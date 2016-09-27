@@ -2,25 +2,23 @@
 /*global $, Folder*/
 
 //***********BORDER*************//
-function onClick_btn_border(borderWidth) {
+function onClick_btn_border(bWidth, bColor) {
+  bWidth = parseInt(bWidth);
   var borderCheck = layerCheck('border');
   var actionsCheck = layerCheck('actions');
-
-  alert(borderWidth);
-
+  //alert(bWidth + ' : ' + typeof(bWidth));
   //make border if it doesn't exist
   if (borderCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(borderCheck);
-    createBorderGuide(actionsCheck + 1);
-    createBorder(actionsCheck);
+    createBorderGuide(actionsCheck + 1, bWidth, bColor);
+    createBorder(actionsCheck, bWidth, bColor);
   } else {
-    createBorderGuide(actionsCheck + 1);
-    createBorder(actionsCheck);
+    createBorderGuide(actionsCheck + 1, bWidth, bColor);
+    createBorder(actionsCheck, bWidth, bColor);
   }
 }
 
-function createBorderGuide(ac) {
-  var borderStroke = fl.getDocumentDOM().getCustomStroke();
+function createBorderGuide(ac, bWidth, bColor) {
 
   //select top layer and crate border layer
   fl.getDocumentDOM().getTimeline().setSelectedLayers(ac);
@@ -30,22 +28,26 @@ function createBorderGuide(ac) {
   //draw and style border rectangle
   fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, true);
   fl.getDocumentDOM().selectAll();
-  borderStroke.thickness = 2;
-  //borderStroke.color = '#000000'; chose to leave this up to the designer, border color will be made based on what is selected
+  //style
+  var borderStroke = fl.getDocumentDOM().getCustomStroke();
+  //alert(bWidth + ' : ' + typeof(bwidth));
+  borderStroke.thickness = bWidth;
+  borderStroke.color = bColor;
   fl.getDocumentDOM().setCustomStroke(borderStroke);
   fl.getDocumentDOM().selectNone();
+
   //reset to default
   borderStroke.thickness = 1;
   fl.getDocumentDOM().setCustomStroke(borderStroke);
+
   //lock the border layer
   fl.getDocumentDOM().getTimeline().layers[ac].locked = true;
 }
 
-function createBorder(ac) {
-  //TODO get text fields to work
+function createBorder(ac, bWidth, bColor) {
 
-  var borderColor = '#000000';
-  var borderWidth = '1px';
+  var borderColor = bColor;
+  var borderWidth = bWidth + 'px';
   fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
   var actionText = fl.actionsPanel.getText();
 
