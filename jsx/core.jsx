@@ -2,35 +2,37 @@
 /*global $, Folder*/
 
 //***********BORDER*************//
-function onClick_btn_border(bWidth, bColor) {
+function onClick_btn_border(bWidth, bColor, loopTog) {
+  //alert(loopTog);
   bWidth = parseInt(bWidth);
   var borderCheck = layerCheck('border');
   var actionsCheck = layerCheck('actions');
-  //alert(bWidth + ' : ' + typeof(bWidth));
+
   //make border if it doesn't exist
   if (borderCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(borderCheck);
     createBorderGuide(actionsCheck + 1, bWidth, bColor);
-    createBorder(actionsCheck, bWidth, bColor);
+    createBorder(actionsCheck, bWidth, bColor, loopTog);
   } else {
     createBorderGuide(actionsCheck + 1, bWidth, bColor);
-    createBorder(actionsCheck, bWidth, bColor);
+    createBorder(actionsCheck, bWidth, bColor, loopTog);
   }
+  createLoop(loopTog);
+  fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
 }
 
-function createBorderGuide(ac, bWidth, bColor) {
+function createBorderGuide(actionsCheck, bWidth, bColor) {
 
   //select top layer and crate border layer
-  fl.getDocumentDOM().getTimeline().setSelectedLayers(ac);
+  fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck);
   fl.getDocumentDOM().getTimeline().addNewLayer('border', 'guide', true);
-  fl.getDocumentDOM().getTimeline().setSelectedLayers(ac);
+  fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck);
 
   //draw and style border rectangle
   fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, true);
   fl.getDocumentDOM().selectAll();
   //style
   var borderStroke = fl.getDocumentDOM().getCustomStroke();
-  //alert(bWidth + ' : ' + typeof(bwidth));
   borderStroke.thickness = bWidth;
   borderStroke.color = bColor;
   fl.getDocumentDOM().setCustomStroke(borderStroke);
@@ -41,21 +43,24 @@ function createBorderGuide(ac, bWidth, bColor) {
   fl.getDocumentDOM().setCustomStroke(borderStroke);
 
   //lock the border layer
-  fl.getDocumentDOM().getTimeline().layers[ac].locked = true;
+  fl.getDocumentDOM().getTimeline().layers[actionsCheck].locked = true;
 }
 
-function createBorder(ac, bWidth, bColor) {
+function createBorder(actionsCheck, bWidth, bColor, loopTog) {
 
   var borderColor = bColor;
   var borderWidth = bWidth + 'px';
   fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
   var actionText = fl.actionsPanel.getText();
 
-  if (ac > -1) {
+  if (actionsCheck > -1) {
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
     actionsSelect('document.getElementById("canvas").style.border', 69);
+    //if border code already exists overwrite it
     if (fl.actionsPanel.hasSelection()) {
       fl.actionsPanel.replaceSelectedText('document.getElementById("canvas").style.border = "' + borderWidth + ' solid ' + borderColor + '";');
       fl.actionsPanel.setSelection(0,0);
+      //if it doesn't exist write new code
     } else {
       fl.actionsPanel.setText(actionText + '\n\ndocument.getElementById("canvas").style.border = "' + borderWidth + ' solid ' + borderColor + '";');
       fl.actionsPanel.setSelection(0,0);
@@ -63,6 +68,7 @@ function createBorder(ac, bWidth, bColor) {
   } else {
     fl.getDocumentDOM().getTimeline().addNewLayer('actions', 'normal', true);
     fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
     fl.actionsPanel.setText('document.getElementById("canvas").style.border = "' + borderWidth + ' solid ' + borderColor + '";');
     fl.actionsPanel.setSelection(0,0);
   }
@@ -70,8 +76,15 @@ function createBorder(ac, bWidth, bColor) {
 
 //**************CLICK TAG***************//
 function onClick_btn_clickTag() {
+
   var tagCheck = layerCheck('clickTag');
   var clickCheck = layerCheck('actions');
+
+  //deletes previous clickTags
+  if (fl.getDocumentDOM().library.itemExists('btn_clickTag')) {
+    fl.getDocumentDOM().library.deleteItem('btn_clickTag');
+  }
+
   giadcScriptInject(clickCheck);
   if (tagCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(tagCheck);
@@ -81,22 +94,25 @@ function onClick_btn_clickTag() {
   }
 }
 
-function giadcScriptInject(cc) {
+function giadcScriptInject(clickCheck) {
   fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+  fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
   var actionText = fl.actionsPanel.getText();
 
-  if (cc > -1) {
+  if (clickCheck > -1) {
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
     actionsSelect('if (!this.loopNum) {\n\tvar script = document.createElement("script")', 10);
     if (fl.actionsPanel.hasSelection()) {
       fl.actionsPanel.setSelection(0,0);
-      return;
     } else {
       fl.actionsPanel.setText('if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}\n\n' + actionText);
       fl.actionsPanel.setSelection(0,0);
+      fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
     }
   } else {
     fl.getDocumentDOM().getTimeline().addNewLayer('actions', 'normal', true);
     fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
     fl.actionsPanel.setText('if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}');
     fl.actionsPanel.setSelection(0,0);
     }
@@ -108,15 +124,64 @@ function createClickTag() {
   fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
 
   fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, false, true);
+  //converts to button
+  fl.getDocumentDOM().selectAll();
+  fl.getDocumentDOM().convertToSymbol('button', 'btn_clickTag', 'top left');
+  fl.getDocumentDOM().selectAll();
+  fl.getDocumentDOM().enterEditMode('inPlace');
 
-  //TODO convert to button
+  //make new frames in button
+  fl.getDocumentDOM().getTimeline().insertFrames();
+  fl.getDocumentDOM().getTimeline().insertFrames();
+  fl.getDocumentDOM().getTimeline().insertFrames();
 
+  //select hit frame
+  fl.getDocumentDOM().getTimeline().currentFrame = 3;
+
+  //new keyframe on hit frame
+  fl.getDocumentDOM().getTimeline().convertToKeyframes();
+
+  //delete all frames before hit
+  fl.getDocumentDOM().getTimeline().currentFrame = 0;
+  fl.getDocumentDOM().selectAll();
+  fl.getDocumentDOM().deleteSelection();
+
+  //exit edit mode
+  fl.getDocumentDOM().exitEditMode();
+
+  //set instance name
+  fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = "btn_clickTag";
+
+  //add actions to clickTag
   fl.actionsPanel.setText('this.btn_clickTag.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","default URL");\n}');
   fl.actionsPanel.setSelection(0,0);
+
+  //lock and hide clickTag
   fl.getDocumentDOM().getTimeline().layers[1].visible = false;
   fl.getDocumentDOM().getTimeline().layers[1].locked = true;
   fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
 }
+
+//*****************LOOP******************//
+
+function createLoop(loopTog) {
+
+  var frameIndex = (fl.getDocumentDOM().getTimeline().frameCount) - 1;
+  if(loopTog === 'true') {
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(frameIndex, frameIndex, true);
+    //alert(fl.getDocumentDOM().getTimeline().frameCount);
+    fl.getDocumentDOM().getTimeline().clearKeyframes();
+    fl.getDocumentDOM().getTimeline().convertToKeyframes();
+    fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.alreadyExecuted=true;\n\tthis.loopNum = 1;\n} else {\n\tthis.loopNum++;\n\tif (this.loopNum === 3) {\n\t\tthis.stop();\n\t}\n}');
+    fl.actionsPanel.setSelection(0,0);
+  } else {
+    fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+    fl.getDocumentDOM().getTimeline().setSelectedFrames(frameIndex, frameIndex, true);
+    fl.getDocumentDOM().getTimeline().clearKeyframes();
+  }
+}
+
+//**********Universal Functions**********//
 
 function layerCheck(layerName) {
   var layerAmt = fl.getDocumentDOM().getTimeline().layerCount;
@@ -131,6 +196,7 @@ function layerCheck(layerName) {
 
 function actionsSelect(subFind, actionLength) {
   fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+  fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
   var actionStart = fl.actionsPanel.getText().indexOf(subFind);
   fl.actionsPanel.setSelection(actionStart, actionLength);
 }
