@@ -21,24 +21,4 @@
     }
 
     init();
-
 }());
-
-function onClick_btn_border(bWidth, bColor, loopTog) {
-  //alert(loopTog);
-  bWidth = parseInt(bWidth);
-  var borderCheck = layerCheck('border');
-  var actionsCheck = layerCheck('actions');
-
-  //make border if it doesn't exist
-  if (borderCheck > -1) {
-    fl.getDocumentDOM().getTimeline().deleteLayer(borderCheck);
-    createBorderGuide(actionsCheck + 1, bWidth, bColor);
-    createBorder(actionsCheck, bWidth, bColor, loopTog);
-  } else {
-    createBorderGuide(actionsCheck + 1, bWidth, bColor);
-    createBorder(actionsCheck, bWidth, bColor, loopTog);
-  }
-  createLoop(loopTog);
-  fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
-}
