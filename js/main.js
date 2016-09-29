@@ -13,7 +13,7 @@
           var bWidth = document.getElementById("txt_borderWidth").value;
           var bColor = document.getElementById("txt_borderColor").value;
           var loopTog = document.getElementById("chk_loopToggle").checked;
-          csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '", "' + loopTog + '")');
+          csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
         });
         $("#btn_clickTag").click(function () {
             csInterface.evalScript('onClick_btn_clickTag()');
