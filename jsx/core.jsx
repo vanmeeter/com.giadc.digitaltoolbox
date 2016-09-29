@@ -8,7 +8,7 @@
 var JS_PATH = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/js/classes';
 var files = FLfile.listFolder(JS_PATH)
 for (var i = 0; i < files.length; i++) {
-	eval(FLfile.read(JS_PATH+ '/' + files[i]));
+	eval(FLfile.read(JS_PATH + '/' + files[i]));
 }
 
 //***********PUBLISH SETTINGS************//
@@ -20,7 +20,6 @@ function initializeDoc() {
 //***********BORDER*************//
 function onClick_btn_border(bWidth, bColor) {
 	var x = new PublishClass;
-	x.setPublishSettings();
   bWidth = parseInt(bWidth);
   var util = new UtilitiesClass;
   var foo = new BorderClass;

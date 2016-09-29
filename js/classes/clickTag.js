@@ -25,6 +25,9 @@
       fl.actionsPanel.setText(clickCode);
       fl.actionsPanel.setSelection(0,0);
       }
+      if (fl.getDocumentDOM().frameRate != 30) {
+        fl.getDocumentDOM().frameRate = 30;
+      };
   }
 
   p.createClickTag = function() {

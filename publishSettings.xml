@@ -19,7 +19,6 @@
     <Property name="copy">true</Property>
     <Property name="default">true</Property>
     <Property name="embed">false</Property>
-    <Property name="filename">Untitled-1.svg</Property>
     <Property name="imagesPath">images</Property>
     <Property name="includeHiddenLayers">true</Property>
     <Property name="version">0.1</Property>
@@ -42,7 +41,6 @@
     <Property name="exportLibsToFolder">true</Property>
     <Property name="exportSounds">true</Property>
     <Property name="exportSoundsToFolder">true</Property>
-    <Property name="filename">Untitled-1</Property>
     <Property name="frameBounds">false</Property>
     <Property name="hostedLibs">true</Property>
     <Property name="imageFormat">0</Property>
