@@ -8,7 +8,9 @@
 
     function init() {
         themeManager.init();
-
+        $("#initial").ready(function () {
+          csInterface.evalScript('initializeDoc()');
+        });
         $("#btn_border").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
           var bColor = document.getElementById("txt_borderColor").value;

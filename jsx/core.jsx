@@ -2,24 +2,25 @@
 /*global $, Folder*/
 
 //********PATH FOR WHEN IT"S PUBLISHED********//
-//var JS_PATH = 'file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/js/'
+//var JS_PATH = 'file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/js/classes'
 
 //**************INCLUDE CODE FOR EXTERNAL JS****************//
-var JS_PATH = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/js/';
-var included = {};
-function include(file) {
-	if (included[file]) { return; }
-	included[file] = true;
-	eval(FLfile.read(JS_PATH+file+".js"));
+var JS_PATH = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/js/classes';
+var files = FLfile.listFolder(JS_PATH)
+for (var i = 0; i < files.length; i++) {
+	eval(FLfile.read(JS_PATH+ '/' + files[i]));
 }
-//************FILES TO INCLUDE*************//
-include("utilities");
-include("border");
-include("clickTag");
+
+//***********PUBLISH SETTINGS************//
+function initializeDoc() {
+	var setPub = new PublishClass;
+	setPub.setPublishSettings();
+}
 
 //***********BORDER*************//
 function onClick_btn_border(bWidth, bColor) {
-
+	var x = new PublishClass;
+	x.setPublishSettings();
   bWidth = parseInt(bWidth);
   var util = new UtilitiesClass;
   var foo = new BorderClass;
