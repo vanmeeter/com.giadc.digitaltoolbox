@@ -560,7 +560,7 @@ CSInterface.prototype.getHostCapabilities = function()
 };
 
 /**
- * Triggers a CEP event programmatically. Yoy can use it to dispatch
+ * Triggers a CEP event programmatically. You can use it to dispatch
  * an event of a predefined type, or of a type you have defined.
  *
  * @param event A \c CSEvent object.

@@ -53,19 +53,18 @@
 					<Type>Panel</Type>
 					<Menu>digitalToolbox</Menu>
 					<Geometry>
-						<Size>
+						<!--<Size>
 							<Height>300</Height>
 							<Width>300</Width>
-						</Size>
-                    <!--<MinSize>
-                            <Height>550</Height>
-                            <Width>400</Width>
-                        </MinSize>
-                        <MaxSize>
-                            <Height>550</Height>
-                            <Width>400</Width>
-                        </MaxSize>-->
-
+						</Size>-->
+                    <MinSize>
+                        <Height>300</Height>
+                        <Width>250</Width>
+                    </MinSize>
+                    <MaxSize>
+                        <Height>2000</Height>
+                        <Width>400</Width>
+                    </MaxSize>
 					</Geometry>
 					<Icons>
 						<Icon Type="Normal">./icons/iconNormal.png</Icon>

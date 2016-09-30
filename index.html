@@ -10,30 +10,59 @@
 </head>
 
 <body id="inital" class="hostElt">
-
+  <div id="header"></div>
     <div id="content">
 
-        <div>
-            <button id="btn_border" style="float:left;" class="topcoat-button--large hostFontSize">Create Border</button>
-            <div>
-              <input id="txt_borderWidth" class="topcoat-text-input" type="text" style="width:70px; margin-top:2px; margin-left:2px;" placeholder="width" value="1">
-              <input id="txt_borderColor" class="topcoat-text-input" type="text" style="width:70px; margin-top:2px;" placeholder="color" value="#000000">
-            </div>
+        <div class = "contRow">
+          <div id = "init_bttnDiv">
+            <button id="btn_initialize" class="topcoat-button--large--cta" style="width:100%; margin-left:2px;">Initialize</button>
+          </div>
+          <div id="toggleLoop">
+            <label class="topcoat-switch" style="margin-top:2px;">
+              <input id="chk_loopToggle" type="checkbox" class="topcoat-switch__input" checked>
+                <div class="topcoat-switch__toggle"></div>
+            </label>
+          </div>
         </div>
-        <div style="margin-top:10px;">
-            <button id="btn_clickTag" style="margin-right:200px;" class="topcoat-button--large hostFontSize">Create clickTag</button>
+
+        <div class = "contRow">
+          <h3 class="sectionLabel">Border</h3>
+          <hr / class="sectionRule" style="top:118px;">
+          <div id=border_bttnDiv>
+            <button id="btn_border" class="topcoat-button--large hostFontSize" style="float:left;">Border</button>
+          </div>
+          <div id="border_fields">
+              <input id="txt_borderWidth" class="topcoat-text-input" type="text" placeholder="width" value="1">
+              <input id="txt_borderColor" class="topcoat-text-input" type="text"  placeholder="color" value="#000000">
+          </div>
         </div>
-        <div style="margin-top:10px;">
-          <p style="float:left; line-height:1px; margin-right:10px;">Loop</p>
-          <label class="topcoat-switch">
-            <input id="chk_loopToggle" type="checkbox" class="topcoat-switch__input" checked>
-              <div class="topcoat-switch__toggle"></div>
-          </label>
+
+        <div class = "contRow">
+          <h3 class="sectionLabel">ClickTag</h3>
+          <hr / class="sectionRule" style="top:190px;">
+          <div id="click_fields">
+            <input id="txt_clickTag" class="topcoat-text-input" type="text" placeholder="Enter ClickTag" required>
+          </div>
+          <div id="click_bttnDiv">
+            <button id="btn_clickTag" style="width:98%; margin-left:2px; margin-bottom:2px;" class="topcoat-button--large hostFontSize">Generate ClickTag</button>
+          </div>
+        </div>
+        <div class = "contRow">
+          <h3 class="sectionLabel">Publish</h3>
+          <hr / class="sectionRule" style="top:295px;">
+          <div id="click_bttnDiv">
+            <button id="btn_publish" style="width:98%; margin-left:2px; margin-bottom:2px;" class="topcoat-button--large hostFontSize">Publish</button>
+          </div>
+        </div>
+        <div id="footer">
+          <h2 style="position:fixed; bottom:6px; margin:0px; left:6px;">Size of Document: </h2>
+          <h2 id="sizeDisplay" style="position:fixed; bottom:6px; margin:0px; left:73%;"></h2>
         </div>
     </div>
     <script src="js/libs/CSInterface.js"></script>
     <script src="js/libs/jquery-2.0.2.min.js"></script>
     <script src="js/themeManager.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/panel.js"></script>
 </body>
 </html>

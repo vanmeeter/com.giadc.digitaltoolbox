@@ -1,7 +1,7 @@
 <profile version="1.0" name="Default">
   <PublishFormatProperties enabled="true">
     <defaultNames>1</defaultNames>
-    <jpeg>0</jpeg>
+    <jpeg>1</jpeg>
     <oam>0</oam>
     <jpegDefaultName>1</jpegDefaultName>
     <oamDefaultName>1</oamDefaultName>

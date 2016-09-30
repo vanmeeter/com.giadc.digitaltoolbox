@@ -30,7 +30,7 @@
       };
   }
 
-  p.createClickTag = function() {
+  p.createClickTag = function(clickURL) {
       fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
       fl.getDocumentDOM().getTimeline().addNewLayer('clickTag', 'normal', true);
       fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
@@ -65,7 +65,7 @@
       fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = "btn_clickTag";
 
       //add actions to clickTag
-      fl.actionsPanel.setText('this.btn_clickTag.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","default URL");\n}');
+      fl.actionsPanel.setText('this.btn_clickTag.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL + '");\n}');
       fl.actionsPanel.setSelection(0,0);
 
       //lock and hide clickTag

@@ -17,9 +17,10 @@ function initializeDoc() {
 	setPub.setPublishSettings();
 }
 
+function test() { return fl.getDocumentDOM().getTimeline().layers[0].name; }
+
 //***********BORDER*************//
 function onClick_btn_border(bWidth, bColor) {
-	var x = new PublishClass;
   bWidth = parseInt(bWidth);
   var util = new UtilitiesClass;
   var foo = new BorderClass;
@@ -40,7 +41,7 @@ function onClick_btn_border(bWidth, bColor) {
 }
 
 //**************CLICK TAG***************//
-function onClick_btn_clickTag() {
+function onClick_btn_clickTag(clickURL) {
 
   var foo = new ClickTagClass;
   var util = new UtilitiesClass;
@@ -55,9 +56,9 @@ function onClick_btn_clickTag() {
   foo.giadcScriptInject(clickCheck);
   if (tagCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(tagCheck);
-    foo.createClickTag();
+    foo.createClickTag(clickURL);
   } else {
-    foo.createClickTag();
+    foo.createClickTag(clickURL);
   }
   fl.actionsPanel.setSelection(0,0);
   fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
@@ -80,4 +81,11 @@ function createLoop(loopTog) {
     fl.getDocumentDOM().getTimeline().setSelectedFrames(frameIndex, frameIndex, true);
     fl.getDocumentDOM().getTimeline().clearKeyframes();
   }
+}
+
+//****************PUBLISH AD********************//
+function publishDOC() {
+	foo = new SizeReportClass;
+	var sizeReport = foo.genSizeReport();
+	return sizeReport;
 }
