@@ -17,8 +17,6 @@ function initializeDoc() {
 	setPub.setPublishSettings();
 }
 
-function test() { return fl.getDocumentDOM().getTimeline().layers[0].name; }
-
 //***********BORDER*************//
 function onClick_btn_border(bWidth, bColor) {
   bWidth = parseInt(bWidth);
@@ -64,28 +62,30 @@ function onClick_btn_clickTag(clickURL) {
   fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
 }
 
-//*****************LOOP******************//
-
-function createLoop(loopTog) {
-
-  var frameIndex = (fl.getDocumentDOM().getTimeline().frameCount) - 1;
-  if(loopTog === 'true') {
-    fl.getDocumentDOM().getTimeline().setSelectedFrames(frameIndex, frameIndex, true);
-    //alert(fl.getDocumentDOM().getTimeline().frameCount);
-    fl.getDocumentDOM().getTimeline().clearKeyframes();
-    fl.getDocumentDOM().getTimeline().convertToKeyframes();
-    fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.alreadyExecuted=true;\n\tthis.loopNum = 1;\n} else {\n\tthis.loopNum++;\n\tif (this.loopNum === 3) {\n\t\tthis.stop();\n\t}\n}');
-    fl.actionsPanel.setSelection(0,0);
-  } else {
-    fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
-    fl.getDocumentDOM().getTimeline().setSelectedFrames(frameIndex, frameIndex, true);
-    fl.getDocumentDOM().getTimeline().clearKeyframes();
-  }
+//****************LOOP SETTINGS******************//
+function onClick_chk_loopToggle(loopTog) {
+	var setLoop = new LoopClass;
+	setLoop.loop(loopTog);
 }
 
 //****************PUBLISH AD********************//
-function publishDOC() {
+function onClick_btn_publish() {
 	foo = new SizeReportClass;
-	var sizeReport = foo.genSizeReport();
-	return sizeReport;
+	var util = new UtilitiesClass;
+	var tagCheck = util.layerCheck('clickTag');
+  var clickCheck = util.layerCheck('actions');
+
+	if (tagCheck > -1 && clickCheck > -1) {
+		if (fl.getDocumentDOM().pathURI === undefined){
+			alert('Ad must be saved first.');
+			return 0
+		} else {
+			fl.getDocumentDOM().publish();
+			var sizeReport = foo.genSizeReport();
+			return sizeReport;;
+		}
+	} else {
+		alert('Ad must be initialized first.');
+		return 0;
+	}
 }

@@ -8,13 +8,33 @@
 
     function init() {
         themeManager.init();
+
+        $("#btn_initialize").click(function () {
+          var bWidth = document.getElementById("txt_borderWidth").value;
+          var bColor = document.getElementById("txt_borderColor").value;
+          var loopTog = document.getElementById("chk_loopToggle").checked;
+          var clickURL = document.getElementById("txt_clickTag").value;
+          var httpCheck = clickURL.slice(0, 7);
+
+          if (httpCheck != 'http://') {
+            clickURL = 'http://' + clickURL;
+          }
+          if (clickURL === 'http://') {
+            return;
+          } else{
+            csInterface.evalScript('initializeDoc()');
+            csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+            csInterface.evalScript('onClick_btn_clickTag("' + clickURL + '")');
+            csInterface.evalScript('fl.getDocumentDOM().getTimeline().insertFrames(299, true)');
+            csInterface.evalScript('onClick_chk_loopToggle(true)');
+          }
+        });
         $("#btn_border").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
           var bColor = document.getElementById("txt_borderColor").value;
           var loopTog = document.getElementById("chk_loopToggle").checked;
           csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
         });
-
         $("#btn_clickTag").click(function () {
           var clickURL = document.getElementById("txt_clickTag").value;
           var httpCheck = clickURL.slice(0, 7);
@@ -28,9 +48,9 @@
           }
         });
         $("#btn_publish").click(function () {
-          csInterface.evalScript('publishDOC()', function(result) {
-            var sizeDisplay = document.getElementById("sizeDisplay");
-            sizeDisplay.innerHTML = result/1000 + "kb"
+          csInterface.evalScript('onClick_btn_publish()', function(result) {
+          var sizeDisplay = document.getElementById("sizeDisplay");
+          sizeDisplay.innerHTML = result/1000 + "kb"
           });
         });
     }
