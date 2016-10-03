@@ -8,7 +8,7 @@
 
     function init() {
         themeManager.init();
-        var clickNum = 2;
+        var clickNum = 1;
 
         $("#btn_initialize").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;

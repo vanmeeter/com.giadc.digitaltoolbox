@@ -50,21 +50,33 @@ function onClick_btn_clickTag(clickURL) {
   var util = new UtilitiesClass;
   var clickCheck = util.layerCheck('actions');
 	var tags = util.parseObj(clickURL);
-	var tagCheck;
+	var totalLayers = fl.getDocumentDOM().getTimeline().layerCount;
 	var totalFrames = fl.getDocumentDOM().getTimeline().frameCount;
+	var libItems = fl.getDocumentDOM().library.items;
+	var libSize = libItems.length;
 	foo.giadcScriptInject(clickCheck);
 
-	for (var i = 1; i <= clickURL.clickNum; i++) {
-		var clickStart = 0;
-		var clickEnd = totalFrames / clickURL.clickNum;
-		tagCheck = util.layerCheck('clickTag' + i);
-		if (tagCheck > -1) {
-			fl.getDocumentDOM().getTimeline().deleteLayer(tagCheck);
+  //deletes previous clickTags
+	for (var i = 0; i < totalLayers; i++) {
+		var oldTag = fl.getDocumentDOM().getTimeline().layers[i].name;
+		oldTag = oldTag.slice(0, 8);
+		if (oldTag === 'clickTag') {
+			fl.getDocumentDOM().getTimeline().deleteLayer(i);
+			totalLayers--;
+			i--;
 		}
-		//deletes previous clickTags
+	}
+	for (var i = 0; i < 10; i++) {
 		if (fl.getDocumentDOM().library.itemExists('btn_clickTag' + i)) {
 			fl.getDocumentDOM().library.deleteItem('btn_clickTag' + i);
 		}
+	}
+
+	//clickTag creation
+	for (var i = 1; i <= clickURL.clickNum; i++) {
+		var clickStart = 0;
+		var clickEnd = totalFrames / clickURL.clickNum;
+
 		foo.createClickTag(clickURL, i);
 		clickEnd = Math.round(clickEnd * (i - 1));
 		if (clickEnd != 0) {
@@ -89,7 +101,7 @@ function onClick_chk_loopToggle(loopTog) {
 function onClick_btn_publish() {
 	foo = new SizeReportClass;
 	var util = new UtilitiesClass;
-	var tagCheck = util.layerCheck('clickTag');
+	var tagCheck = util.layerCheck('clickTag1');
   var clickCheck = util.layerCheck('actions');
 
 	if (tagCheck > -1 && clickCheck > -1) {
