@@ -110,6 +110,10 @@ body::-webkit-scrollbar-thumb {
   margin-left:2px;
 }
 
+.contRow #pub_bttnDiv {
+  margin-bottom:25px;
+}
+
 #footer {
   height:30px;
   width:100%;

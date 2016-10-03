@@ -25,9 +25,12 @@
             csInterface.evalScript('initializeDoc()');
             csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
             csInterface.evalScript('onClick_btn_clickTag("' + clickURL + '")');
-            csInterface.evalScript('fl.getDocumentDOM().getTimeline().insertFrames(299, true)');
-            csInterface.evalScript('onClick_chk_loopToggle(true)');
+            csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
           }
+        });
+        $("#chk_loopToggle").click(function () {
+          var loopTog = document.getElementById("chk_loopToggle").checked;
+          csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
         });
         $("#btn_border").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;

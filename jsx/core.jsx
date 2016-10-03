@@ -11,9 +11,15 @@ for (var i = 0; i < files.length; i++) {
 	eval(FLfile.read(JS_PATH + '/' + files[i]));
 }
 
-//***********PUBLISH SETTINGS************//
+//***********DOCUMENT INITIALIZE************//
 function initializeDoc() {
 	var setPub = new PublishClass;
+	var frameIndex = fl.getDocumentDOM().getTimeline().frameCount;
+
+	if (frameIndex < 30){
+		fl.getDocumentDOM().getTimeline().insertFrames((90 - frameIndex), true)
+	}
+
 	setPub.setPublishSettings();
 }
 

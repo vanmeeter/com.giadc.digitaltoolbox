@@ -4,11 +4,9 @@
 + clickTag
   - multiple clickTags
     + create text fields that can be dynamically generated for multi-tags
-+ Publish Settings
-+ Project Size
-+ How loop toggle will work
++ Project Size <= mostly done
 + Generate static
 + Disclaimer
++ Reset button
++ Get data button
 + Widgets
-
-+ create master input object to import all values set by user <= this may not be possible
