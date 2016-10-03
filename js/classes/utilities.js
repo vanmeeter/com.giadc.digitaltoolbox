@@ -23,4 +23,12 @@
     fl.actionsPanel.setSelection(actionStart, actionLength);
   }
 
+//************PARSER FOR OBJECTS**************//
+p.parseObj = function(o) {
+  var str = "";
+    for (prop in o) {
+      str += prop + " [" + typeof o[prop] + "]: " + o[prop] + ".\n";
+    }
+}
+
 }());

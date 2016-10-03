@@ -103,11 +103,14 @@ body::-webkit-scrollbar-thumb {
   display:inline-block;
 }
 
-.contRow #click_fields #txt_clickTag {
-  width: 98%;
-  display:inline-block;
-  margin-bottom:5px;
+.contRow #click_fields {
+  width:100%;
   margin-left:2px;
+  margin-bottom:5px;
+}
+
+.contRow #click_fields #txt_clickTag #txt_clickTag2 #txt_clickTag3{
+  display:inline-block;
 }
 
 .contRow #pub_bttnDiv {

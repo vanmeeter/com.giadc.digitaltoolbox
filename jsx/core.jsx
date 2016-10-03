@@ -46,23 +46,28 @@ function onClick_btn_border(bWidth, bColor) {
 
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
-
+	alert(clickURL);
   var foo = new ClickTagClass;
   var util = new UtilitiesClass;
   var tagCheck = util.layerCheck('clickTag');
   var clickCheck = util.layerCheck('actions');
-
-  //deletes previous clickTags
-  if (fl.getDocumentDOM().library.itemExists('btn_clickTag')) {
-    fl.getDocumentDOM().library.deleteItem('btn_clickTag');
-  }
+	var tags = util.parseObj(clickURL);
 
   foo.giadcScriptInject(clickCheck);
+
   if (tagCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(tagCheck);
-    foo.createClickTag(clickURL);
+		for (var i = 1; i <= clickURL.clickNum; i++) {
+			//deletes previous clickTags
+			if (fl.getDocumentDOM().library.itemExists('btn_clickTag' + i)) {
+				fl.getDocumentDOM().library.deleteItem('btn_clickTag' + i);
+			}
+    	foo.createClickTag(clickURL, i);
+		}
   } else {
-    foo.createClickTag(clickURL);
+		for (var i = 1; i <= clickURL.clickNum; i++) {
+    	foo.createClickTag(clickURL, i);
+		}
   }
   fl.actionsPanel.setSelection(0,0);
   fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
