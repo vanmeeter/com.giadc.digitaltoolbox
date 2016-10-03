@@ -39,8 +39,8 @@
           csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
         });
         $("#btn_clickTag").click(function () {
-          var clickURL = document.getElementById("txt_clickTag").value;
-          var httpCheck = clickURL.slice(0, 7);
+          var clickURL = document.getElementById("txt_clickTag" + 1).value;
+          var httpCheck = clickURL.newClick.slice(0, 7);
           if (httpCheck != 'http://') {
             clickURL = 'http://' + clickURL;
           }
