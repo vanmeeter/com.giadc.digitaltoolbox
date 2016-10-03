@@ -32,13 +32,13 @@
 
   p.createClickTag = function(clickURL, clickNum) {
       fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
-      fl.getDocumentDOM().getTimeline().addNewLayer(('clickTag' + clickNum), 'normal', true);
+      fl.getDocumentDOM().getTimeline().addNewLayer('clickTag' + clickNum, 'normal', true);
       fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
 
       fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, false, true);
       //converts to button
       fl.getDocumentDOM().selectAll();
-      fl.getDocumentDOM().convertToSymbol('button', ('btn_clickTag' + clickNum), 'top left');
+      fl.getDocumentDOM().convertToSymbol('button', 'btn_clickTag' + clickNum, 'top left');
       fl.getDocumentDOM().selectAll();
       fl.getDocumentDOM().enterEditMode('inPlace');
 
@@ -62,16 +62,15 @@
       fl.getDocumentDOM().exitEditMode();
 
       //set instance name
-      fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = ('btn_clickTag' + clickNum);
+      fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
 
       //add actions to clickTag
-      fl.actionsPanel.setText('this.btn_clickTag' + clickNum '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n}');
+      fl.actionsPanel.setText('this.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n}');
       fl.actionsPanel.setSelection(0,0);
 
       //lock and hide clickTag
       fl.getDocumentDOM().getTimeline().layers[1].visible = false;
       fl.getDocumentDOM().getTimeline().layers[1].locked = true;
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
   }
 
 

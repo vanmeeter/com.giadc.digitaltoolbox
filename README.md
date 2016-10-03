@@ -3,7 +3,8 @@
 ------TODO------
 + clickTag
   - multiple clickTags
-    + create text fields that can be dynamically generated for multi-tags
+    + create interface to dynamically add and delete clickTags
+     - minus button gets rid of text fields and deletes clicktag and symbol
 + Project Size <= mostly done
 + Generate static
 + Disclaimer
