@@ -11,4 +11,4 @@
 + Reset
 + Get data button
 + Widgets
-+ grey out button
++ grey out buttons if not initialized
