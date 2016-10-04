@@ -54,11 +54,12 @@ function onClick_btn_clickTag(clickURL) {
 	var totalFrames = fl.getDocumentDOM().getTimeline().frameCount;
 	var libItems = fl.getDocumentDOM().library.items;
 	var libSize = libItems.length;
+	var oldTag;
 	foo.giadcScriptInject(clickCheck);
 
   //deletes previous clickTags
 	for (var i = 0; i < totalLayers; i++) {
-		var oldTag = fl.getDocumentDOM().getTimeline().layers[i].name;
+		oldTag = fl.getDocumentDOM().getTimeline().layers[i].name;
 		oldTag = oldTag.slice(0, 8);
 		if (oldTag === 'clickTag') {
 			fl.getDocumentDOM().getTimeline().deleteLayer(i);
