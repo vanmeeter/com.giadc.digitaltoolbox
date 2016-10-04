@@ -46,26 +46,50 @@ function onClick_btn_border(bWidth, bColor) {
 
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
-
   var foo = new ClickTagClass;
   var util = new UtilitiesClass;
-  var tagCheck = util.layerCheck('clickTag');
   var clickCheck = util.layerCheck('actions');
+	var tags = util.parseObj(clickURL);
+	var totalLayers = fl.getDocumentDOM().getTimeline().layerCount;
+	var totalFrames = fl.getDocumentDOM().getTimeline().frameCount;
+	var libItems = fl.getDocumentDOM().library.items;
+	var libSize = libItems.length;
+	var oldTag;
+	foo.giadcScriptInject(clickCheck);
 
   //deletes previous clickTags
-  if (fl.getDocumentDOM().library.itemExists('btn_clickTag')) {
-    fl.getDocumentDOM().library.deleteItem('btn_clickTag');
-  }
+	for (var i = 0; i < totalLayers; i++) {
+		oldTag = fl.getDocumentDOM().getTimeline().layers[i].name;
+		oldTag = oldTag.slice(0, 8);
+		if (oldTag === 'clickTag') {
+			fl.getDocumentDOM().getTimeline().deleteLayer(i);
+			totalLayers--;
+			i--;
+		}
+	}
+	for (var i = 0; i < 10; i++) {
+		if (fl.getDocumentDOM().library.itemExists('btn_clickTag' + i)) {
+			fl.getDocumentDOM().library.deleteItem('btn_clickTag' + i);
+		}
+	}
 
-  foo.giadcScriptInject(clickCheck);
-  if (tagCheck > -1) {
-    fl.getDocumentDOM().getTimeline().deleteLayer(tagCheck);
-    foo.createClickTag(clickURL);
-  } else {
-    foo.createClickTag(clickURL);
-  }
-  fl.actionsPanel.setSelection(0,0);
-  fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
+	//clickTag creation
+	for (var i = 1; i <= clickURL.clickNum; i++) {
+		var clickStart = 0;
+		var clickEnd = totalFrames / clickURL.clickNum;
+
+		foo.createClickTag(clickURL, i);
+		clickEnd = Math.round(clickEnd * (i - 1));
+		if (clickEnd != 0) {
+			fl.getDocumentDOM().getTimeline().clearFrames(clickStart, clickEnd);
+		}
+		clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
+		clickEnd = totalFrames;
+		if (clickStart != totalFrames) {
+			fl.getDocumentDOM().getTimeline().clearFrames(clickStart, clickEnd);
+		}
+	}
+	fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
 }
 
 //****************LOOP SETTINGS******************//
@@ -78,7 +102,7 @@ function onClick_chk_loopToggle(loopTog) {
 function onClick_btn_publish() {
 	foo = new SizeReportClass;
 	var util = new UtilitiesClass;
-	var tagCheck = util.layerCheck('clickTag');
+	var tagCheck = util.layerCheck('clickTag1');
   var clickCheck = util.layerCheck('actions');
 
 	if (tagCheck > -1 && clickCheck > -1) {

@@ -7,6 +7,5 @@
   p.setPublishSettings = function() {
     fl.getDocumentDOM().importPublishProfile(pubProfile);
     fl.getDocumentDOM().frameRate = 30;
-    //alert('test');
     }
 }());
