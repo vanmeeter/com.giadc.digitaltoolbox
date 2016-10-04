@@ -3,13 +3,10 @@
 
 (function () {
     'use strict';
-
     var csInterface = new CSInterface();
 
     function init() {
         themeManager.init();
-        var clickNum = 3;
-
         $("#btn_initialize").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
           var bColor = document.getElementById("txt_borderColor").value;

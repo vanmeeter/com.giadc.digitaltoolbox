@@ -3,11 +3,12 @@
 ------TODO------
 + clickTag
   - multiple clickTags
-    + create interface to dynamically add and delete clickTags
-     - minus button gets rid of text fields
+  + hotspot clicktags
+  + https regexp
 + Project Size <= mostly done
 + Generate static
 + Disclaimer
-+ Reset button
++ Reset
 + Get data button
 + Widgets
++ grey out button

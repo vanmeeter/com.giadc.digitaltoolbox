@@ -107,7 +107,7 @@ function onClick_btn_publish() {
 
 	if (tagCheck > -1 && clickCheck > -1) {
 		if (fl.getDocumentDOM().pathURI === undefined){
-			alert('Ad must be saved first.');
+			alert('Document must be saved.');
 			return 0
 		} else {
 			fl.getDocumentDOM().publish();
@@ -115,7 +115,7 @@ function onClick_btn_publish() {
 			return sizeReport;;
 		}
 	} else {
-		alert('Ad must be initialized first.');
+		alert('Document must be initialized.');
 		return 0;
 	}
 }
