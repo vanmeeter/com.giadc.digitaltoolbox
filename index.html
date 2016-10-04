@@ -5,6 +5,7 @@
 
 <link rel="stylesheet" href="css/topcoat-desktop-dark.css"/>
 <link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
+<script src="js/main.js"></script>
 
 <title></title>
 </head>
@@ -39,12 +40,17 @@
 
         <div class = "contRow">
           <h3 class="sectionLabel">ClickTag</h3>
+          <div class="addSub">
+            <button id="btn_add" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;">
+              <span>+</span>
+            </button>
+            <button id="btn_sub" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;" >
+              <span>-</span>
+            </button>
+          </div>
           <!--<hr / class="sectionRule" style="top:190px;">-->
           <div id="click_fields">
             <input id="txt_clickTag1" class="topcoat-text-input" style="width:98%; margin-bottom:5px;" type="text" placeholder="Enter ClickTag" required>
-            <input id="txt_clickTag2" class="topcoat-text-input" style="width:98%; margin-bottom:5px;" type="text" placeholder="Enter ClickTag" required>
-            <input id="txt_clickTag3" class="topcoat-text-input" style="width:98%; margin-bottom:5px;" type="text" placeholder="Enter ClickTag" required>
-            <input id="txt_clickTag4" class="topcoat-text-input" style="width:98%;" type="text" placeholder="Enter ClickTag" required>
           </div>
           <div id="click_bttnDiv">
             <button id="btn_clickTag" style="width:98%; margin-left:2px; margin-bottom:2px;" class="topcoat-button--large hostFontSize">Generate ClickTag</button>
@@ -69,8 +75,8 @@
     <script src="js/libs/CSInterface.js"></script>
     <script src="js/libs/jquery-2.0.2.min.js"></script>
     <script src="js/themeManager.js"></script>
-    <script src="js/main.js"></script>
     <script src="js/panel.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>
