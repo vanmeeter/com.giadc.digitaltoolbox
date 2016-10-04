@@ -49,17 +49,6 @@
         });
 
         $("#btn_clickTag").click(function () {
-<<<<<<< HEAD
-          var clickURL = document.getElementById("txt_clickTag" + 1).value;
-          var httpCheck = clickURL.newClick.slice(0, 7);
-          if (httpCheck != 'http://') {
-            clickURL = 'http://' + clickURL;
-          }
-          if (clickURL === 'http://') {
-            return;
-          } else{
-            csInterface.evalScript('onClick_btn_clickTag("' + clickURL + '")');
-=======
           var clickURL = {};
           var newClick;
           var httpCheck;
@@ -73,7 +62,6 @@
             if (clickURL[newClick] === 'http://') {
               return;
             }
->>>>>>> multiple_clicktags
           }
           clickURL.clickNum = clickNum;
           csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
