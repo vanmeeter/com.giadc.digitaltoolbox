@@ -24,24 +24,24 @@ function initializeDoc() {
 }
 
 //***********BORDER*************//
-function onClick_btn_border(bWidth, bColor) {
+function onClick_btn_border(bWidth, bColor, clickNum) {
   bWidth = parseInt(bWidth);
   var util = new UtilitiesClass;
   var foo = new BorderClass;
   var borderCheck = util.layerCheck('border');
   var actionsCheck = util.layerCheck('actions');
-  var tagCheck = util.layerCheck('clickTag');
+  var tagCheck = util.layerCheck('clickTag1');
 
   //make border if it doesn't exist
   if (borderCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(borderCheck);
-    foo.createBorderGuide(actionsCheck + 1, tagCheck, bWidth, bColor);
-    foo.createBorder(actionsCheck, bWidth, bColor);
+    foo.createBorder(actionsCheck + 1, tagCheck, bWidth, bColor);
+    //foo.createBorder(actionsCheck, bWidth, bColor);
   } else {
-    foo.createBorderGuide(actionsCheck + 1, tagCheck, bWidth, bColor);
-    foo.createBorder(actionsCheck, bWidth, bColor);
+    foo.createBorder(actionsCheck + 1, tagCheck, bWidth, bColor);
+    //foo.createBorder(actionsCheck, bWidth, bColor);
   }
-  fl.actionsPanel.setSelection(0,0);
+  //fl.actionsPanel.setSelection(0,0);
 }
 
 //**************CLICK TAG***************//
@@ -77,7 +77,9 @@ function onClick_btn_clickTag(clickURL) {
 	for (var i = 1; i <= clickURL.clickNum; i++) {
 		var clickStart = 0;
 		var clickEnd = totalFrames / clickURL.clickNum;
-
+		if(!util.validateUrl(clickURL['clickTag' + i])) {
+			clickURL['clickTag' + i] = 'http://' + clickURL['clickTag' + i];
+		}
 		foo.createClickTag(clickURL, i);
 		clickEnd = Math.round(clickEnd * (i - 1));
 		if (clickEnd != 0) {

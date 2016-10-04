@@ -13,16 +13,11 @@
           var loopTog = document.getElementById("chk_loopToggle").checked;
           var clickURL = {};
           var newClick;
-          var httpCheck;
 
           for (var i = 1; i <= clickNum; i++) {
             newClick = 'clickTag' + i;
             clickURL[newClick] = document.getElementById("txt_clickTag" + i).value;
-            httpCheck = clickURL[newClick].slice(0, 7);
-            if (httpCheck != 'http://') {
-              clickURL[newClick] = 'http://' + clickURL[newClick];
-            }
-            if (clickURL[newClick] === 'http://') {
+            if (clickURL[newClick] === '') {
               return;
             }
           }
@@ -48,15 +43,10 @@
         $("#btn_clickTag").click(function () {
           var clickURL = {};
           var newClick;
-          var httpCheck;
           for (var i = 1; i <= clickNum; i++) {
             newClick = 'clickTag' + i;
             clickURL[newClick] = document.getElementById("txt_clickTag" + i).value;
-            httpCheck = clickURL[newClick].slice(0, 7);
-            if (httpCheck != 'http://') {
-              clickURL[newClick] = 'http://' + clickURL[newClick];
-            }
-            if (clickURL[newClick] === 'http://') {
+            if (clickURL[newClick] === '') {
               return;
             }
           }
