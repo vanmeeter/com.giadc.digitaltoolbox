@@ -1,382 +1,202 @@
-var haveAFrame;
-var symbolName = "";
-var symbolFrames = [];
-var repeatTest = [];
-var frameIndex = 1;
-var symbolPivot = {};
-var symbolAnimation = null;
-var boot = false;
-var resp = {
-    sprites:{}
-};
+// ------------------------------------------------------------------------------------------------------------------------
+//
+//     ██ ██████ ██████ ██   ██
+//     ██ ██     ██  ██ ███  ██
+//     ██ ██     ██  ██ ████ ██
+//     ██ ██████ ██  ██ ██ ████
+//     ██     ██ ██  ██ ██  ███
+//     ██     ██ ██  ██ ██   ██
+//  █████ ██████ ██████ ██   ██
+//
+// ------------------------------------------------------------------------------------------------------------------------
+// JSON
 
-function pad (str, max) {
-  str = str.toString();
-  return str.length < max ? pad("0" + str, max) : str;
-}
+	/**
+	 * JSON
+	 * @overview	JSON functionality for JSFL
+	 *
+	 * jQuery JSON Plugin v2.3-edge (2011-09-25)
+	 *
+	 * @author		Brantley Harris, 2009-2011
+	 * @author		Timo Tijhof, 2011
+	 * @source		This plugin is heavily influenced by MochiKit's serializeJSON, which is
+	 *				copyrighted 2005 by Bob Ippolito.
+	 * @source		Brantley Harris wrote this plugin. It is based somewhat on the JSON.org
+	 *				website's http://www.json.org/json2.js, which proclaims:
+	 *				"NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.", a sentiment that
+	 *				I uphold.
+	 * @license		MIT License <http://www.opensource.org/licenses/mit-license.php>
+	 */
 
-if (typeof JSON !== 'object') JSON = {};
+(function(){
 
-(function () {
-    var rx_one = /^[\],:{}\s]*$/,
-        rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
-        rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
-        rx_four = /(?:^|:|,)(?:\s*\[)+/g,
-        rx_escapable = /[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-        rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
+	// ----------------------------------------------------------------------------------------------------
+	// local variables
 
-    function f(n) {
-        // Format integers to have at least two digits.
-        return n < 10
-            ? '0' + n
-            : n;
-    }
+		var hasOwn = Object.prototype.hasOwnProperty;
+		var escapeable = /["\\\x00-\x1f\x7f-\x9f]/g;
+		var meta =
+		{
+			'\b': '\\b',
+			'\t': '\\t',
+			'\n': '\\n',
+			'\f': '\\f',
+			'\r': '\\r',
+			'"' : '\\"',
+			'\\': '\\\\'
+		};
 
-    function this_value() {
-        return this.valueOf();
-    }
+		/**
+		 * Helper function to correctly quote nested strings
+		 * @ignore
+		 */
+		function quoteString( string )
+		{
+			if ( string.match( escapeable ) )
+			{
+				return '"' + string.replace( escapeable, function( a ) {
+					var c = meta[a];
+					if ( typeof c === 'string' ) {
+						return c;
+					}
+					c = a.charCodeAt();
+					return '\\u00' + Math.floor(c / 16).toString(16) + (c % 16).toString(16);
+				}) + '"';
+			}
+			return '"' + string + '"';
+		};
 
-    if (typeof Date.prototype.toJSON !== 'function') {
+	// ----------------------------------------------------------------------------------------------------
+	// class
 
-        Date.prototype.toJSON = function () {
-            return isFinite(this.valueOf())
-                ? this.getUTCFullYear() + '-' +
-                        f(this.getUTCMonth() + 1) + '-' +
-                        f(this.getUTCDate()) + 'T' +
-                        f(this.getUTCHours()) + ':' +
-                        f(this.getUTCMinutes()) + ':' +
-                        f(this.getUTCSeconds()) + 'Z'
-                : null;
-        };
+		JSON =
+		{
+			/**
+			 * Encodes an Object as a JSON String
+			 * Non-integer/string keys are skipped in the object, as are keys that point to a function.
+			 *
+			 * @name	JSON.encode
+			 * @param	{Object} 	obj		The json-serializble *thing* to be converted
+			 * @returns	{String}			A JSON String
+			 */
+			encode:function(obj)
+			{
+				if ( obj === null ) {
+					return 'null';
+				}
 
-        Boolean.prototype.toJSON = this_value;
-        Number.prototype.toJSON = this_value;
-        String.prototype.toJSON = this_value;
-    }
+				var type = typeof obj;
 
-    var gap,
-        indent,
-        meta,
-        rep;
+				if ( type === 'undefined' )
+				{
+					return undefined;
+				}
+				if ( type === 'number' || type === 'boolean' )
+				{
+					return '' + obj;
+				}
+				if ( type === 'string') {
+					return quoteString( obj );
+				}
+				if ( type === 'object' )
+				{
+					if ( obj.constructor === Date )
+					{
+						var	month = obj.getUTCMonth() + 1,
+							day = obj.getUTCDate(),
+							year = obj.getUTCFullYear(),
+							hours = obj.getUTCHours(),
+							minutes = obj.getUTCMinutes(),
+							seconds = obj.getUTCSeconds(),
+							milli = obj.getUTCMilliseconds();
 
+						if ( month < 10 ) {
+							month = '0' + month;
+						}
+						if ( day < 10 ) {
+							day = '0' + day;
+						}
+						if ( hours < 10 ) {
+							hours = '0' + hours;
+						}
+						if ( minutes < 10 ) {
+							minutes = '0' + minutes;
+						}
+						if ( seconds < 10 ) {
+							seconds = '0' + seconds;
+						}
+						if ( milli < 100 ) {
+							milli = '0' + milli;
+						}
+						if ( milli < 10 ) {
+							milli = '0' + milli;
+						}
+						return '"' + year + '-' + month + '-' + day + 'T' +
+							hours + ':' + minutes + ':' + seconds +
+							'.' + milli + 'Z"';
+					}
+					if ( obj.constructor === Array ) {
+						var ret = [];
+						for ( var i = 0; i < obj.length; i++ ) {
+							ret.push( JSON.encode( obj[i] ) || 'null' );
+						}
+						return '[' + ret.join(',') + ']';
+					}
+					var	name,
+						val,
+						pairs = [];
 
-    function quote(string) {
-        rx_escapable.lastIndex = 0;
-        return rx_escapable.test(string)
-            ? '"' + string.replace(rx_escapable, function (a) {
-                var c = meta[a];
-                return typeof c === 'string'
-                    ? c
-                    : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-            }) + '"'
-            : '"' + string + '"';
-    }
+					for ( var k in obj ) {
+						// Only include own properties,
+						// Filter out inherited prototypes
+						if ( !hasOwn.call( obj, k ) ) {
+							continue;
+						}
 
+						// Keys must be numerical or string. Skip others
+						type = typeof k;
+						if ( type === 'number' ) {
+							name = '"' + k + '"';
+						} else if (type === 'string') {
+							name = quoteString(k);
+						} else {
+							continue;
+						}
+						type = typeof obj[k];
 
-    function str(key, holder, min) {
-        if(!min) min = 0;
+						// Invalid values like these return undefined
+						// from toJSON, however those object members
+						// shouldn't be included in the JSON string at all.
+						if ( type === 'function' || type === 'undefined' ) {
+							continue;
+						}
+						val = JSON.encode( obj[k] );
+						pairs.push( name + ':' + val );
+					}
+					return '{' + pairs.join( ',' ) + '}';
+				};
 
-        var i,
-            k,
-            v,
-            length,
-            mind = gap,
-            partial,
-            value = holder[key];
+			},
 
-        if (value && typeof value === 'object' && typeof value.toJSON === 'function') value = value.toJSON(key);
-        if (typeof rep === 'function') value = rep.call(holder, key, value);
+			/**
+			 * Evaluates a given piece of json source.
+			 * @param	{String}	src
+			 * @name	JSON.decode
+			 */
+			decode:function(src)
+			{
+				if(src != null && src != '' && src != undefined)
+				{
+					return eval('(' + src + ')');
+				}
+				return null;
+			},
 
-        switch (typeof value) {
-        case 'string':
-            return quote(value);
+			toString:function()
+			{
+				return '[class JSON]';
+			}
 
-        case 'number':
+		};
 
-            return isFinite(value)
-                ? String(value)
-                : 'null';
-
-        case 'boolean':
-        case 'null':
-
-            return String(value);
-
-        case 'object':
-
-            if (!value) return 'null';
-
-            gap += indent;
-            partial = [];
-
-            if (Object.prototype.toString.apply(value) === '[object Array]') {
-
-                length = value.length;
-                for (i = 0; i < length; i += 1) partial[i] = str(i, value,min) || 'null';
-
-                v = partial.length === 0
-                    ? '[]'
-                    : gap && partial.length>=min
-                        ? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
-                        : '[' + partial.join(',') + ']';
-                gap = mind;
-                return v;
-            }
-
-            if (rep && typeof rep === 'object') {
-                length = rep.length;
-                for (i = 0; i < length; i += 1) {
-                    if (typeof rep[i] === 'string') {
-                        k = rep[i];
-                        v = str(k, value, min);
-                        if (v) {
-                            partial.push(quote(k) + (
-                                gap
-                                    ? ': '
-                                    : ':'
-                            ) + v);
-                        }
-                    }
-                }
-            } else {
-                for (k in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-                        v = str(k, value, min);
-                        if (v) {
-                            partial.push(quote(k) + (
-                                gap
-                                    ? ': '
-                                    : ':'
-                            ) + v);
-                        }
-                    }
-                }
-            }
-            v = partial.length === 0
-                ? '{}'
-                : gap && partial.length>=min
-                    ? '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}'
-                    : '{' + partial.join(',') + '}';
-            gap = mind;
-            return v;
-        }
-    }
-
-    if (typeof JSON.stringify !== 'function') {
-        meta = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"': '\\"',
-            '\\': '\\\\'
-        };
-        JSON.stringify = function (value, replacer, space, min) {
-            var i;
-            gap = '';
-            indent = '';
-
-            if (typeof space === 'number') {
-                for (i = 0; i < space; i += 1) indent += ' ';
-            } else if (typeof space === 'string') {
-                indent = space;
-            }
-
-            rep = replacer;
-            if (replacer && typeof replacer !== 'function' && (typeof replacer !== 'object' ||  typeof replacer.length !== 'number')) throw new Error('JSON.stringify');
-            return str('', {'': value}, min);
-        };
-    }
-
-    if (typeof JSON.parse !== 'function') {
-        JSON.parse = function (text, reviver) {
-
-            var j;
-
-            function walk(holder, key) {
-                var k, v, value = holder[key];
-                if (value && typeof value === 'object') {
-                    for (k in value) {
-                        if (Object.prototype.hasOwnProperty.call(value, k)) {
-                            v = walk(value, k);
-                            if (v !== undefined) {
-                                value[k] = v;
-                            } else {
-                                delete value[k];
-                            }
-                        }
-                    }
-                }
-                return reviver.call(holder, key, value);
-            }
-
-            text = String(text);
-            rx_dangerous.lastIndex = 0;
-            if (rx_dangerous.test(text)) {
-                text = text.replace(rx_dangerous, function (a) {
-                    return '\\u' +
-                            ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                });
-            }
-
-            if (rx_one.test(text.replace(rx_two, '@').replace(rx_three, ']').replace(rx_four, ''))) {
-                j = eval('(' + text + ')');
-                return typeof reviver === 'function'
-                    ? walk({'': j}, '')
-                    : j;
-            }
-
-            throw new SyntaxError('JSON.parse');
-        };
-    }
 }());
-
-function getPluginInfo(lang){
-    pluginInfo = new Object();
-    pluginInfo.id = "JSON";
-    pluginInfo.name = "JSON";
-    pluginInfo.ext = "json";
-    pluginInfo.encoding = "utf8";
-    pluginInfo.capabilities = new Object();
-    pluginInfo.capabilities.canRotate = true;
-    pluginInfo.capabilities.canTrim = true;
-    pluginInfo.capabilities.canShapePad = true;
-    pluginInfo.capabilities.canBorderPad = true;
-    pluginInfo.capabilities.canStackDuplicateFrames = true;
-
-    return pluginInfo;
-}
-
-function beginExport(meta){
-}
-
-function frameExport(frame){
-    if(symbolName!=frame.symbolName){
-        endSymbol();
-        symbolName=frame.symbolName;
-        symbolPivot = {
-            x:Math.floor(frame.registrationPoint.x),
-            y:Math.floor(frame.registrationPoint.y)
-        }
-
-        symbolAnimation = animationData(frame.symbol.timeline.layers);
-    }
-
-    symbolFrames.push({
-        f:{
-            x:frame.frame.x-1,
-            y:frame.frame.y-1,
-            w:frame.frame.w+1,
-            h:frame.frame.h+1
-        },
-        s:{
-            // x:frame.registrationPoint.x-frame.offsetInSource.x,
-            // y:frame.registrationPoint.y-frame.offsetInSource.y,
-            // x:frame.registrationPoint.x,
-            // y:frame.registrationPoint.y,
-            x:frame.offsetInSource.x,
-            y:frame.offsetInSource.y,
-            w:frame.sourceSize.w,
-            h:frame.sourceSize.h
-        }
-    });
-}
-
-function getFrameRate(){
-    return fl.getDocumentDOM().frameRate;
-}
-
-function animationData(layers){
-    var labelLayer = '';
-    for (i in layers){
-        if (layers[i].name.toLowerCase() == "labels") {
-            labelLayer = layers[i];
-            break;
-        }
-    }
-
-    if (labelLayer === '') return {};
-
-    var labelFrame = null;
-    var controlFrame = null;
-    var labelIndex = 0;
-    var controlIndex = 0;
-    var frameNumber = 0;
-    var endFrameNumber = 0;
-
-    var r = {};
-
-    while (labelIndex < labelLayer.frames.length){
-        labelFrame = labelLayer.frames[labelIndex++];
-
-
-        if (labelFrame.name != null || labelFrame.name!=''){
-            endFrameNumber = frameNumber + labelFrame.duration - 1;
-
-            r[labelFrame.name] = {
-                start:frameNumber+1,
-                end:endFrameNumber+1,
-                rate:getFrameRate()
-            }
-
-            frameNumber = endFrameNumber + 1;
-            labelIndex = frameNumber;
-            controlIndex = labelIndex;
-        }
-    }
-
-    return r;
-}
-
-function countVal(arr,val){
-    var c = 0;
-    for(var i in arr) if(arr[i]==val) c++;
-    return c;
-}
-
-function endSymbol(){
-    if(!symbolName) return;
-
-    var i;
-    var stackedFrames = [];
-    var frameOrder = [];
-
-    for(i=0;i<symbolFrames.length;i++){
-        if(stackedFrames.indexOf(JSON.stringify(symbolFrames[i])) == -1) {
-            stackedFrames.push(JSON.stringify(symbolFrames[i]));
-        }
-    }
-
-    for(i in symbolFrames) frameOrder[i]=stackedFrames.indexOf(JSON.stringify(symbolFrames[i]));
-
-    var newFramesObj = {};
-    for(i in symbolFrames){
-        if(!newFramesObj[frameOrder[i]]){
-            newFramesObj[frameOrder[i]] = symbolFrames[i];
-        } else {
-            if(!newFramesObj[frameOrder[i]].r) newFramesObj[frameOrder[i]].r=1;
-            newFramesObj[frameOrder[i]].r++;
-        }
-    }
-
-    var newFramesArr = [];
-    for(i in newFramesObj) newFramesArr.push(newFramesObj[i]);
-
-    resp.sprites[symbolName.replace(/ instance 1/g,'')] = {
-        frames:newFramesArr,
-        pivot:symbolPivot,
-        animations:symbolAnimation
-    }
-
-    symbolPivot = {};
-    symbolFrames = [];
-    repeatTest = [];
-    frameIndex = 1;
-}
-
-function endExport(meta){
-    endSymbol();
-
-    return JSON.stringify(resp,null,2);
-}

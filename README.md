@@ -3,8 +3,8 @@
 ------TODO------
 + clickTag
   - multiple clickTags
-  + hotspot clicktags
-  + https regexp
+    + hotspot clicktags
+    + https regexp
 + Project Size <= mostly done
 + Generate static
 + Disclaimer
@@ -12,3 +12,5 @@
 + Get data button
 + Widgets
 + grey out buttons if not initialized
++ Widgets
++ grey out button

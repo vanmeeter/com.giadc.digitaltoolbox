@@ -4,7 +4,7 @@
   var p = ClickTagClass.prototype;
 
   p.giadcScriptInject = function(clickCheck) {
-    var util = new UtilitiesClass;
+    
     var clickCode = 'if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
     fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
     fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
@@ -12,7 +12,7 @@
 
     if (clickCheck > -1) {
       fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
-      util.actionsSelect('if (!this.loopNum) {\n\tvar script = document.createElement("script")', 10);
+      UTIL.actionsSelect('if (!this.loopNum) {\n\tvar script = document.createElement("script")', 10);
       if (fl.actionsPanel.hasSelection()) {
         fl.actionsPanel.setSelection(0,0);
       } else {

@@ -64,6 +64,10 @@ body::-webkit-scrollbar-thumb {
   margin-top:10px;
 }
 
+.contRow #get_info {
+  width:98%;
+}
+
 .contRow #init_bttnDiv {
   width:58%;
   display:inline-block;
