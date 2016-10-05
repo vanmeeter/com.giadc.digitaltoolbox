@@ -4,7 +4,7 @@
   var p = BorderClass.prototype;
 
 
-//*******************CREATE HTML BORDER*********************//
+//*************************CREATE BORDER*************************//
 
   p.createBorder = function (actionsCheck, tagCheck, bWidth, bColor) {
     //select top layer and crate border layer and keep border layer below clicktag
@@ -40,7 +40,6 @@
 
   /*p.createBorder = function(actionsCheck, bWidth, bColor) {
 
-    var util = new UtilitiesClass;
     alert(bWidth);
     var htmlBorder = "getElementsByTagName(\'BODY\').innerHTML = \'<div style=\"position:absolute; top:" + bWidth + "; left:" + bWidth + "; width:" + (fl.getDocumentDOM().width - bWidth * 2) + "px; height:" + (fl.getDocumentDOM().height - bWidth * 2) + "px; border:" + bWidth + "px solid " + bColor + ";\"></div>;\';";
 
@@ -49,7 +48,7 @@
 
     if (actionsCheck > -1) {
       fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
-      util.actionsSelect('document.getElementById("canvas").style.border', 69);
+      UTIL.actionsSelect('document.getElementById("canvas").style.border', 69);
       //if border code already exists overwrite it
       if (fl.actionsPanel.hasSelection()) {
         fl.actionsPanel.replaceSelectedText(htmlBorder);

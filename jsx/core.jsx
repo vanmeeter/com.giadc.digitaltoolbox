@@ -1,6 +1,8 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global $, Folder*/
 
+//To stringify through JSON, use encode from JSON xjsfl library
+
 //********PATH FOR WHEN IT"S PUBLISHED********//
 //var JS_PATH = 'file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/js/classes'
 
@@ -17,20 +19,55 @@ function initializeDoc() {
 	var frameIndex = fl.getDocumentDOM().getTimeline().frameCount;
 
 	if (frameIndex < 30){
-		fl.getDocumentDOM().getTimeline().insertFrames((90 - frameIndex), true)
+		fl.getDocumentDOM().getTimeline().insertFrames((90 - frameIndex), true);
 	}
 
 	setPub.setPublishSettings();
 }
 
+//************GET INFO FROM CREATED AD***************//
+function onClick_btn_getInfo() {
+	var data = {};
+	var totalLayers = fl.getDocumentDOM().getTimeline().layerCount;
+	var totalFrames = fl.getDocumentDOM().getTimeline().frameCount;
+	for (var i = 0; i < totalLayers; i++) {
+		for (var j = 1; j < 10; j++){
+			if (fl.getDocumentDOM().getTimeline().layers[i].name === 'clickTag' + j) {
+				for (var k = 0; k < totalFrames; k++) {
+					if (!fl.getDocumentDOM().getTimeline().layers[i].frames[k].isEmpty) {
+						fl.getDocumentDOM().getTimeline().currentFrame = k;
+						break;
+					}
+				}
+				fl.getDocumentDOM().getTimeline().setSelectedLayers(i);
+				var selectStop = fl.actionsPanel.getText().lastIndexOf('");');
+				selectStop -= 141;
+				fl.actionsPanel.setSelection(141, selectStop);
+				var existingURL = fl.actionsPanel.getSelectedText()
+				data[fl.getDocumentDOM().getTimeline().layers[i].name] = existingURL;
+			}
+		}
+		if (fl.getDocumentDOM().getTimeline().layers[i].name === 'border') {
+			fl.getDocumentDOM().getTimeline().setSelectedLayers(i);
+			fl.getDocumentDOM().getTimeline().layers[i].locked = false;
+			fl.getDocumentDOM().selectAll();
+			data.border = {width: fl.getDocumentDOM().getCustomStroke().thickness, color: fl.getDocumentDOM().getCustomStroke().color};
+			fl.getDocumentDOM().getTimeline().layers[i].locked = true;
+		}
+	}
+	fl.getDocumentDOM().selectNone();
+	fl.actionsPanel.setSelection(0,0);
+	fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+	return (JSON.encode(data));
+}
+
 //***********BORDER*************//
 function onClick_btn_border(bWidth, bColor, clickNum) {
   bWidth = parseInt(bWidth);
-  var util = new UtilitiesClass;
   var foo = new BorderClass;
-  var borderCheck = util.layerCheck('border');
-  var actionsCheck = util.layerCheck('actions');
-  var tagCheck = util.layerCheck('clickTag1');
+  var borderCheck = UTIL.layerCheck('border');
+  var actionsCheck = UTIL.layerCheck('actions');
+  var tagCheck = UTIL.layerCheck('clickTag1');
 
   //make border if it doesn't exist
   if (borderCheck > -1) {
@@ -47,9 +84,8 @@ function onClick_btn_border(bWidth, bColor, clickNum) {
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
   var foo = new ClickTagClass;
-  var util = new UtilitiesClass;
-  var clickCheck = util.layerCheck('actions');
-	var tags = util.parseObj(clickURL);
+  var clickCheck = UTIL.layerCheck('actions');
+	var tags = UTIL.parseObj(clickURL);
 	var totalLayers = fl.getDocumentDOM().getTimeline().layerCount;
 	var totalFrames = fl.getDocumentDOM().getTimeline().frameCount;
 	var libItems = fl.getDocumentDOM().library.items;
@@ -77,7 +113,7 @@ function onClick_btn_clickTag(clickURL) {
 	for (var i = 1; i <= clickURL.clickNum; i++) {
 		var clickStart = 0;
 		var clickEnd = totalFrames / clickURL.clickNum;
-		if(!util.validateUrl(clickURL['clickTag' + i])) {
+		if(!UTIL.validateUrl(clickURL['clickTag' + i])) {
 			clickURL['clickTag' + i] = 'http://' + clickURL['clickTag' + i];
 		}
 		foo.createClickTag(clickURL, i);
@@ -94,6 +130,7 @@ function onClick_btn_clickTag(clickURL) {
 	fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
 }
 
+
 //****************LOOP SETTINGS******************//
 function onClick_chk_loopToggle(loopTog) {
 	var setLoop = new LoopClass;
@@ -103,9 +140,8 @@ function onClick_chk_loopToggle(loopTog) {
 //****************PUBLISH AD********************//
 function onClick_btn_publish() {
 	foo = new SizeReportClass;
-	var util = new UtilitiesClass;
-	var tagCheck = util.layerCheck('clickTag1');
-  var clickCheck = util.layerCheck('actions');
+	var tagCheck = UTIL.layerCheck('clickTag1');
+  var clickCheck = UTIL.layerCheck('actions');
 
 	if (tagCheck > -1 && clickCheck > -1) {
 		if (fl.getDocumentDOM().pathURI === undefined){

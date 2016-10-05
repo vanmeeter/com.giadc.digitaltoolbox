@@ -7,6 +7,25 @@
 
     function init() {
         themeManager.init();
+
+        $("#btn_getInfo").click(function () {
+          csInterface.evalScript('onClick_btn_getInfo()', function(result) {
+            result = JSON.parse(result);
+            var tagField = Object.keys(result).length - 1;
+            for (var i = 1; i <= tagField; i++) {
+              if (i === 1) {
+                 document.getElementById("txt_clickTag1").value = result['clickTag' + i];
+               } else {
+                 if (clickNum < tagField && !document.getElementById("txt_clickTag" + i)) {
+                   addField(result['clickTag' + i]);
+                 }
+               }
+            }
+            document.getElementById("txt_borderWidth").value = result.border.width;
+            document.getElementById("txt_borderColor").value = result.border.color;
+          });
+        });
+
         $("#btn_initialize").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
           var bColor = document.getElementById("txt_borderColor").value;

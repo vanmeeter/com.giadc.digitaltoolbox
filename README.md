@@ -3,12 +3,12 @@
 ------TODO------
 + clickTag
   - multiple clickTags
-  + hotspot clicktags
-  + https regexp
+    + hotspot clicktags
+    + https regexp
 + Project Size <= mostly done
 + Generate static
 + Disclaimer
 + Reset
 + Get data button
-+ Widgets
++ Widgetsf
 + grey out button
