@@ -66,7 +66,7 @@
       (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum : fl.getDocumentDOM().getTimeline().layers[2].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
 
       //add actions to clickTag
-      fl.actionsPanel.setText('this.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n}');
+      fl.actionsPanel.setText('if (!this.loopNum) {\n\tthis.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n\t}\n}');
       fl.actionsPanel.setSelection(0,0);
 
       //lock and hide clickTag
