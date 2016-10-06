@@ -41,8 +41,8 @@ function onClick_btn_getInfo() {
 				}
 				UI.timeline.setSelectedLayers(i);
 				var selectStop = fl.actionsPanel.getText().lastIndexOf('");');
-				selectStop -= 141;
-				fl.actionsPanel.setSelection(141, selectStop);
+				selectStop -= 165;
+				fl.actionsPanel.setSelection(165, selectStop);
 				var existingURL = fl.actionsPanel.getSelectedText()
 				data[UI.timeline.layers[i].name] = existingURL;
 			}
@@ -83,7 +83,7 @@ function onClick_btn_border(bWidth, bColor, clickNum) {
 
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
-  var foo = new ClickTagClass;
+  //var foo = new ClickTagClass;
   var clickCheck = UTIL.layerCheck('actions');
 	var tags = UTIL.parseObj(clickURL);
 	var totalLayers = UI.timeline.layerCount;
@@ -91,7 +91,7 @@ function onClick_btn_clickTag(clickURL) {
 	var libItems = fl.getDocumentDOM().library.items;
 	var libSize = libItems.length;
 	var oldTag;
-	foo.giadcScriptInject(clickCheck);
+	TAG.giadcScriptInject(clickCheck);
 
   //deletes previous clickTags
 	for (var i = 0; i < totalLayers; i++) {
@@ -115,15 +115,15 @@ function onClick_btn_clickTag(clickURL) {
 		if(!UTIL.validateUrl(clickURL['clickTag' + i])) {
 			clickURL['clickTag' + i] = 'http://' + clickURL['clickTag' + i];
 		}
-		foo.createClickTag(clickURL, i);
+		TAG.createClickTag(clickURL, i);
 		clickEnd = Math.round(clickEnd * (i - 1));
 		if (clickEnd != 0) {
-			UI.timeline.layers[UI.timeline.findLayerIndex('clickTag' + i)].clearFrames(clickStart, clickEnd);
+			UI.timeline.clearFrames(clickStart, clickEnd);
 		}
 		clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
 		clickEnd = totalFrames;
 		if (clickStart != totalFrames) {
-			UI.timeline.layers[UI.timeline.findLayerIndex('clickTag' + i)].clearFrames(clickStart, clickEnd);
+			UI.timeline.clearFrames(clickStart, clickEnd);
 		}
 	}
 	UI.timeline.setSelectedLayers(0);
