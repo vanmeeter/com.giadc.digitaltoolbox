@@ -1,7 +1,5 @@
 (function() {
 
-  //UtilitiesClass = function() {}
-  //var p = UtilitiesClass.prototype;
     UTIL =
     {
 

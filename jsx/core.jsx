@@ -72,10 +72,10 @@ function onClick_btn_border(bWidth, bColor, clickNum) {
   //make border if it doesn't exist
   if (borderCheck > -1) {
     fl.getDocumentDOM().getTimeline().deleteLayer(borderCheck);
-    foo.createBorder(actionsCheck + 1, tagCheck, bWidth, bColor);
+    foo.createBorder(actionsCheck, tagCheck, bWidth, bColor);
     //foo.createBorder(actionsCheck, bWidth, bColor);
   } else {
-    foo.createBorder(actionsCheck + 1, tagCheck, bWidth, bColor);
+    foo.createBorder(actionsCheck, tagCheck, bWidth, bColor);
     //foo.createBorder(actionsCheck, bWidth, bColor);
   }
   //fl.actionsPanel.setSelection(0,0);
@@ -138,20 +138,42 @@ function onClick_chk_loopToggle(loopTog) {
 	setLoop.loop(loopTog);
 }
 
+//****************STATIC SET*****************//
+function onClick_btn_static() {
+	//fl.trace(fl.getDocumentDOM().exportPublishProfileString());
+	var currF = fl.getDocumentDOM().getTimeline().currentFrame;
+	var staticCheck = UTIL.layerCheck('static');
+	if (staticCheck === -1) {
+		fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
+		fl.getDocumentDOM().getTimeline().addNewLayer('static', 'normal', false);
+		fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
+	} else {
+		for (var i = 0; i < fl.getDocumentDOM().getTimeline().frameCount; i++) {
+			if (fl.getDocumentDOM().getTimeline().layers[staticCheck].frames[i].name === 'static') {
+				fl.getDocumentDOM().getTimeline().setSelectedLayers(staticCheck);
+				fl.getDocumentDOM().getTimeline().setSelectedFrames(i, i);
+				fl.getDocumentDOM().getTimeline().clearKeyframes();
+				break;
+			}
+		}
+	}
+	fl.getDocumentDOM().getTimeline().convertToKeyframes(currF, currF);
+	fl.getDocumentDOM().getTimeline().setFrameProperty('name', 'static');
+}
+
 //****************PUBLISH AD********************//
 function onClick_btn_publish() {
-	foo = new SizeReportClass;
 	var tagCheck = UTIL.layerCheck('clickTag1');
   var clickCheck = UTIL.layerCheck('actions');
 
 	if (tagCheck > -1 && clickCheck > -1) {
 		if (fl.getDocumentDOM().pathURI === undefined){
 			alert('Document must be saved.');
-			return 0
+			return 0;
 		} else {
 			fl.getDocumentDOM().publish();
-			var sizeReport = foo.genSizeReport();
-			return sizeReport;;
+			var sizeReport = SZREP.genSizeReport();
+			return sizeReport;
 		}
 	} else {
 		alert('Document must be initialized.');

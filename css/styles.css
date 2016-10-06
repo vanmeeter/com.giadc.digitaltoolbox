@@ -129,6 +129,21 @@ body::-webkit-scrollbar-thumb {
   margin-bottom:25px;
 }
 
+.contRow #static_bttnDiv {
+  width:30%;
+}
+
+.contRow #static_field {
+  width: auto;
+}
+
+.contRow #static_field #txt_jpegQuality {
+  width: 20%;
+  margin-top:2px;
+  margin-left:5px;
+  display:inline-block;
+}
+
 #footer {
   height:30px;
   width:100%;

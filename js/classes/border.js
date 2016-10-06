@@ -9,13 +9,12 @@
 p.createBorder = function (actionsCheck, tagCheck, bWidth, bColor) {
     //select top layer and crate border layer and keep border layer below clicktag
     if (tagCheck === -1) {
-      alert(actionsCheck + 1);
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck);
-      fl.getDocumentDOM().getTimeline().addNewLayer('border', 'normal', true);
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck);
+      (actionsCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck + 1) : fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck);
+      (actionsCheck === -1) ? fl.getDocumentDOM().getTimeline().addNewLayer('border', 'normal', true) : fl.getDocumentDOM().getTimeline().addNewLayer('border', 'normal', false);
+      (actionsCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck + 1) : fl.getDocumentDOM().getTimeline().setSelectedLayers(actionsCheck)
     } else {
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(tagCheck + 1);
-      fl.getDocumentDOM().getTimeline().addNewLayer('border', 'normal', true);
+      fl.getDocumentDOM().getTimeline().setSelectedLayers(tagCheck);
+      fl.getDocumentDOM().getTimeline().addNewLayer('border', 'normal', false);
       fl.getDocumentDOM().getTimeline().setSelectedLayers(tagCheck + 1);
     }
     //draw and style border rectangle
@@ -34,7 +33,7 @@ p.createBorder = function (actionsCheck, tagCheck, bWidth, bColor) {
     fl.getDocumentDOM().setCustomStroke(borderStroke);
 
     //lock the border layer
-    (tagCheck === -1) ? fl.getDocumentDOM().getTimeline().layers[actionsCheck].locked = true : fl.getDocumentDOM().getTimeline().layers[tagCheck + 1].locked = true;
+    (tagCheck === -1) ? fl.getDocumentDOM().getTimeline().layers[actionsCheck + 1].locked = true : fl.getDocumentDOM().getTimeline().layers[tagCheck + 1].locked = true;
   };
 
 //*******************CREATE HTML BORDER*********************//

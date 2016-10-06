@@ -74,6 +74,10 @@
           //alert('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
         });
 
+        $("#btn_static").click(function () {
+          csInterface.evalScript('onClick_btn_static()');
+        });
+
         $("#btn_publish").click(function () {
           csInterface.evalScript('onClick_btn_publish()', function(result) {
           var sizeDisplay = document.getElementById("sizeDisplay");

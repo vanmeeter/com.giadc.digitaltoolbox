@@ -4,7 +4,7 @@
   var p = ClickTagClass.prototype;
 
   p.giadcScriptInject = function(clickCheck) {
-    
+
     var clickCode = 'if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
     fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
     fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
@@ -31,9 +31,10 @@
   }
 
   p.createClickTag = function(clickURL, clickNum) {
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
-      fl.getDocumentDOM().getTimeline().addNewLayer('clickTag' + clickNum, 'normal', true);
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
+      var staticCheck = UTIL.layerCheck ('static');
+      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(0) : fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
+      fl.getDocumentDOM().getTimeline().addNewLayer('clickTag' + clickNum, 'normal', false);
+      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(1) : fl.getDocumentDOM().getTimeline().setSelectedLayers(2);
 
       fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, false, true);
       //converts to button
@@ -43,9 +44,9 @@
       fl.getDocumentDOM().enterEditMode('inPlace');
 
       //make new frames in button
+      for (var i = 0; i < 3; i++) {
       fl.getDocumentDOM().getTimeline().insertFrames();
-      fl.getDocumentDOM().getTimeline().insertFrames();
-      fl.getDocumentDOM().getTimeline().insertFrames();
+      }
 
       //select hit frame
       fl.getDocumentDOM().getTimeline().currentFrame = 3;
@@ -62,15 +63,15 @@
       fl.getDocumentDOM().exitEditMode();
 
       //set instance name
-      fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
+      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum : fl.getDocumentDOM().getTimeline().layers[2].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
 
       //add actions to clickTag
       fl.actionsPanel.setText('this.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n}');
       fl.actionsPanel.setSelection(0,0);
 
       //lock and hide clickTag
-      fl.getDocumentDOM().getTimeline().layers[1].visible = false;
-      fl.getDocumentDOM().getTimeline().layers[1].locked = true;
+      fl.getDocumentDOM().getTimeline().layers[fl.getDocumentDOM().getTimeline().findLayerIndex('clickTag' + clickNum)].locked = true;
+      fl.getDocumentDOM().getTimeline().layers[fl.getDocumentDOM().getTimeline().findLayerIndex('clickTag' + clickNum)].visible = false;
   }
 
 
