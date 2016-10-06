@@ -6,12 +6,12 @@
   p.giadcScriptInject = function(clickCheck) {
 
     var clickCode = 'if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
-    fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
-    fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
+    UI.timeline.setSelectedLayers(0);
+    UI.timeline.setSelectedFrames(0, 0, true);
     var actionText = fl.actionsPanel.getText();
 
     if (clickCheck > -1) {
-      fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
+      UI.timeline.setSelectedFrames(0, 0, true);
       UTIL.actionsSelect('if (!this.loopNum) {\n\tvar script = document.createElement("script")', 10);
       if (fl.actionsPanel.hasSelection()) {
         fl.actionsPanel.setSelection(0,0);
@@ -19,9 +19,9 @@
         fl.actionsPanel.setText(clickCode + '\n\n' + actionText);
       }
     } else {
-      fl.getDocumentDOM().getTimeline().addNewLayer('actions', 'normal', true);
-      fl.getDocumentDOM().getTimeline().setSelectedLayers(0);
-      fl.getDocumentDOM().getTimeline().setSelectedFrames(0, 0, true);
+      UI.timeline.addNewLayer('actions', 'normal', true);
+      UI.timeline.setSelectedLayers(0);
+      UI.timeline.setSelectedFrames(0, 0, true);
       fl.actionsPanel.setText(clickCode);
       fl.actionsPanel.setSelection(0,0);
       }
@@ -32,10 +32,9 @@
 
   p.createClickTag = function(clickURL, clickNum) {
       var staticCheck = UTIL.layerCheck ('static');
-      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(0) : fl.getDocumentDOM().getTimeline().setSelectedLayers(1);
-      fl.getDocumentDOM().getTimeline().addNewLayer('clickTag' + clickNum, 'normal', false);
-      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().setSelectedLayers(1) : fl.getDocumentDOM().getTimeline().setSelectedLayers(2);
-
+      (staticCheck === -1) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(1);
+      UI.timeline.addNewLayer('clickTag' + clickNum, 'normal', false);
+      (staticCheck === -1) ? UI.timeline.setSelectedLayers(1) : UI.timeline.setSelectedLayers(2);
       fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, false, true);
       //converts to button
       fl.getDocumentDOM().selectAll();
@@ -45,17 +44,17 @@
 
       //make new frames in button
       for (var i = 0; i < 3; i++) {
-      fl.getDocumentDOM().getTimeline().insertFrames();
+      UI.timeline.insertFrames();
       }
 
       //select hit frame
-      fl.getDocumentDOM().getTimeline().currentFrame = 3;
+      UI.timeline.currentFrame = 3;
 
       //new keyframe on hit frame
-      fl.getDocumentDOM().getTimeline().convertToKeyframes();
+      UI.timeline.convertToKeyframes();
 
       //delete all frames before hit
-      fl.getDocumentDOM().getTimeline().currentFrame = 0;
+      UI.timeline.currentFrame = 0;
       fl.getDocumentDOM().selectAll();
       fl.getDocumentDOM().deleteSelection();
 
@@ -63,15 +62,15 @@
       fl.getDocumentDOM().exitEditMode();
 
       //set instance name
-      (staticCheck === -1) ? fl.getDocumentDOM().getTimeline().layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum : fl.getDocumentDOM().getTimeline().layers[2].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
+      (staticCheck === -1) ? UI.timeline.layers[1].frames[0].elements[0].name = 'btn_clickTag' + clickNum : UI.timeline.layers[2].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
 
       //add actions to clickTag
       fl.actionsPanel.setText('this.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\nfunction fl_ClickToGoToWebPage_8() {\n\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n}');
       fl.actionsPanel.setSelection(0,0);
 
       //lock and hide clickTag
-      fl.getDocumentDOM().getTimeline().layers[fl.getDocumentDOM().getTimeline().findLayerIndex('clickTag' + clickNum)].locked = true;
-      fl.getDocumentDOM().getTimeline().layers[fl.getDocumentDOM().getTimeline().findLayerIndex('clickTag' + clickNum)].visible = false;
+      UI.timeline.layers[UI.timeline.findLayerIndex('clickTag' + clickNum)].locked = true;
+      UI.timeline.layers[UI.timeline.findLayerIndex('clickTag' + clickNum)].visible = false;
   }
 
 
