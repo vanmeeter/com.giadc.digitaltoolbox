@@ -9,15 +9,14 @@
       if (tagCheck === -1) {
         (actionsCheck === -1) ? UI.timeline.setSelectedLayers(actionsCheck + 1) : UI.timeline.setSelectedLayers(actionsCheck);
         (actionsCheck === -1) ? UI.timeline.addNewLayer('border', 'normal', true) : UI.timeline.addNewLayer('border', 'normal', false);
-        (actionsCheck === -1) ? UI.timeline.setSelectedLayers(actionsCheck + 1) : UI.timeline.setSelectedLayers(actionsCheck)
       } else {
-        UI.timeline.setSelectedLayers(tagCheck);
+        UI.timeline.setSelectedLayers(parseInt(UI.timeline.findLayerIndex('clickTag1')));
         UI.timeline.addNewLayer('border', 'normal', false);
-        UI.timeline.setSelectedLayers(tagCheck + 1);
       }
+      UI.timeline.setSelectedLayers(parseInt(UI.timeline.findLayerIndex('border')));
       //draw and style border rectangle
       fl.getDocumentDOM().addNewRectangle({left:bWidth / 2,top:bWidth / 2,right:fl.getDocumentDOM().width - bWidth / 2,bottom:fl.getDocumentDOM().height - bWidth / 2},0, true, false);
-      fl.getDocumentDOM().selectAll();
+      UI.timeline.setSelectedLayers(parseInt(UI.timeline.findLayerIndex('border')));
       //style
       var borderStroke = fl.getDocumentDOM().getCustomStroke();
       borderStroke.thickness = bWidth;
@@ -31,7 +30,7 @@
       fl.getDocumentDOM().setCustomStroke(borderStroke);
 
       //lock the border layer
-      (tagCheck === -1) ? UI.timeline.layers[actionsCheck + 1].locked = true : UI.timeline.layers[tagCheck + 1].locked = true;
+      UI.timeline.layers[parseInt(UI.timeline.findLayerIndex('border'))].locked = true;
     }
   }
 

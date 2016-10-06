@@ -32,7 +32,7 @@
 
       createClickTag: function(clickURL, clickNum) {
           var staticCheck = UTIL.layerCheck ('static');
-          (staticCheck === -1) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(1);
+          (staticCheck === -1) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(parseInt(UI.timeline.findLayerIndex('static')));
           UI.timeline.addNewLayer('clickTag' + clickNum, 'normal', false);
           UI.timeline.setSelectedLayers(parseInt(UI.timeline.findLayerIndex('clickTag' + clickNum)));
           fl.getDocumentDOM().addNewRectangle({left:0,top:0,right:fl.getDocumentDOM().width,bottom:fl.getDocumentDOM().height},0, false, true);

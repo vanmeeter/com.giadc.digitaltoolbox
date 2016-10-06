@@ -12,7 +12,7 @@
     <Progressive>0</Progressive>
     <DPI>4718592</DPI>
     <Size>0</Size>
-    <!--<Quality>80</Quality>-->
+    <Quality>100</Quality>
     <MatchMovieDim>1</MatchMovieDim>
   </PublishJpegProperties>
   <PublishProperties id="BBC1F406-65F2-4219-9304-FA48C7549E44" name="SVG Image" otf="true" enabled="true">

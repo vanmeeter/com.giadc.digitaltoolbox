@@ -79,7 +79,8 @@
         });
 
         $("#btn_publish").click(function () {
-          csInterface.evalScript('onClick_btn_publish()', function(result) {
+          var size = document.getElementById("txt_jpegQuality").value;
+          csInterface.evalScript('onClick_btn_publish("' + size + '")', function(result) {
           var sizeDisplay = document.getElementById("sizeDisplay");
           sizeDisplay.innerHTML = result/1000 + "kb"
           });

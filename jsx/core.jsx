@@ -15,14 +15,13 @@ for (var i = 0; i < files.length; i++) {
 
 //***********DOCUMENT INITIALIZE************//
 function initializeDoc() {
-	var setPub = new PublishClass;
 	var frameIndex = UI.timeline.frameCount;
 
 	if (frameIndex < 30){
 		UI.timeline.insertFrames((90 - frameIndex), true);
 	}
 
-	setPub.setPublishSettings();
+	PUBLISH.setPublishSettings();
 }
 
 //************GET INFO FROM CREATED AD***************//
@@ -159,7 +158,7 @@ function onClick_btn_static() {
 }
 
 //****************PUBLISH AD********************//
-function onClick_btn_publish() {
+function onClick_btn_publish(size) {
 	var tagCheck = UTIL.layerCheck('clickTag1');
   var clickCheck = UTIL.layerCheck('actions');
 
@@ -168,9 +167,8 @@ function onClick_btn_publish() {
 			alert('Document must be saved.');
 			return 0;
 		} else {
-			fl.getDocumentDOM().publish();
-			var sizeReport = SZREP.genSizeReport();
-			return sizeReport;
+			PUBLISH.setJPEG(size);
+			return PUBLISH.genSizeReport();
 		}
 	} else {
 		alert('Document must be initialized.');
