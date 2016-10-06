@@ -4,6 +4,7 @@
   var p = LoopClass.prototype;
 
   p.loop = function(loopTog) {
+    fl.getDocumentDOM().getTimeline().activateTool;
     var frameIndex = (fl.getDocumentDOM().getTimeline().frameCount) - 1;
     var staticCheck = UTIL.layerCheck('static');
     var actionsCheck = UTIL.layerCheck('actions');
