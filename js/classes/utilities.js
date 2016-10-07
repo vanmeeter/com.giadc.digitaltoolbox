@@ -32,7 +32,7 @@
     },
 
     validateUrl: function(url) {
-      var urlregex = new RegExp("^(https?:\/\/www\.)?(^(https?:\/\/www\.)[0-9A-Za-z]+\.+[a-z]{2,5})");
+      var urlregex = new RegExp("^(https?:\/\/)?(^(https?:\/\/)[0-9A-Za-z]+\.+[a-z]{2,5})");
       return urlregex.test(url);
     }
   }
