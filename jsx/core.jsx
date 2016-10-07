@@ -143,6 +143,7 @@ function onClick_btn_static() {
 			}
 		}
 	}
+	//fl.trace(UI.dom.exportPublishProfileString());
 	UI.timeline.convertToKeyframes(currF, currF);
 	UI.timeline.setFrameProperty('name', 'static');
 	UI.timeline.layers[UTIL.layerCheck('static')].locked = true;

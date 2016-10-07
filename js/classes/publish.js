@@ -26,7 +26,10 @@
     },
 
     setJPEG: function(size) {
-      var jpegPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('.')) + '.jpg';
+      //var jpegPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('.')) + '.jpg';
+      var jpegPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/'));
+      jpegPath = jpegPath.slice(0, jpegPath.lastIndexOf('/') + 1);
+      var pathFiles = FLfile.listFolder(jpegPath);
       var q = 100;
       for (var i = UI.timeline.frameCount - 1; i > -1; i--) {
         if (UI.timeline.layers[UTIL.layerCheck('static')].frames[i].name === 'static') {
@@ -34,6 +37,18 @@
           break;
         }
       }
+      for (var i = 0; i < pathFiles.length; i++) {
+        if(pathFiles[i].slice(pathFiles[i].lastIndexOf('_'), pathFiles[i].length) === '_SUB.html' || pathFiles[i].slice(pathFiles[i].lastIndexOf('_'), pathFiles[i].length) === '_COR.html') {
+          var jpegName = pathFiles[i].slice(pathFiles[i].indexOf('-') + 1, pathFiles[i].lastIndexOf('_')) + '_' + UI.dom.name.slice(0, UI.dom.name.lastIndexOf('.')) + '.jpg';
+        } else {
+          var jpegName = UI.dom.name.slice(0, UI.dom.name.lastIndexOf('.')) + '.jpg';
+        }
+      }
+      jpegPath += jpegName;
+      //if (FLfile.listFolder(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/') - 1) ,files))
+
+      pubProfile = pubProfile.replace ('<jpegFileName></jpegFileName>', '<jpegFileName>../' + jpegName + '</jpegFileName>');
+      UI.dom.importPublishProfileString(pubProfile);
       UI.dom.publish();
       UI.timeline.currentFrame = UI.timeline.frameCount - 1;
       while (FLfile.getSize(jpegPath) / 1000 > size && q > 0) {
@@ -45,6 +60,7 @@
       }
       pubProfile = pubProfile.replace ('<Quality>' + q + '</Quality>', '<Quality>100</Quality>');
       pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="false">', 'name="JavaScript/HTML" otf="true" enabled="true">');
+      pubProfile = pubProfile.replace ('<jpegFileName>../' + jpegName + '</jpegFileName>', '<jpegFileName></jpegFileName>');
       UI.dom.importPublishProfileString(pubProfile);
     }
   }
