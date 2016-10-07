@@ -157,6 +157,7 @@ function onClick_btn_static() {
 	}
 	UI.timeline.convertToKeyframes(currF, currF);
 	UI.timeline.setFrameProperty('name', 'static');
+	UI.timeline.layers[UI.timeline.findLayerIndex('static')].locked = true;
 }
 
 //****************PUBLISH AD********************//
