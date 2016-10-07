@@ -4,12 +4,10 @@
 + clickTag
   - multiple clickTags
     + hotspot clicktags
-    + https regexp
-+ Project Size <= mostly done
-+ Generate static
 + Disclaimer
 + Reset
 + Get data button
+  - subtract text field in less clicktags than in plugin
 + Widgets
 + grey out buttons if not initialized
 + Widgets

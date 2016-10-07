@@ -28,6 +28,7 @@
           if (fl.getDocumentDOM().frameRate != 30) {
             fl.getDocumentDOM().frameRate = 30;
           }
+          UI.timeline.layers[UI.timeline.findLayerIndex('actions')].locked = true;
         },
 
       createClickTag: function(clickURL, clickNum) {

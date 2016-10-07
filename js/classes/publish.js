@@ -28,7 +28,14 @@
     setJPEG: function(size) {
       var jpegPath = fl.getDocumentDOM().pathURI.slice(0, fl.getDocumentDOM().pathURI.lastIndexOf('.')) + '.jpg';
       var q = 100;
+      for (var i = UI.timeline.frameCount - 1; i > -1; i--) {
+        if (UI.timeline.layers[UI.timeline.findLayerIndex('static')].frames[i].name === 'static') {
+          UI.timeline.currentFrame = UI.timeline.layers[UI.timeline.findLayerIndex('static')].frames[i].startFrame;
+          break;
+        }
+      }
       fl.getDocumentDOM().publish();
+      UI.timeline.currentFrame = UI.timeline.frameCount - 1;
       while (FLfile.getSize(jpegPath) / 1000 > size && q > 0) {
         q--;
         pubProfile = pubProfile.replace ('<Quality>' + (q + 1) + '</Quality>', '<Quality>' + q + '</Quality>');

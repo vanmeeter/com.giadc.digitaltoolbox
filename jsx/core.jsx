@@ -26,6 +26,7 @@ function initializeDoc() {
 
 //************GET INFO FROM CREATED AD***************//
 function onClick_btn_getInfo() {
+	//TODO clean this up by directly selecting the layers
 	var data = {};
 	var totalLayers = UI.timeline.layerCount;
 	var totalFrames = UI.timeline.frameCount;
@@ -49,7 +50,7 @@ function onClick_btn_getInfo() {
 		if (UI.timeline.layers[i].name === 'border') {
 			UI.timeline.setSelectedLayers(i);
 			UI.timeline.layers[i].locked = false;
-			fl.getDocumentDOM().selectAll();
+			UI.timeline.setSelectedLayers(i);
 			data.border = {width: fl.getDocumentDOM().getCustomStroke().thickness, color: fl.getDocumentDOM().getCustomStroke().color};
 			UI.timeline.layers[i].locked = true;
 		}
@@ -132,6 +133,7 @@ function onClick_btn_clickTag(clickURL) {
 //****************LOOP SETTINGS******************//
 function onClick_chk_loopToggle(loopTog) {
 	LOOP.loopToggle(loopTog);
+	UI.timeline.layers[UI.timeline.findLayerIndex('actions')].locked = true;
 }
 
 //****************STATIC SET*****************//
