@@ -3,12 +3,13 @@
   LOOP =
   {
     loopToggle: function(loopTog) {
+
       UI.timeline.activateTool;
       var frameIndex = (UI.timeline.frameCount) - 1;
       var staticCheck = UTIL.layerCheck('static');
       var actionsCheck = UTIL.layerCheck('actions');
       if(loopTog === 'true') {
-        if (actionsCheck === -1) {
+        if (actionsCheck < 0) {
           UI.timeline.setSelectedLayers(0);
           UI.timeline.addNewLayer('actions', 'normal', true);
           UI.timeline.setSelectedLayers(0);

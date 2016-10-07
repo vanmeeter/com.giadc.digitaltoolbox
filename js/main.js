@@ -46,6 +46,7 @@
             csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
             csInterface.evalScript('onClick_btn_static()');
             csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+            csInterface.evalScript('UI.timeline.setSelectedLayers(UTIL.layerCheck("actions"));');
         });
 
         $("#chk_loopToggle").click(function () {

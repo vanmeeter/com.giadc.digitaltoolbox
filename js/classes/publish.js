@@ -6,13 +6,13 @@
   {
     setPublishSettings: function() {
 
-      fl.getDocumentDOM().importPublishProfileString(pubProfile);
-      fl.getDocumentDOM().frameRate = 30;
+      UI.dom.importPublishProfileString(pubProfile);
+      UI.dom.frameRate = 30;
     },
 
     genSizeReport: function() {
-      var docPath = fl.getDocumentDOM().pathURI.slice(0, fl.getDocumentDOM().pathURI.lastIndexOf('.')) + '.html';
-      var spritePath = docPath.slice(0, (docPath.lastIndexOf('/'))) + '/images/' + fl.getDocumentDOM().name;
+      var docPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('.')) + '.html';
+      var spritePath = docPath.slice(0, (docPath.lastIndexOf('/'))) + '/images/' + UI.dom.name;
       spritePath = spritePath.slice(0, spritePath.lastIndexOf('.')) + '.png';
       if (!FLfile.exists(spritePath)) {
         spritePath = spritePath.slice(0, spritePath.lastIndexOf('.')) + '.jpg';
@@ -26,26 +26,26 @@
     },
 
     setJPEG: function(size) {
-      var jpegPath = fl.getDocumentDOM().pathURI.slice(0, fl.getDocumentDOM().pathURI.lastIndexOf('.')) + '.jpg';
+      var jpegPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('.')) + '.jpg';
       var q = 100;
       for (var i = UI.timeline.frameCount - 1; i > -1; i--) {
-        if (UI.timeline.layers[UI.timeline.findLayerIndex('static')].frames[i].name === 'static') {
-          UI.timeline.currentFrame = UI.timeline.layers[UI.timeline.findLayerIndex('static')].frames[i].startFrame;
+        if (UI.timeline.layers[UTIL.layerCheck('static')].frames[i].name === 'static') {
+          UI.timeline.currentFrame = UI.timeline.layers[UTIL.layerCheck('static')].frames[i].startFrame;
           break;
         }
       }
-      fl.getDocumentDOM().publish();
+      UI.dom.publish();
       UI.timeline.currentFrame = UI.timeline.frameCount - 1;
       while (FLfile.getSize(jpegPath) / 1000 > size && q > 0) {
         q--;
         pubProfile = pubProfile.replace ('<Quality>' + (q + 1) + '</Quality>', '<Quality>' + q + '</Quality>');
         pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="true">', 'name="JavaScript/HTML" otf="true" enabled="false">');
-        fl.getDocumentDOM().importPublishProfileString(pubProfile);
-        fl.getDocumentDOM().publish();
+        UI.dom.importPublishProfileString(pubProfile);
+        UI.dom.publish();
       }
       pubProfile = pubProfile.replace ('<Quality>' + q + '</Quality>', '<Quality>100</Quality>');
       pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="false">', 'name="JavaScript/HTML" otf="true" enabled="true">');
-      fl.getDocumentDOM().importPublishProfileString(pubProfile);
+      UI.dom.importPublishProfileString(pubProfile);
     }
   }
 
