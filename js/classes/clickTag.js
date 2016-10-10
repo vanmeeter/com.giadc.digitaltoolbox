@@ -5,13 +5,13 @@
 
       giadcScriptInject: function(clickCheck) {
 
-        var clickCode = 'if (!this.loopNum) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
+        var clickCode = 'if (!this.alreadyExecuted) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
         UI.timeline.setSelectedLayers(0);
         UI.timeline.setSelectedFrames(0, 0, true);
         var actionText = fl.actionsPanel.getText();
         if (clickCheck > -1) {
           UI.timeline.setSelectedFrames(0, 0, true);
-          UTIL.actionsSelect('if (!this.loopNum) {\n\tvar script = document.createElement("script")', 10);
+          UTIL.actionsSelect('if (!this.alreadyExecuted) {\n\tvar script = document.createElement("script")', 10);
           if (fl.actionsPanel.hasSelection()) {
             fl.actionsPanel.setSelection(0,0);
           } else {
@@ -35,6 +35,10 @@
           (staticCheck < 0) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
           UI.timeline.addNewLayer('clickTag' + clickNum, 'normal', false);
           UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + clickNum));
+          var recStyle = UI.dom.getCustomFill();
+          recStyle.style = 'solid';
+          recStyle.color = '#000000';
+          UI.dom.setCustomFill(recStyle);
           UI.dom.addNewRectangle(
             {
               left:0,
@@ -72,7 +76,7 @@
           UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].frames[0].elements.name = 'btn_clickTag' + clickNum;
 
           //add actions to clickTag
-          fl.actionsPanel.setText('if (!this.loopNum) {\n\tthis.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n\t}\n}');
+          fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n\t}\n}');
           fl.actionsPanel.setSelection(0,0);
 
           //lock and hide clickTag
@@ -83,3 +87,6 @@
     }
 
 }());
+
+!this.alreadyExecuted
+!this.loopnum

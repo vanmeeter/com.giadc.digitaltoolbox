@@ -23,6 +23,7 @@
             }
             document.getElementById("txt_borderWidth").value = result.border.width;
             document.getElementById("txt_borderColor").value = result.border.color;
+            document.getElementById("chk_loopToggle").checked = result.loop;
           });
         });
 

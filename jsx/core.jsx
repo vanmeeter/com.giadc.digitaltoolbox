@@ -39,8 +39,8 @@ function onClick_btn_getInfo() {
 			}
 			UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + j));
 			var selectStop = fl.actionsPanel.getText().lastIndexOf('");');
-			selectStop -= 165;
-			fl.actionsPanel.setSelection(165, selectStop);
+			selectStop -= 173;
+			fl.actionsPanel.setSelection(173, selectStop);
 			var existingURL = fl.actionsPanel.getSelectedText()
 			data[UI.timeline.layers[UTIL.layerCheck('clickTag' + j)].name] = existingURL;
 		}
@@ -59,6 +59,11 @@ function onClick_btn_getInfo() {
 	}
 	fl.actionsPanel.setSelection(0,0);
 	UI.timeline.setSelectedLayers(0);
+	if(UI.timeline.layers[UTIL.layerCheck('actions')].frames[totalFrames - 1].name === 'replay') {
+		data.loop = false;
+	}else {
+		data.loop = true;
+	}
 	return (JSON.encode(data));
 }
 
@@ -121,6 +126,16 @@ function onClick_btn_clickTag(clickURL) {
 
 //****************LOOP SETTINGS******************//
 function onClick_chk_loopToggle(loopTog) {
+	UI.timeline.layers[UTIL.layerCheck('actions')].locked = false;
+	if (UI.dom.library.itemExists('replay_bttn')) {
+		UI.dom.library.deleteItem('replay_bttn');
+	}
+	if (UI.dom.library.itemExists('replayArrow')) {
+		UI.dom.library.deleteItem('replayArrow');
+	}
+	if (UI.dom.library.itemExists('replayArrow_inside')) {
+		UI.dom.library.deleteItem('replayArrow_inside');
+	}
 	LOOP.loopToggle(loopTog);
 	UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
 }
@@ -132,7 +147,7 @@ function onClick_btn_static() {
 	if (staticCheck < 0) {
 		UI.timeline.setSelectedLayers(0);
 		UI.timeline.addNewLayer('static', 'normal', false);
-		UI.timeline.setSelectedLayers(1);
+		UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
 	} else {
 		for (var i = 0; i < UI.timeline.frameCount; i++) {
 			if (UI.timeline.layers[staticCheck].frames[i].name === 'static') {

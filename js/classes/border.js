@@ -37,6 +37,13 @@
       UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
 
       //draw and style border rectangle
+      var borderStroke = UI.dom.getCustomStroke();
+      borderStroke.style = 'solid';
+      borderStroke.thickness = bWidth;
+      borderStroke.color = bColor;
+      borderStroke.joinType = 'miter';
+      UI.dom.setCustomStroke(borderStroke);
+
       UI.dom.addNewRectangle(
         {
           left:bWidth / 2,
@@ -44,22 +51,11 @@
           right:UI.dom.width - bWidth / 2,
           bottom:UI.dom.height - bWidth / 2
         },0, true, false);
-
-      UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
-      //style
-      var borderStroke = UI.dom.getCustomStroke();
-      borderStroke.thickness = bWidth;
-      borderStroke.color = bColor;
-      borderStroke.joinType = 'miter';
-      UI.dom.setCustomStroke(borderStroke);
-      UI.dom.selectNone();
-
+        
+      UI.timeline.layers[UTIL.layerCheck('border')].locked = true;
       //reset to default
       borderStroke.thickness = 1;
       UI.dom.setCustomStroke(borderStroke);
-
-      //lock the border layer
-      UI.timeline.layers[UTIL.layerCheck('border')].locked = true;
     }
   }
 
