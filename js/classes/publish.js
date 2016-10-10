@@ -40,6 +40,7 @@
       for (var i = 0; i < pathFiles.length; i++) {
         if(pathFiles[i].slice(pathFiles[i].lastIndexOf('_'), pathFiles[i].length) === '_SUB.html' || pathFiles[i].slice(pathFiles[i].lastIndexOf('_'), pathFiles[i].length) === '_COR.html') {
           var jpegName = pathFiles[i].slice(pathFiles[i].indexOf('-') + 1, pathFiles[i].lastIndexOf('_')) + '_' + UI.dom.name.slice(0, UI.dom.name.lastIndexOf('.')) + '.jpg';
+          break;
         } else {
           var jpegName = UI.dom.name.slice(0, UI.dom.name.lastIndexOf('.')) + '.jpg';
         }
@@ -47,7 +48,7 @@
       jpegPath += jpegName;
       //if (FLfile.listFolder(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/') - 1) ,files))
 
-      pubProfile = pubProfile.replace ('<jpegFileName></jpegFileName>', '<jpegFileName>../' + jpegName + '</jpegFileName>');
+      pubProfile = pubProfile.replace ('<jpegFileName>dont change</jpegFileName>', '<jpegFileName>../' + jpegName + '</jpegFileName>');
       UI.dom.importPublishProfileString(pubProfile);
       UI.dom.publish();
       UI.timeline.currentFrame = UI.timeline.frameCount - 1;
@@ -60,7 +61,7 @@
       }
       pubProfile = pubProfile.replace ('<Quality>' + q + '</Quality>', '<Quality>100</Quality>');
       pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="false">', 'name="JavaScript/HTML" otf="true" enabled="true">');
-      pubProfile = pubProfile.replace ('<jpegFileName>../' + jpegName + '</jpegFileName>', '<jpegFileName></jpegFileName>');
+      pubProfile = pubProfile.replace ('<jpegFileName>../' + jpegName + '</jpegFileName>', '<jpegFileName>dont change</jpegFileName>');
       UI.dom.importPublishProfileString(pubProfile);
     }
   }

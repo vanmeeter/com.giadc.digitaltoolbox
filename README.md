@@ -4,6 +4,7 @@
 + clickTag
   - multiple clickTags
     + hotspot clicktags
+     - at least store position and size of existing clicktags
 + Disclaimer
 + Reset
 + Get data button

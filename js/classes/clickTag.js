@@ -73,7 +73,7 @@
           UI.dom.exitEditMode();
 
           //set instance name
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].frames[0].elements.name = 'btn_clickTag' + clickNum;
+          UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
 
           //add actions to clickTag
           fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n\t}\n}');
