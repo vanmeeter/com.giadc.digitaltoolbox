@@ -7,6 +7,38 @@
 
     function init() {
         themeManager.init();
+        setInterval(isInitialized, 60);
+        setInterval(isSaved, 60);
+
+        function isInitialized() {
+          csInterface.evalScript('UTIL.layerCheck("actions")', function(result) {
+            if (result > -1) {
+              document.getElementById("btn_getInfo").disabled = false;
+              document.getElementById("btn_border").disabled = false;
+              document.getElementById("btn_clickTag").disabled = false;
+              document.getElementById("btn_static").disabled = false;
+              document.getElementById("btn_publish").disabled = false;
+              document.getElementById("btn_initialize").disabled = true;
+            } else {
+              document.getElementById("btn_getInfo").disabled = true;
+              document.getElementById("btn_border").disabled = true;
+              document.getElementById("btn_clickTag").disabled = true;
+              document.getElementById("btn_static").disabled = true;
+              document.getElementById("btn_publish").disabled = true;
+              document.getElementById("btn_initialize").disabled = false;
+            }
+          });
+        }
+
+        function isSaved() {
+          csInterface.evalScript('typeof UI.dom.pathURI', function(result) {
+            if (result != 'undefined') {
+              document.getElementById("btn_publish").disabled = false;
+            } else {
+              document.getElementById("btn_publish").disabled = true;
+            }
+          });
+        }
 
         $("#btn_getInfo").click(function () {
           csInterface.evalScript('onClick_btn_getInfo()', function(result) {

@@ -160,13 +160,9 @@ function onClick_btn_static() {
 //****************PUBLISH AD********************//
 function onClick_btn_publish(size) {
 	if (UTIL.layerCheck('actions') > -1) {
-		if (typeof UI.dom.pathURI === 'undefined'){
-			alert('Document must be saved.');
-			return 0;
-		} else {
+
 			PUBLISH.publishDoc(size);
 			return PUBLISH.genSizeReport();
-		}
 	}
 	return 0;
 }
