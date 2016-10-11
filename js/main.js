@@ -43,6 +43,7 @@
           }
             clickURL.clickNum = clickNum;
             csInterface.evalScript('initializeDoc()');
+            csInterface.evalScript('PUBLISH.setPublishSettings();')
             csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
             csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
             csInterface.evalScript('onClick_btn_static()');

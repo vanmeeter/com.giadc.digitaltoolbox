@@ -15,13 +15,19 @@ for (var i = 0; i < files.length; i++) {
 
 //***********DOCUMENT INITIALIZE************//
 function initializeDoc() {
-	var frameIndex = UI.timeline.frameCount;
 
+	var frameIndex = UI.timeline.frameCount;
+	if (UTIL.layerCheck('actions') > -1) {
+		UI.timeline.deleteLayer(UTIL.layerCheck('actions'));
+	}
+	UI.timeline.setSelectedLayers(0);
+	UI.timeline.addNewLayer('actions', 'normal', true);
+	TAG.giadcScriptInject(UTIL.layerCheck('actions'));
+
+	UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
 	if (frameIndex < 30){
 		UI.timeline.insertFrames((90 - frameIndex), true);
 	}
-
-	PUBLISH.setPublishSettings();
 }
 
 //************GET INFO FROM CREATED AD***************//
@@ -68,117 +74,99 @@ function onClick_btn_getInfo() {
 }
 
 //***********BORDER*************//
-function onClick_btn_border(bWidth, bColor, clickNum) {
-  bWidth = parseInt(bWidth);
-  var borderCheck = UTIL.layerCheck('border');
-  var actionsCheck = UTIL.layerCheck('actions');
-  var tagCheck = UTIL.layerCheck('clickTag1');
+function onClick_btn_border(bWidth, bColor) {
+	if (UTIL.layerCheck('actions') > -1) {
+	  bWidth = parseInt(bWidth);
 
-  //make border if it doesn't exist
-  if (borderCheck > -1) {
-    UI.timeline.deleteLayer(borderCheck);
-    BORDER.createBorder(actionsCheck, tagCheck, bWidth, bColor);
-  } else {
-    BORDER.createBorder(actionsCheck, tagCheck, bWidth, bColor);
-  }
+	  //make border if it doesn't exist
+	  if (UTIL.layerCheck('border') > -1) {
+	    UI.timeline.deleteLayer(UTIL.layerCheck('border'));
+	    BORDER.createBorder(bWidth, bColor);
+	  } else {
+	    BORDER.createBorder(bWidth, bColor);
+	  }
+		UI.timeline.layers[UTIL.layerCheck('border')].locked = true;
+	}
 }
 
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
-  //var foo = new ClickTagClass;
-  var clickCheck = UTIL.layerCheck('actions');
-	var tags = UTIL.parseObj(clickURL);
-	var totalFrames = UI.timeline.frameCount;
+	if (UTIL.layerCheck('actions') > -1) {
+		var tags = UTIL.parseObj(clickURL);
+		var totalFrames = UI.timeline.frameCount;
 
-	TAG.giadcScriptInject(clickCheck);
+	  //deletes previous clickTags
+		for (var i = 1; i < 10; i++) {
+			if (UTIL.layerCheck('clickTag' + i) > -1) {
+				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+			}
+		}
+		for (var i = 0; i < 10; i++) {
+			if (UI.dom.library.itemExists('btn_clickTag' + i)) {
+				UI.dom.library.deleteItem('btn_clickTag' + i);
+			}
+		}
+		//clickTag creation
+		for (var i = 1; i <= clickURL.clickNum; i++) {
+			var clickStart = 0;
+			var clickEnd = totalFrames / clickURL.clickNum;
 
-  //deletes previous clickTags
-	for (var i = 1; i < 10; i++) {
-		if (UTIL.layerCheck('clickTag' + i) > -1) {
-			UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+			TAG.createClickTag(UTIL.validateUrl(clickURL['clickTag' + i]), i);
+			clickEnd = Math.round(clickEnd * (i - 1));
+			if (clickEnd != 0) {
+				UI.timeline.clearFrames(clickStart, clickEnd);
+			}
+			clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
+			clickEnd = totalFrames;
+			if (clickStart != totalFrames) {
+				UI.timeline.clearFrames(clickStart, clickEnd);
+			}
 		}
+		UI.timeline.setSelectedLayers(0);
 	}
-	for (var i = 0; i < 10; i++) {
-		if (UI.dom.library.itemExists('btn_clickTag' + i)) {
-			UI.dom.library.deleteItem('btn_clickTag' + i);
-		}
-	}
-	//clickTag creation
-	for (var i = 1; i <= clickURL.clickNum; i++) {
-		var clickStart = 0;
-		var clickEnd = totalFrames / clickURL.clickNum;
-		if(!UTIL.validateUrl(clickURL['clickTag' + i])) {
-			clickURL['clickTag' + i] = 'http://' + clickURL['clickTag' + i];
-		}
-		TAG.createClickTag(clickURL, i);
-		clickEnd = Math.round(clickEnd * (i - 1));
-		if (clickEnd != 0) {
-			UI.timeline.clearFrames(clickStart, clickEnd);
-		}
-		clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
-		clickEnd = totalFrames;
-		if (clickStart != totalFrames) {
-			UI.timeline.clearFrames(clickStart, clickEnd);
-		}
-	}
-	UI.timeline.setSelectedLayers(0);
 }
 
 //****************LOOP SETTINGS******************//
 function onClick_chk_loopToggle(loopTog) {
-	UI.timeline.layers[UTIL.layerCheck('actions')].locked = false;
-	if (UI.dom.library.itemExists('replay_bttn')) {
+	if (UTIL.layerCheck('actions') > -1) {
+		initializeDoc();
+		UI.timeline.layers[UTIL.layerCheck('actions')].locked = false;
 		UI.dom.library.deleteItem('replay_bttn');
-	}
-	if (UI.dom.library.itemExists('replayArrow')) {
 		UI.dom.library.deleteItem('replayArrow');
-	}
-	if (UI.dom.library.itemExists('replayArrow_inside')) {
 		UI.dom.library.deleteItem('replayArrow_inside');
+
+		LOOP.loopToggle(loopTog);
+		UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
 	}
-	LOOP.loopToggle(loopTog);
-	UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
 }
 
 //****************STATIC SET*****************//
 function onClick_btn_static() {
-	var currF = UI.timeline.currentFrame;
-	var staticCheck = UTIL.layerCheck('static');
-	if (staticCheck < 0) {
-		UI.timeline.setSelectedLayers(0);
+	if (UTIL.layerCheck('actions') > -1) {
+		var currF = UI.timeline.currentFrame;
+		if (UTIL.layerCheck('static') > -1) {
+			UI.timeline.deleteLayer(UTIL.layerCheck('static'));
+		}
+		UI.timeline.setSelectedLayers(UTIL.layerCheck('actions'));
 		UI.timeline.addNewLayer('static', 'normal', false);
 		UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
-	} else {
-		for (var i = 0; i < UI.timeline.frameCount; i++) {
-			if (UI.timeline.layers[staticCheck].frames[i].name === 'static') {
-				UI.timeline.setSelectedLayers(staticCheck);
-				UI.timeline.setSelectedFrames(i, i);
-				UI.timeline.clearKeyframes();
-				break;
-			}
-		}
+
+		UI.timeline.convertToKeyframes(currF, currF);
+		UI.timeline.setFrameProperty('name', 'static');
+		UI.timeline.layers[UTIL.layerCheck('static')].locked = true;
 	}
-	//fl.trace(UI.dom.exportPublishProfileString());
-	UI.timeline.convertToKeyframes(currF, currF);
-	UI.timeline.setFrameProperty('name', 'static');
-	UI.timeline.layers[UTIL.layerCheck('static')].locked = true;
 }
 
 //****************PUBLISH AD********************//
 function onClick_btn_publish(size) {
-	var tagCheck = UTIL.layerCheck('clickTag1');
-  var clickCheck = UTIL.layerCheck('actions');
-
-	if (tagCheck > -1 && clickCheck > -1) {
+	if (UTIL.layerCheck('actions') > -1) {
 		if (typeof UI.dom.pathURI === 'undefined'){
 			alert('Document must be saved.');
 			return 0;
 		} else {
-			PUBLISH.setJPEG(size);
+			PUBLISH.publishDoc(size);
 			return PUBLISH.genSizeReport();
 		}
-	} else {
-		alert('Document must be initialized.');
-		return 0;
 	}
+	return 0;
 }

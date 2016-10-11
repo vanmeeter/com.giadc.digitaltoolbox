@@ -29,7 +29,11 @@
 
       validateUrl: function(url) {
         var urlregex = new RegExp("^(https?:\/\/)?(^(https?:\/\/)[0-9A-Za-z]+\.+[a-z]{2,5})");
-        return urlregex.test(url);
+        if (!urlregex.test(url)) {
+          return 'http://' + url;
+        } else {
+          return url;
+        }
       }
     }
 

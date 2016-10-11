@@ -27,15 +27,18 @@
           if (UI.dom.frameRate != 30) {
             UI.dom.frameRate = 30;
           }
-          UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
+          fl.actionsPanel.setSelection(0,0);
         },
 
-      createClickTag: function(clickURL, clickNum) {
+      createClickTag: function(url, tagNum) {
           var staticCheck = UTIL.layerCheck ('static');
           (staticCheck < 0) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
-          UI.timeline.addNewLayer('clickTag' + clickNum, 'normal', false);
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + clickNum));
+          UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
+
+          //create clicktag rectangle
           var recStyle = UI.dom.getCustomFill();
+          var legacyStyle = UI.dom.getCustomFill('toolbar');
           recStyle.style = 'solid';
           recStyle.color = '#000000';
           UI.dom.setCustomFill(recStyle);
@@ -46,47 +49,37 @@
               right:UI.dom.width,
               bottom:UI.dom.height
             },0, false, true);
+            UI.dom.setCustomFill(legacyStyle);
 
           //converts to button
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + clickNum));
-          UI.dom.convertToSymbol('button', 'btn_clickTag' + clickNum, 'top left');
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + clickNum));
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
+          UI.dom.convertToSymbol('button', 'btn_clickTag' + tagNum, 'top left');
           UI.dom.enterEditMode('inPlace');
 
           //make new frames in button
-          for (var i = 0; i < 3; i++) {
-          UI.timeline.insertFrames();
-          }
-
-          //select hit frame
-          UI.timeline.currentFrame = 3;
+          UI.timeline.insertFrames(3);
 
           //new keyframe on hit frame
-          UI.timeline.convertToKeyframes();
+          UI.timeline.convertToKeyframes(3, 3);
 
           //delete all frames before hit
-          UI.timeline.currentFrame = 0;
-          UI.dom.selectAll();
-          UI.dom.deleteSelection();
+          UI.timeline.clearFrames(0, 3);
 
           //exit edit mode
           UI.dom.exitEditMode();
 
           //set instance name
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].frames[0].elements[0].name = 'btn_clickTag' + clickNum;
+          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[0].elements[0].name = 'btn_clickTag' + tagNum;
 
           //add actions to clickTag
-          fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + clickNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + clickURL['clickTag' + clickNum] + '");\n\t}\n}');
+          fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
           fl.actionsPanel.setSelection(0,0);
 
           //lock and hide clickTag
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].locked = true;
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + clickNum)].visible = false;
+          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].locked = true;
+          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].visible = false;
       }
 
     }
 
 }());
-
-!this.alreadyExecuted
-!this.loopnum
