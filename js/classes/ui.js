@@ -39,7 +39,7 @@
 				{
 					return dom;
 				}
-				alert('Open a Flash document (FLA) before running this script');
+				//alert('Open a Flash document (FLA) before running this script');
 				return false;
 			},
 
@@ -55,7 +55,7 @@
 				{
 					return fl.getDocumentDOM().getTimeline();
 				}
-				alert('Open a Flash document (FLA) before running this script');
+				//alert('Open a Flash document (FLA) before running this script');
 				return false;
 			},
 
@@ -74,7 +74,7 @@
 					{
 						return items;
 					}
-					alert('Select some library items before running this script');
+					//alert('Select some library items before running this script');
 					return false;
 				}
 				return false;
@@ -95,7 +95,7 @@
 					{
 						return selection;
 					}
-					alert('Make a selection before running this script');
+					//alert('Make a selection before running this script');
 					return false;
 				}
 				return false;
