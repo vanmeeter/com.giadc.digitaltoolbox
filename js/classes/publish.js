@@ -48,20 +48,29 @@
       jpegPath += jpegName;
       //if (FLfile.listFolder(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/') - 1) ,files))
 
-      pubProfile = pubProfile.replace ('<jpegFileName>dont change</jpegFileName>', '<jpegFileName>../' + jpegName + '</jpegFileName>');
+      pubProfile = pubProfile.replace ('<jpeg>1</jpeg>', '<jpeg>0</jpeg>');
       UI.dom.importPublishProfileString(pubProfile);
       UI.dom.publish();
-      UI.timeline.currentFrame = UI.timeline.frameCount - 1;
+
+      pubProfile = pubProfile.replace ('<jpeg>0</jpeg>', '<jpeg>1</jpeg>');
+      pubProfile = pubProfile.replace ('<jpegFileName>DONT_CHANGE</jpegFileName>', '<jpegFileName>../' + jpegName + '</jpegFileName>');
+      pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="true">', 'name="JavaScript/HTML" otf="true" enabled="false">');
+      UI.dom.importPublishProfileString(pubProfile);
+      UI.timeline.layers[UI.timeline.findLayerIndex('actions')].visible = false;
+      UI.dom.publish();
+
       while (FLfile.getSize(jpegPath) / 1000 > size && q > 0) {
         q--;
         pubProfile = pubProfile.replace ('<Quality>' + (q + 1) + '</Quality>', '<Quality>' + q + '</Quality>');
-        pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="true">', 'name="JavaScript/HTML" otf="true" enabled="false">');
         UI.dom.importPublishProfileString(pubProfile);
         UI.dom.publish();
       }
+
+      UI.timeline.currentFrame = UI.timeline.frameCount - 1;
+      UI.timeline.layers[UI.timeline.findLayerIndex('actions')].visible = true;
       pubProfile = pubProfile.replace ('<Quality>' + q + '</Quality>', '<Quality>100</Quality>');
       pubProfile = pubProfile.replace ('name="JavaScript/HTML" otf="true" enabled="false">', 'name="JavaScript/HTML" otf="true" enabled="true">');
-      pubProfile = pubProfile.replace ('<jpegFileName>../' + jpegName + '</jpegFileName>', '<jpegFileName>dont change</jpegFileName>');
+      pubProfile = pubProfile.replace ('<jpegFileName>../' + jpegName + '</jpegFileName>', '<jpegFileName>DONT_CHANGE</jpegFileName>');
       UI.dom.importPublishProfileString(pubProfile);
     }
   }

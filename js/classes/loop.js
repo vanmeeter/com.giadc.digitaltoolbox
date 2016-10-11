@@ -67,6 +67,7 @@
           recStyle.style = 'solid';
           recStyle.color = '#000000';
           UI.dom.setCustomFill(recStyle);
+
           UI.dom.addNewRectangle(
             {
               left:-4.0,
