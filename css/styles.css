@@ -1,7 +1,7 @@
 /*Your styles*/
 
  body {
-    margin: 10px;
+    margin: 2px;
 }
 
 body::-webkit-scrollbar {
@@ -26,7 +26,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 #content {
-  margin-top:55px;
+  margin-top:80px;
   margin-right:auto;
   margin-left:auto;
   width:100%;
@@ -45,10 +45,18 @@ body::-webkit-scrollbar-thumb {
   z-index: +1;
 }
 
+#nav {
+  width:100%;
+  position:fixed;
+  top:50px;
+  z-index: +1;
+}
+
 .sectionLabel {
   display:inline-block;
-  background:#444444;
+  /*background:#444444;*/
   padding-right:5px;
+  margin-left: 3px;
 }
 
 .sectionRule {
@@ -61,59 +69,101 @@ body::-webkit-scrollbar-thumb {
 
 .contRow {
   width:100%;
-  margin-top:10px;
+  margin-top:10px
 }
 
-.contRow #get_info {
+#get_info {
   width:98%;
 }
 
-.contRow #init_bttnDiv {
+#init_bttnDiv {
   width:58%;
   display:inline-block;
   margin-right:10px;
 }
 
-.contRow #bttnInit #btn_initialize {
+#btn_initialize {
   display:inline-block;
 }
 
-.contRow #toggleLoop {
+#toggleLoop,
+#toggleHover,
+#toggleClick {
   display:inline-block;
 }
 
-.contRow #border_bttnDiv {
+#switch__toggle_hover::before {
+  content: 'HOVER';
+  padding-left: 0.55rem;
+}
+
+#switch__toggle_hover::after {
+  content: 'CLICK';
+  padding-left: 0.6rem;
+}
+
+#toggleClick {
+  margin-left:4px;
+}
+
+#click-switch {
+  width: 3rem;
+
+}
+
+#switch__toggle_click {
+  margin-left: -0.65rem;
+  transition: margin-left 0.05s ease-in-out;
+}
+
+#switch__toggle_click::before {
+  content: 'ON';
+  padding-left: 2.2rem;
+}
+
+#switch__toggle_click::after {
+  content: 'OFF';
+  padding-left: 0.38rem;
+  left: 0.9rem;
+}
+
+#chk_clickToggle:checked + #switch__toggle_click {
+  margin-left: 1.37rem;
+}
+
+#border_bttnDiv {
   width:30%;
 }
-.contRow #btn_border {
+#btn_border {
   margin-left:2px;
   width:99%;
 }
 
-.contRow #border_fields {
+#border_fields,
+#disc_fields {
   width: auto;
 }
 
-.contRow #border_fields #txt_borderWidth {
+#txt_borderWidth {
   width: 25%;
   margin-top:2px;
   margin-left:5px;
   display:inline-block;
 }
 
-.contRow #border_fields #txt_borderColor {
+#txt_borderColor {
   width: 40%;
   margin-top:2px;
   display:inline-block;
 }
 
-.contRow #click_fields {
+#click_fields {
   width:98%;
   margin-left:2px;
   margin-bottom:5px;
 }
 
-.contRow .addSub {
+.addSub {
   display:inline-block;
 }
 
@@ -121,23 +171,23 @@ body::-webkit-scrollbar-thumb {
   display:inline-block;
 }*/
 
-.contRow #click_fields .topcoat-text-input{
+#click_fields .topcoat-text-input{
   display:inline-block;
 }
 
-.contRow #pub_bttnDiv {
-  margin-bottom:25px;
+#pub_bttnDiv {
+  margin-bottom:35px;
 }
 
-.contRow #static_bttnDiv {
+#static_bttnDiv {
   width:30%;
 }
 
-.contRow #static_field {
+#static_field {
   width: auto;
 }
 
-.contRow #static_field #txt_jpegQuality {
+#txt_jpegQuality {
   width: 20%;
   margin-top:2px;
   margin-left:5px;
@@ -152,6 +202,14 @@ body::-webkit-scrollbar-thumb {
   left:0px;
   padding:0px;
   background-color:black;
+}
+
+#txt_discColor,
+#txt_discFontColor {
+  width: 30%;
+  margin-top:2px;
+  margin-left:5px;
+  display:inline-block;
 }
 
 

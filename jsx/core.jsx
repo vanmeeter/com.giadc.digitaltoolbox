@@ -92,7 +92,7 @@ function onClick_btn_border(bWidth, bColor) {
 //**************CLICK TAG***************//
 function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
-		var tags = UTIL.parseObj(clickURL);
+		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
 
 	  //deletes previous clickTags
@@ -165,4 +165,14 @@ function onClick_btn_publish(size) {
 			return PUBLISH.genSizeReport();
 	}
 	return 0;
+}
+
+//******************DISCLAIMER TOOL****************//
+function onClick_btn_disclaimer(disclaimer) {
+	JSON.decode(disclaimer);
+	if (UTIL.layerCheck('disclaimer') > -1) {
+		UI.timeline.deleteLayer(UTIL.layerCheck('disclaimer'));
+	}
+	DISCLAIMER.draw(disclaimer);
+	DISCLAIMER.addText(disclaimer);
 }

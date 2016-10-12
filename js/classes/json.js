@@ -185,12 +185,11 @@
 			 */
 			decode:function(src)
 			{
-				if(src != null && src != '' && src != undefined)
-				{
-					return eval('(' + src + ')');
-				}
-				return null;
-			},
+				var str = "";
+          for (prop in src) {
+            str += prop + " [" + typeof src[prop] + "]: " + src[prop] + ".\n";
+					}
+      },
 
 			toString:function()
 			{

@@ -19,14 +19,6 @@
         fl.actionsPanel.setSelection(actionStart, actionLength);
       },
 
-      //************PARSER FOR OBJECTS**************//
-      parseObj: function(o) {
-        var str = "";
-          for (prop in o) {
-            str += prop + " [" + typeof o[prop] + "]: " + o[prop] + ".\n";
-          }
-      },
-
       validateUrl: function(url) {
         var urlregex = new RegExp("^(https?:\/\/)?(^(https?:\/\/)[0-9A-Za-z]+\.+[a-z]{2,5})");
         if (!urlregex.test(url)) {

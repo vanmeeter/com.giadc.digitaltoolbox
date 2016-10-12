@@ -125,12 +125,21 @@
           sizeDisplay.innerHTML = result/1000 + "kb"
           });
         });
+
+        $("#btn_disclaimer").click(function () {
+          var disclaimer =
+          {
+            corner: cornerTog,
+            hover: document.getElementById("chk_hoverToggle").checked,
+            clickthrough: document.getElementById("chk_clickToggle").checked,
+            color: document.getElementById("txt_discColor").value + parseInt(document.getElementById("rng_opacity").value * 2.555).toString(16),
+            //opacity: document.getElementById("rng_opacity").value,
+            fontColor: document.getElementById("txt_discFontColor").value + 'ff',
+            text: document.getElementById("txt_disclaimer1").value
+          };
+          csInterface.evalScript('onClick_btn_disclaimer(' + JSON.stringify(disclaimer) + ')');
+        });
     }
 
     init();
 }());
-
-
-//csInterface.evalScript('test()', function(result) {
-//      alert(result);
-//    });

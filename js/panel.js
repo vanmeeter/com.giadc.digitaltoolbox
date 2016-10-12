@@ -1,4 +1,5 @@
 var clickNum = 1;
+var cornerTog = 1;
 
 var addField = function(url) {
   var url = (typeof url !== 'object') ? url : "";
@@ -23,3 +24,6 @@ $("#btn_sub").click(function () {
     clickNum--;
   }
 });
+
+$("#btn_roundCorner").click(cornerTog = 0);
+$("#btn_sharpCorner").click(cornerTog = 1);

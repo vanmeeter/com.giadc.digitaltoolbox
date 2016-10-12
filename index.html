@@ -12,12 +12,17 @@
 
 <body id="inital" class="hostElt">
   <div id="header"></div>
-    <div id="content">
 
-      <div class = "contRow">
-        <a href="disclaimer.html">Disclaimer</a>
+    <div id="nav">
+      <div id = "main_tab" style="width:50%; float:left; display:inline-block;">
+        <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='index.html';">Main</button>
       </div>
+      <div id = "disclaimer_tab" style="width:48%; float:right; display:inline-block; padding-right:4px;">
+        <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='disclaimer.html';">Disclaimer/Widgets</button>
+      </div>
+    </div>
 
+    <div id="content">
         <div class = "contRow">
           <div id = "get_info">
             <button id="btn_getInfo" class="topcoat-button--large hostFontSize" style="width:100%; margin-left:2px;">Get Information</button>
@@ -85,12 +90,11 @@
             <button id="btn_publish" style="width:98%; margin-left:2px; margin-bottom:2px;" class="topcoat-button--large hostFontSize">Publish</button>
           </div>
         </div>
+    </div>
 
-        <div id="footer">
-          <h2 style="position:fixed; bottom:6px; margin:0px; left:6px;">Size of Document: </h2>
-          <h2 id="sizeDisplay" style="position:fixed; bottom:6px; margin:0px; left:70%;"></h2>
-        </div>
-
+    <div id="footer">
+      <h2 style="position:fixed; bottom:6px; margin:0px; left:6px;">Size of Document: </h2>
+      <h2 id="sizeDisplay" style="position:fixed; bottom:6px; margin:0px; left:70%;"></h2>
     </div>
 
     <script src="js/libs/CSInterface.js"></script>

@@ -19,6 +19,8 @@
   - multiple disclaimers:
     + user will have to option to choose which click through is used on which disclaimer(radio buttons)
   - widgets may be on same page
+  - footer needs to be copied over when changing pages
+  - get info needs to get disclaimer info
 
 + Reset
 + Widgets
