@@ -1,0 +1,34 @@
+this.disclaimer_content.cursor = 'pointer';
+if(!this.flag)
+{
+	var i;
+	this.flag=1;
+	this.stop();
+
+	this.disclaimer_content.addEventListener("rollover", fl_MouseOverHandler.bind(this));
+	this.disclaimer_content.addEventListener("rollout", fl_MouseOutHandler.bind(this));
+
+	function fl_MouseOverHandler() {
+		this.on("tick", ffwd.bind(this));
+	}
+
+
+	function fl_MouseOutHandler() {
+		i = this.currentFrame;
+		this.on("tick", rewind.bind(this));
+	}
+
+	function ffwd() {
+		if (this.currentFrame < this.getDuration() - 1) {
+			this.gotoAndStop(this.currentFrame + 1);
+		}
+	}
+
+	function rewind(e) {
+		this.gotoAndStop(i);
+		i--;
+		if(i === 0) {
+			this.removeAllEventListeners('tick');
+		}
+	}
+}
