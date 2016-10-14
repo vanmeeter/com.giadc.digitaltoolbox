@@ -1,4 +1,5 @@
 var clickNum = 1;
+var cornerTog = 0;
 
 var addField = function(url) {
   var url = (typeof url !== 'object') ? url : "";
@@ -23,3 +24,18 @@ $("#btn_sub").click(function () {
     clickNum--;
   }
 });
+
+$("#btn_disclaimer_tab").click(function () {
+  var sizeDisplay = document.getElementById("sizeDisplay");
+  localStorage["footer"] = sizeDisplay.innerHTML;
+  location.href='disclaimer.html';
+});
+
+$("#btn_main_tab").click(function () {
+  var sizeDisplay = document.getElementById("sizeDisplay");
+  localStorage["footer"] = sizeDisplay.innerHTML;
+  location.href='index.html';
+});
+
+$("#btn_roundCorner").click(function() {cornerTog = 1});
+$("#btn_sharpCorner").click(function() {cornerTog = 0});

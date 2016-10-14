@@ -1,0 +1,43 @@
+this.stop();
+
+var frequency = 5;
+stage.enableMouseOver(frequency);
+this.disclaimer_content.cursor = "pointer";
+
+this.disclaimer_content.addEventListener("rollover", fl_MouseOverHandler.bind(this));
+this.disclaimer_content.addEventListener("rollout", fl_MouseOutHandler.bind(this));
+
+function fl_MouseOverHandler() {
+	if(this.currentFrame != (this.getDuration() - 1)) {
+		createjs.Ticker.removeAllEventListeners("tick")
+	}
+	createjs.Ticker.addEventListener("tick", ffwd.bind(this));
+}
+
+
+function fl_MouseOutHandler() {
+	if(this.currentFrame != 0) {
+		createjs.Ticker.removeAllEventListeners("tick")
+	}
+	createjs.Ticker.addEventListener("tick", rewind.bind(this));
+}
+
+function ffwd(e) {
+	console.log(this.currentFrame);
+	stage.update();
+	if (this.currentFrame < (this.getDuration() - 1)) {
+		this.gotoAndStop(this.currentFrame + 1);
+	}else {
+		createjs.Ticker.removeAllEventListeners("tick")
+	}
+}
+
+function rewind(e)
+{
+	stage.update();
+	if(this.currentFrame > 0) {
+		this.gotoAndStop(this.currentFrame -1)
+	}else	{
+		createjs.Ticker.removeAllEventListeners("tick")
+	}
+}

@@ -1,17 +1,28 @@
 # com.giadc.digitaltoolbox
 
 ------TODO------
-+ clickTag
-  - multiple clickTags
-    + hotspot clicktags
-     - at least store position and size of existing clicktags
 + Disclaimer
+  - separate page - may need to put content in iframe to keep footer info - or use code to transfer info into disclaimer page
+  - link won't be clickable until initialized
+  - large text field that will pass the content on the Disclaimer
+  - size will be dependent on:
+    + how many characters
+    + size of the ad
+  - condensed or regular font will also be decided on depending on the size & character count
+  - user options:
+    + corners (round or sharp)
+    + color
+    + opacity
+    + font color
+    + click through or not (toggle with default on)
+    + hover or click activation
+  - multiple disclaimers:
+    + user will have to option to choose which click through is used on which disclaimer(radio buttons)
+  - widgets may be on same page
+  - footer needs to be copied over when changing pages
+  - get info needs to get disclaimer info
+
 + Reset
-+ Get data button
-  - subtract text field in less clicktags than in plugin
 + Widgets
-+ Widgets
-
-\\Oct 11\\
-
-+ resume heavy cleanup and see where RegExp can be used instead of loops and if statments. (SIMPLYFY).
++ RegExp for special cases in naming conventions
++ Lock layout down
