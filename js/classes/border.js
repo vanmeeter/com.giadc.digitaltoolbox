@@ -27,12 +27,8 @@
 
     createBorder: function (bWidth, bColor) {
 
-      //select top layer and crate border layer and keep border layer below clicktag
-      if (UTIL.layerCheck('clickTag1') < 0) {
-        (UTIL.layerCheck('static') < 0) ?  UI.timeline.setSelectedLayers(UTIL.layerCheck('actions')) : UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
-      } else {
-        UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag1'));
-      }
+      (UTIL.layerCheck('static') >= 0) ? UI.timeline.setSelectedLayers(UTIL.layerCheck('static')) : UI.timeline.setSelectedLayers(0);
+
       UI.timeline.addNewLayer('border', 'normal', false);
       UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
 

@@ -11,14 +11,14 @@
 </head>
 
 <body id="inital" class="hostElt">
-  <div id="header"></div>
+  <div id="header"><img src="images/header.png" /></div>
 
     <div id="nav">
       <div id = "main_tab" style="width:50%; float:left; display:inline-block;">
-        <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='index.html';">Main</button>
+        <button id="btn_main_tab" class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Main</button>
       </div>
       <div id = "disclaimer_tab" style="width:48%; float:right; display:inline-block; padding-right:4px;">
-        <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='disclaimer.html';">Disclaimer/Widgets</button>
+        <button id="btn_disclaimer_tab" class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Disclaimer/Widgets</button>
       </div>
     </div>
 
@@ -93,9 +93,15 @@
     </div>
 
     <div id="footer">
-      <h2 style="position:fixed; bottom:6px; margin:0px; left:6px;">Size of Document: </h2>
-      <h2 id="sizeDisplay" style="position:fixed; bottom:6px; margin:0px; left:70%;"></h2>
+      <img id="leftLines" src="images/footer_line.png"/>
+      <p id="sizeDisplay"></p>
+      <img id="rightLines" src="images/footer_line.png"/>
     </div>
+
+    <script>
+      var sizeDisplay = document.getElementById("sizeDisplay");
+      sizeDisplay.innerHTML = localStorage["footer"];
+    </script>
 
     <script src="js/libs/CSInterface.js"></script>
     <script src="js/libs/jquery-2.0.2.min.js"></script>

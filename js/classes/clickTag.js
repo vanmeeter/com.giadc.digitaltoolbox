@@ -31,8 +31,16 @@
         },
 
       createClickTag: function(url, tagNum) {
-          var staticCheck = UTIL.layerCheck ('static');
-          (staticCheck < 0) ? UI.timeline.setSelectedLayers(0) : UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
+
+          if (UTIL.layerCheck('disclaimer') >= 0){
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+          }else {
+            if(UTIL.layerCheck('static') >= 0){
+              UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
+            }else {
+              UI.timeline.setSelectedLayers(0);
+            }
+          }
           UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
           UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
 

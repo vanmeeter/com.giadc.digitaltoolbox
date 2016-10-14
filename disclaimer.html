@@ -11,32 +11,33 @@
 </head>
 
 <body id="inital" class="hostElt">
-  <div id="header"></div>
+  <body id="inital" class="hostElt">
+    <div id="header"><img src="images/header.png" /></div>
 
-  <div id="nav">
-    <div id = "main_tab" style="width:50%; float:left; display:inline-block;">
-      <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='index.html';">Main</button>
+    <div id="nav">
+      <div id = "main_tab" style="width:50%; float:left; display:inline-block;">
+        <button id="btn_main_tab" class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Main</button>
+      </div>
+      <div id = "disclaimer_tab" style="width:48%; float:right; display:inline-block; padding-right:4px;">
+        <button id="btn_disclaimer_tab" class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Disclaimer/Widgets</button>
+      </div>
     </div>
-    <div id = "disclaimer_tab" style="width:48%; float:right; display:inline-block; padding-right:4px;">
-      <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;" onclick="location.href='disclaimer.html';">Disclaimer/Widgets</button>
-    </div>
-  </div>
 
     <div id="content" style="margin-top:65px">
 
       <div class = "contRow">
         <h3 class="sectionLabel">Disclaimer</h3>
-        <div class="addSub">
+        <!--<div class="addSub">
           <button id="btn_add_disc" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;">
             <span>+</span>
           </button>
           <button id="btn_sub_disc" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;" >
             <span>-</span>
           </button>
-        </div>
+        </div>-->
         <!--<hr / class="sectionRule" style="top:190px;">-->
         <div id="click_fields">
-          <textarea id="txt_disclaimer1" class="topcoat-textarea" style="width:100%; font-size:11px; line-height:18px;" rows="10" cols="45" placeholder="Enter Disclaimer Text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum hendrerit congue lacus sed vehicula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse sit amet placerat dolor, ac venenatis magna. Duis elementum nisi at ligula fringilla euismod. Vestibulum condimentum, ligula sit amet egestas vehicula, est enim malesuada risus, sit amet lobortis leo urna a nibh. Quisque ante erat, luctus nec finibus ut, laoreet quis erat. Phasellus eleifend nisi vitae lectus rutrum, sed ultricies eros placerat.</textarea>
+          <textarea id="txt_disclaimer1" class="topcoat-textarea" style="width:100%; font-size:11px; line-height:18px;" rows="10" cols="45" placeholder="Enter Disclaimer Text"></textarea>
         </div>
       </div>
 
@@ -82,9 +83,15 @@
     </div>
 
     <div id="footer">
-      <h2 style="position:fixed; bottom:6px; margin:0px; left:6px;">Size of Document: </h2>
-      <h2 id="sizeDisplay" style="position:fixed; bottom:6px; margin:0px; left:70%;"></h2>
+      <img id="leftLines" src="images/footer_line.png"/>
+      <p id="sizeDisplay"></p>
+      <img id="rightLines" src="images/footer_line.png"/>
     </div>
+    <script>
+      var sizeDisplay = document.getElementById("sizeDisplay");
+      sizeDisplay.innerHTML = localStorage["footer"];
+      localStorage["footer"] = 'Size of Document: ';
+    </script>
 
     <script src="js/libs/CSInterface.js"></script>
     <script src="js/libs/jquery-2.0.2.min.js"></script>

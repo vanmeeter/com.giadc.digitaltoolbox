@@ -180,4 +180,5 @@ function onClick_btn_disclaimer(disclaimer) {
 	DISCLAIMER.draw(disclaimer);
 	DISCLAIMER.addText(disclaimer);
 	DISCLAIMER.animate(disclaimer);
+	UI.timeline.layers[UTIL.layerCheck('disclaimer')].locked = true;
 }

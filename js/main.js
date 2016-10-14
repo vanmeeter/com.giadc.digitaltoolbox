@@ -4,11 +4,11 @@
 (function () {
     'use strict';
     var csInterface = new CSInterface();
-
+    localStorage["footer"] = 'Size of Document: ';
+    
     function init() {
         themeManager.init();
         var x = setInterval(isInitialized, 60);
-
         function isInitialized() {
           csInterface.evalScript('fl.getDocumentDOM()', function(open) {
             if (open != 'null') {
@@ -18,6 +18,7 @@
                 document.getElementById("btn_border").disabled = false;
                 document.getElementById("btn_clickTag").disabled = false;
                 document.getElementById("btn_static").disabled = false;
+                document.getElementById("btn_disclaimer_tab").disabled = false;
                 document.getElementById("btn_initialize").disabled = true;
                 var y = setInterval(isSaved, 60);
               } else {
@@ -26,6 +27,7 @@
                 document.getElementById("btn_clickTag").disabled = true;
                 document.getElementById("btn_static").disabled = true;
                 document.getElementById("btn_publish").disabled = true;
+                document.getElementById("btn_disclaimer_tab").disabled = true;
                 document.getElementById("btn_initialize").disabled = false;
                 clearInterval(y);
               }
@@ -121,8 +123,9 @@
         $("#btn_publish").click(function () {
           var size = document.getElementById("txt_jpegQuality").value;
           csInterface.evalScript('onClick_btn_publish("' + size + '")', function(result) {
-          var sizeDisplay = document.getElementById("sizeDisplay");
-          sizeDisplay.innerHTML = result/1000 + "kb"
+            var sizeDisplay = document.getElementById("sizeDisplay");
+            sizeDisplay.innerHTML = 'Size of Document: ' + result/1000 + "kb"
+            localStorage["footer"] = sizeDisplay.innerHTML;
           });
         });
 
