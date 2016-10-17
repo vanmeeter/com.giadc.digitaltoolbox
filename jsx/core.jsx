@@ -158,14 +158,21 @@ function onClick_btn_static() {
 }
 
 //****************PUBLISH AD********************//
-function onClick_btn_publish(size) {
+function onClick_btn_publish() {
 	if (UTIL.layerCheck('actions') > -1) {
-
-			PUBLISH.publishDoc(size);
+			PUBLISH.publishDoc();
 			return PUBLISH.genSizeReport();
 	}
 	return 0;
 }
+
+//****************PUBLISH JPG********************//
+//TODO different pub files for each type of publishing
+function onClick_btn_publishJpg() {
+		PUBLISH.jpgProfile();
+		PUBLISH.showHideLayers(false);
+}
+
 
 //******************DISCLAIMER TOOL****************//
 function onClick_btn_disclaimer(disclaimer) {

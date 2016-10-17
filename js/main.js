@@ -5,10 +5,11 @@
     'use strict';
     var csInterface = new CSInterface();
     localStorage["footer"] = 'Size of Document: ';
-    
+
     function init() {
         themeManager.init();
         var x = setInterval(isInitialized, 60);
+
         function isInitialized() {
           csInterface.evalScript('fl.getDocumentDOM()', function(open) {
             if (open != 'null') {
@@ -27,6 +28,7 @@
                 document.getElementById("btn_clickTag").disabled = true;
                 document.getElementById("btn_static").disabled = true;
                 document.getElementById("btn_publish").disabled = true;
+                document.getElementById("btn_publishJpg").disabled = true;
                 document.getElementById("btn_disclaimer_tab").disabled = true;
                 document.getElementById("btn_initialize").disabled = false;
                 clearInterval(y);
@@ -40,8 +42,10 @@
           csInterface.evalScript('typeof UI.dom.pathURI', function(result) {
             if (result != 'undefined') {
               document.getElementById("btn_publish").disabled = false;
+              document.getElementById("btn_publishJpg").disabled = false;
             } else {
               document.getElementById("btn_publish").disabled = true;
+              document.getElementById("btn_publishJpg").disabled = true;
             }
           });
         }
@@ -121,12 +125,45 @@
         });
 
         $("#btn_publish").click(function () {
-          var size = document.getElementById("txt_jpegQuality").value;
-          csInterface.evalScript('onClick_btn_publish("' + size + '")', function(result) {
+          csInterface.evalScript('onClick_btn_publish()', function(result) {
             var sizeDisplay = document.getElementById("sizeDisplay");
             sizeDisplay.innerHTML = 'Size of Document: ' + result/1000 + "kb"
             localStorage["footer"] = sizeDisplay.innerHTML;
           });
+
+
+        });
+
+        $("#btn_publishJpg").click(function () {
+          var q = 100;
+          var jpgFileSize;
+          var size = document.getElementById("txt_jpegQuality").value;
+          var dot = '..';
+          csInterface.evalScript('onClick_btn_publishJpg()');
+          csInterface.evalScript('PUBLISH.publishJpg("' + q + '")');
+          csInterface.evalScript('UI.dom.publish();');
+          csInterface.evalScript('fl.trace("Please wait for JPG to export.")');
+          var run = function() {
+            if (jpgFileSize > size && q > 0) {
+              q--;
+              csInterface.evalScript('PUBLISH.publishJpg("' + q + '")');
+              csInterface.evalScript('UI.dom.publish();');
+              csInterface.evalScript('fl.trace("Please wait for JPG to export' + dot + '")');
+              dot += '.';
+              setTimeout(getSize, 1);
+            }else {
+              csInterface.evalScript('fl.trace("JPG export complete!");');
+              csInterface.evalScript('PUBLISH.showHideLayers(true);');
+            }
+          };
+
+          var getSize = function() {
+            csInterface.evalScript('PUBLISH.getFileSize()', function(result) {
+              jpgFileSize = result / 1000;
+            });
+            setTimeout(run, 1);
+          };
+          setTimeout(getSize, 1);
         });
 
         $("#btn_disclaimer").click(function () {
