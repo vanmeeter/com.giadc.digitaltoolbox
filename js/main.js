@@ -7,34 +7,35 @@
     localStorage["footer"] = 'Size of Document: ';
     function init() {
         themeManager.init();
+
         var x = setInterval(isInitialized, 60);
         function isInitialized() {
           csInterface.evalScript('fl.getDocumentDOM()', function(open) {
             //alert(open);
             if (open != 'null') {
-            csInterface.evalScript('UTIL.layerCheck("actions")', function(result) {
-              if (result > -1) {
-                document.getElementById("btn_getInfo").disabled = false;
-                document.getElementById("btn_border").disabled = false;
-                document.getElementById("btn_clickTag").disabled = false;
-                document.getElementById("btn_static").disabled = false;
-                document.getElementById("btn_disclaimer_tab").disabled = false;
-                document.getElementById("btn_initialize").disabled = true;
-                var y = setInterval(isSaved, 60);
-              } else {
-                document.getElementById("btn_getInfo").disabled = true;
-                document.getElementById("btn_border").disabled = true;
-                document.getElementById("btn_clickTag").disabled = true;
-                document.getElementById("btn_static").disabled = true;
-                document.getElementById("btn_publish").disabled = true;
-                document.getElementById("btn_publishJpg").disabled = true;
-                document.getElementById("btn_disclaimer_tab").disabled = true;
-                document.getElementById("btn_initialize").disabled = false;
-                clearInterval(y);
-              }
+              csInterface.evalScript('UTIL.layerCheck("actions")', function(result) {
+                if (result > -1) {
+                  //document.getElementById("btn_getInfo").disabled = false;
+                  document.getElementById("btn_border").disabled = false;
+                  document.getElementById("btn_clickTag").disabled = false;
+                  document.getElementById("btn_static").disabled = false;
+                  document.getElementById("btn_disclaimer_tab").disabled = false;
+                  document.getElementById("btn_initialize").disabled = true;
+                  var y = setInterval(isSaved, 60);
+                } else {
+                  //document.getElementById("btn_getInfo").disabled = true;
+                  document.getElementById("btn_border").disabled = true;
+                  document.getElementById("btn_clickTag").disabled = true;
+                  document.getElementById("btn_static").disabled = true;
+                  document.getElementById("btn_publish").disabled = true;
+                  document.getElementById("btn_publishJpg").disabled = true;
+                  document.getElementById("btn_disclaimer_tab").disabled = true;
+                  document.getElementById("btn_initialize").disabled = false;
+                  clearInterval(y);
+                }
               });
             }
-            });
+          });
         }
 
         function isSaved() {
@@ -48,25 +49,6 @@
             }
           });
         }
-
-        /*$("#btn_getInfo").click(function () {
-          csInterface.evalScript('onClick_btn_getInfo()', function(result) {
-            result = JSON.parse(result);
-            var tagField = Object.keys(result).length - 2;
-            for (var i = 1; i <= tagField; i++) {
-              if (i === 1) {
-                 document.getElementById("txt_clickTag1").value = result['clickTag' + i];
-               } else {
-                 if (clickNum < tagField && !document.getElementById("txt_clickTag" + i)) {
-                   addField(result['clickTag' + i]);
-                 }
-               }
-            }
-            document.getElementById("txt_borderWidth").value = result.border.width;
-            document.getElementById("txt_borderColor").value = result.border.color;
-            document.getElementById("chk_loopToggle").checked = result.loop;
-          });
-        });*/
 
         $("#btn_initialize").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
@@ -169,13 +151,11 @@
             hover: document.getElementById("chk_hoverToggle").checked,
             clickthrough: document.getElementById("chk_clickToggle").checked,
             color: document.getElementById("txt_discColor").value + parseInt(document.getElementById("rng_opacity").value * 2.555).toString(16),
-            //opacity: document.getElementById("rng_opacity").value,
             fontColor: document.getElementById("txt_discFontColor").value + 'ff',
             text: document.getElementById("txt_disclaimer1").value
           };
           csInterface.evalScript('onClick_btn_disclaimer(' + JSON.stringify(disclaimer) + ')');
         });
     }
-
     init();
 }());

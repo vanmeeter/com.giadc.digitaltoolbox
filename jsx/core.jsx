@@ -13,6 +13,14 @@ for (var i = 0; i < files.length; i++) {
 	eval(FLfile.read(JS_PATH + '/' + files[i]));
 }
 
+//******************DOC SWITCH****************//
+var switchCount = 1;
+var switcher = fl.addEventListener("documentChanged", function(){switchCount++});
+
+function onSwitch() {
+	return switchCount;
+}
+
 //***********DOCUMENT INITIALIZE************//
 function initializeDoc() {
 

@@ -243,13 +243,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 .over {
-    transform: rotate( -180deg );
-    transition: transform 300ms ease;
+    transform: rotate( -360deg );
+    transition: transform 400ms ease;
+    cursor:pointer;
 }
 
 .out {
     transform: rotate( -360deg );
-    transition: transform 300ms ease;
+    cursor:pointer;
 }
 
 #sizeDisplay {

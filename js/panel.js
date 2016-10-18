@@ -1,9 +1,10 @@
 var clickNum = 1;
+var get = 0;
+var cornerTog = 0;
 
 (function() {
+var switchCount = 1;
 var csInterface = new CSInterface();
-var cornerTog = 0;
-var get = 0;
 var rotate = document.getElementById("btn_reset");
 
 var addField = function(url) {
@@ -34,6 +35,11 @@ var getInfo = function() {
                addField(result['clickTag' + i]);
              }
            }
+           if (tagField < clickNum) {
+             for(var i = 0; i < clickNum - tagField; i++){
+              $("#btn_sub").click();
+            }
+           }
         }
         document.getElementById("txt_borderWidth").value = result.border.width;
         document.getElementById("txt_borderColor").value = result.border.color;
@@ -47,6 +53,12 @@ $("#inital").ready(function(){
   var autoTimer = setInterval(function() {
     csInterface.evalScript('fl.getDocumentDOM()', function(open) {
       if (open != 'null') {
+        csInterface.evalScript('onSwitch()', function(testSwitch) {
+          if (testSwitch != switchCount){
+            get = 0;
+            switchCount = testSwitch;
+          }
+        });
         if (get === 0) {
           getInfo();
           get = 1;
@@ -56,6 +68,10 @@ $("#inital").ready(function(){
       }
   });
   }, 60);
+});
+
+$("#inital").unload(function(){
+  csInterface.evalScript('fl.removeEventListener("documentChanged", switcher)');
 });
 
 $("#btn_add").click(addField);
