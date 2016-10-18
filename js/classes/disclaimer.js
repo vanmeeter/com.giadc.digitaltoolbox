@@ -5,6 +5,7 @@
     draw: function(disclaimer) {
       UI.timeline.setSelectedLayers(Math.abs(UTIL.layerCheck('border')));
       UI.timeline.addNewLayer('disclaimer', 'normal', false);
+      
       //create temp text box to get dynamic height of disclaimer
       UI.dom.addNewText(
         {
@@ -76,8 +77,8 @@
           textMain = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[2];
           textDisp.setTextAttr('fillColor', disclaimer.fontColor);
           textMain.setTextAttr('fillColor', disclaimer.fontColor);
-          textDisp.setTextAttr('face', 'Gf-OpenSans');
-          textMain.setTextAttr('face', 'Gf-OpenSans');
+          textDisp.setTextAttr('face', 'HelveticaNeue');
+          textMain.setTextAttr('face', 'HelveticaNeue');
           textDisp.setTextAttr('size', 9);
           textMain.setTextAttr('size', 10);
           textDisp.setTextAttr('alignment', 'center');

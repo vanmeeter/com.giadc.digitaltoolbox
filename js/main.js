@@ -5,13 +5,12 @@
     'use strict';
     var csInterface = new CSInterface();
     localStorage["footer"] = 'Size of Document: ';
-
     function init() {
         themeManager.init();
         var x = setInterval(isInitialized, 60);
-
         function isInitialized() {
           csInterface.evalScript('fl.getDocumentDOM()', function(open) {
+            //alert(open);
             if (open != 'null') {
             csInterface.evalScript('UTIL.layerCheck("actions")', function(result) {
               if (result > -1) {
@@ -33,9 +32,9 @@
                 document.getElementById("btn_initialize").disabled = false;
                 clearInterval(y);
               }
+              });
+            }
             });
-          }
-          });
         }
 
         function isSaved() {
@@ -50,7 +49,7 @@
           });
         }
 
-        $("#btn_getInfo").click(function () {
+        /*$("#btn_getInfo").click(function () {
           csInterface.evalScript('onClick_btn_getInfo()', function(result) {
             result = JSON.parse(result);
             var tagField = Object.keys(result).length - 2;
@@ -67,7 +66,7 @@
             document.getElementById("txt_borderColor").value = result.border.color;
             document.getElementById("chk_loopToggle").checked = result.loop;
           });
-        });
+        });*/
 
         $("#btn_initialize").click(function () {
           var bWidth = document.getElementById("txt_borderWidth").value;
@@ -117,7 +116,6 @@
           }
           clickURL.clickNum = clickNum;
           csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
-          //alert('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
         });
 
         $("#btn_static").click(function () {
@@ -130,8 +128,6 @@
             sizeDisplay.innerHTML = 'Size of Document: ' + result/1000 + "kb"
             localStorage["footer"] = sizeDisplay.innerHTML;
           });
-
-
         });
 
         $("#btn_publishJpg").click(function () {
@@ -143,6 +139,7 @@
           csInterface.evalScript('PUBLISH.publishJpg("' + q + '")');
           csInterface.evalScript('UI.dom.publish();');
           csInterface.evalScript('fl.trace("Please wait for JPG to export.")');
+
           var run = function() {
             if (jpgFileSize > size && q > 0) {
               q--;
@@ -156,7 +153,6 @@
               csInterface.evalScript('PUBLISH.showHideLayers(true);');
             }
           };
-
           var getSize = function() {
             csInterface.evalScript('PUBLISH.getFileSize()', function(result) {
               jpgFileSize = result / 1000;

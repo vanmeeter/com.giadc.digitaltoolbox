@@ -1,5 +1,10 @@
 var clickNum = 1;
+
+(function() {
+var csInterface = new CSInterface();
 var cornerTog = 0;
+var get = 0;
+var rotate = document.getElementById("btn_reset");
 
 var addField = function(url) {
   var url = (typeof url !== 'object') ? url : "";
@@ -14,6 +19,44 @@ var addField = function(url) {
     document.getElementById("txt_clickTag" + i).value = currentTags[i];
   }
 }
+
+var getInfo = function() {
+  csInterface.evalScript('UI.timeline.layers[0].name', function(initCheck) {
+    if (initCheck === 'actions') {
+      csInterface.evalScript('onClick_btn_getInfo()', function(result) {
+        result = JSON.parse(result);
+        var tagField = Object.keys(result).length - 2;
+        for (var i = 1; i <= tagField; i++) {
+          if (i === 1) {
+             document.getElementById("txt_clickTag1").value = result['clickTag' + i];
+           } else {
+             if (clickNum < tagField && !document.getElementById("txt_clickTag" + i)) {
+               addField(result['clickTag' + i]);
+             }
+           }
+        }
+        document.getElementById("txt_borderWidth").value = result.border.width;
+        document.getElementById("txt_borderColor").value = result.border.color;
+        document.getElementById("chk_loopToggle").checked = result.loop;
+      });
+    }
+  });
+};
+
+$("#inital").ready(function(){
+  var autoTimer = setInterval(function() {
+    csInterface.evalScript('fl.getDocumentDOM()', function(open) {
+      if (open != 'null') {
+        if (get === 0) {
+          getInfo();
+          get = 1;
+        }
+      }else {
+        get = 0;
+      }
+  });
+  }, 60);
+});
 
 $("#btn_add").click(addField);
 
@@ -39,3 +82,27 @@ $("#btn_main_tab").click(function () {
 
 $("#btn_roundCorner").click(function() {cornerTog = 1});
 $("#btn_sharpCorner").click(function() {cornerTog = 0});
+
+//reset bttn
+rotate.addEventListener( 'mouseover', function () {
+
+    this.className = 'over';
+    this.cursor = 'pointer';
+
+}, false );
+
+rotate.addEventListener( 'mouseout', function () {
+
+    var rotate = this;
+
+    rotate.className = 'out';
+    window.setTimeout( function () { rotate.className = '' }, 150 );
+
+}, false );
+
+$("#btn_reset").click(function() {
+  location.href='index.html';
+  localStorage["footer"] = 'Size of Document: ';
+});
+
+}());
