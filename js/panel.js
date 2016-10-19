@@ -36,7 +36,8 @@ var getInfo = function() {
              }
            }
            if (tagField < clickNum) {
-             for(var i = 0; i < clickNum - tagField; i++){
+             var removeUpdate = clickNum - tagField;
+             for(var i = 0; i < removeUpdate; i++){
               $("#btn_sub").click();
             }
            }

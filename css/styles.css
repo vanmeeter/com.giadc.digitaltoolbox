@@ -186,10 +186,6 @@ body::-webkit-scrollbar-thumb {
   display:inline-block;
 }
 
-/*.contRow .addSub .topcoat-icon-button--quiet {
-  display:inline-block;
-}*/
-
 #click_fields .topcoat-text-input{
   display:inline-block;
 }
