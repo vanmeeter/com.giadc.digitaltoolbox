@@ -23,7 +23,6 @@ function onSwitch() {
 
 //***********DOCUMENT INITIALIZE************//
 function initializeDoc() {
-
 	var frameIndex = UI.timeline.frameCount;
 	if (UTIL.layerCheck('actions') > -1) {
 		UI.timeline.deleteLayer(UTIL.layerCheck('actions'));
@@ -90,7 +89,7 @@ function onClick_btn_border(bWidth, bColor) {
 	  if (UTIL.layerCheck('border') > -1) {
 	    UI.timeline.deleteLayer(UTIL.layerCheck('border'));
 	    BORDER.createBorder(bWidth, bColor);
-	  } else {
+	  }else {
 	    BORDER.createBorder(bWidth, bColor);
 	  }
 		UI.timeline.layers[UTIL.layerCheck('border')].locked = true;

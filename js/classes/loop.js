@@ -1,5 +1,6 @@
 (function() {
   var replayIcon = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/icons/replay_arrow.svg';
+  var loopCode = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/loopCode.txt');
 
   LOOP =
   {
@@ -16,7 +17,7 @@
 
         UI.timeline.convertToKeyframes();
         UI.timeline.setFrameProperty('name', 'loop');
-        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.alreadyExecuted=true;\n\tthis.loopNum = 1;\n} else {\n\tthis.loopNum++;\n\tif (this.loopNum === 3) {\n\t\tthis.gotoAndStop(\'static\');\n\t}\n}');
+        fl.actionsPanel.setText(loopCode.slice(12, loopCode.indexOf('//replay code')));
         fl.actionsPanel.setSelection(0,0);
 
 //*************REPLAY***************//
@@ -74,7 +75,7 @@
         UI.timeline.clearKeyframes(frameIndex, frameIndex);
         UI.timeline.convertToKeyframes(frameIndex, frameIndex);
         UI.timeline.setFrameProperty('name', 'replay');
-        fl.actionsPanel.setText('this.stop();\n\nif (!this.alreadyExecuted) {\n\tthis.replay.addEventListener("click", fl_ClickToGoToAndPlayFromFrame_replay.bind(this));\n}\n\nfunction fl_ClickToGoToAndPlayFromFrame_replay() {\n\tthis.alreadyExecuted=true;\n\tthis.gotoAndPlay(0);\n}');
+        fl.actionsPanel.setText(loopCode.slice(loopCode.indexOf('//replay code') + 14, loopCode.length - 1));
         fl.actionsPanel.setSelection(0,0);
         UI.dom.library.selectItem('replay_bttn');
         UI.dom.library.addItemToDocument({x:UI.dom.width - 14, y:14});

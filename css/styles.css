@@ -101,10 +101,9 @@ body::-webkit-scrollbar-thumb {
   margin-right:10px;
 }
 
-#btn_initialize {
-  display:inline-block;
-}
-
+#click_fields .topcoat-text-input,
+.addSub,
+#btn_initialize,
 #toggleLoop,
 #toggleHover,
 #toggleClick {
@@ -150,7 +149,8 @@ body::-webkit-scrollbar-thumb {
   margin-left: 1.37rem;
 }
 
-#border_bttnDiv {
+#border_bttnDiv,
+#static_bttnDiv {
   width:30%;
 }
 #btn_border {
@@ -159,7 +159,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 #border_fields,
-#disc_fields {
+#disc_fields,
+#static_field {
   width: auto;
 }
 
@@ -182,24 +183,8 @@ body::-webkit-scrollbar-thumb {
   margin-bottom:5px;
 }
 
-.addSub {
-  display:inline-block;
-}
-
-#click_fields .topcoat-text-input{
-  display:inline-block;
-}
-
 #pub_bttnDiv {
   margin-bottom:35px;
-}
-
-#static_bttnDiv {
-  width:30%;
-}
-
-#static_field {
-  width: auto;
 }
 
 #txt_jpegQuality {
@@ -219,16 +204,11 @@ body::-webkit-scrollbar-thumb {
   background-image: url("../images/footer.png");
 }
 
-#leftLines {
-  position:fixed;
-  bottom:3px;
-  left:3px;
-}
-
+#leftLines,
 #rightLines {
   position:fixed;
   bottom:3px;
-  right:3px;
+  left:3px;
 }
 
 #btn_reset {

@@ -9,21 +9,18 @@
         themeManager.init();
 
         var x = setInterval(isInitialized, 60);
+        var y = setInterval(isSaved, 60);
         function isInitialized() {
           csInterface.evalScript('fl.getDocumentDOM()', function(open) {
-            //alert(open);
             if (open != 'null') {
               csInterface.evalScript('UTIL.layerCheck("actions")', function(result) {
                 if (result > -1) {
-                  //document.getElementById("btn_getInfo").disabled = false;
                   document.getElementById("btn_border").disabled = false;
                   document.getElementById("btn_clickTag").disabled = false;
                   document.getElementById("btn_static").disabled = false;
                   document.getElementById("btn_disclaimer_tab").disabled = false;
                   document.getElementById("btn_initialize").disabled = true;
-                  var y = setInterval(isSaved, 60);
                 } else {
-                  //document.getElementById("btn_getInfo").disabled = true;
                   document.getElementById("btn_border").disabled = true;
                   document.getElementById("btn_clickTag").disabled = true;
                   document.getElementById("btn_static").disabled = true;
@@ -31,7 +28,6 @@
                   document.getElementById("btn_publishJpg").disabled = true;
                   document.getElementById("btn_disclaimer_tab").disabled = true;
                   document.getElementById("btn_initialize").disabled = false;
-                  clearInterval(y);
                 }
               });
             }
@@ -40,7 +36,7 @@
 
         function isSaved() {
           csInterface.evalScript('typeof UI.dom.pathURI', function(result) {
-            if (result != 'undefined') {
+            if (result != 'undefined' && document.getElementById("btn_initialize").disabled === true) {
               document.getElementById("btn_publish").disabled = false;
               document.getElementById("btn_publishJpg").disabled = false;
             } else {
@@ -122,7 +118,7 @@
           csInterface.evalScript('UI.dom.publish();');
           csInterface.evalScript('fl.trace("Please wait for JPG to export.")');
 
-          var run = function() {
+          var exportJPG = function() {
             if (jpgFileSize > size && q > 0) {
               q--;
               csInterface.evalScript('PUBLISH.publishJpg("' + q + '")');
@@ -139,7 +135,7 @@
             csInterface.evalScript('PUBLISH.getFileSize()', function(result) {
               jpgFileSize = result / 1000;
             });
-            setTimeout(run, 1);
+            setTimeout(exportJPG, 1);
           };
           setTimeout(getSize, 1);
         });

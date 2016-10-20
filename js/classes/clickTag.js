@@ -57,7 +57,7 @@
               right:UI.dom.width,
               bottom:UI.dom.height
             },0, false, true);
-            UI.dom.setCustomFill(legacyStyle);
+          UI.dom.setCustomFill(legacyStyle);
 
           //converts to button
           UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));

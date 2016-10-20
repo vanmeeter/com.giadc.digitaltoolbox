@@ -1,0 +1,22 @@
+//loop code
+if (!this.alreadyExecuted) {
+	this.alreadyExecuted=true;
+	this.loopNum = 1;
+} else {
+	this.loopNum++;
+	if (this.loopNum === 3) {
+		this.gotoAndStop('static');
+	}
+}
+
+//replay code
+this.stop();
+
+if (!this.alreadyExecuted) {
+	this.replay.addEventListener("click", fl_ClickToGoToAndPlayFromFrame_replay.bind(this));
+}
+
+function fl_ClickToGoToAndPlayFromFrame_replay() {
+	this.alreadyExecuted=true;
+	this.gotoAndPlay(0);
+}

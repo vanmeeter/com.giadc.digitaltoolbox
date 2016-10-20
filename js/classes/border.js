@@ -12,7 +12,7 @@
 // BORDER
 /**
  * Border
- * @overview	border creation or digitalToolbox
+ * @overview	border creation for digitalToolbox
  *
  * @author		Jacob VanMeeter
  */
