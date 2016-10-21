@@ -20,7 +20,7 @@
                   document.getElementById("btn_static").disabled = false;
                   document.getElementById("btn_disclaimer_tab").disabled = false;
                   document.getElementById("btn_initialize").disabled = true;
-                } else {
+                }else {
                   document.getElementById("btn_border").disabled = true;
                   document.getElementById("btn_clickTag").disabled = true;
                   document.getElementById("btn_static").disabled = true;
@@ -39,7 +39,7 @@
             if (result != 'undefined' && document.getElementById("btn_initialize").disabled === true) {
               document.getElementById("btn_publish").disabled = false;
               document.getElementById("btn_publishJpg").disabled = false;
-            } else {
+            }else {
               document.getElementById("btn_publish").disabled = true;
               document.getElementById("btn_publishJpg").disabled = true;
             }

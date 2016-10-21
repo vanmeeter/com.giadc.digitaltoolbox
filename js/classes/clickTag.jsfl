@@ -4,15 +4,14 @@
     {
 
       giadcScriptInject: function(clickCheck) {
-
-        var clickCode = 'if (!this.alreadyExecuted) {\n\tvar script = document.createElement("script");\n\tscript.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";\n\tdocument.head.appendChild(script);\n}';
+        var clickCode = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/clickCode.txt');
         UI.timeline.setSelectedLayers(0);
         UI.timeline.setSelectedFrames(0, 0, true);
         var actionText = fl.actionsPanel.getText();
         if (clickCheck > -1) {
           UI.timeline.setSelectedFrames(0, 0, true);
           UTIL.actionsSelect('if (!this.alreadyExecuted) {\n\tvar script = document.createElement("script")', 10);
-          if (fl.actionsPanel.hasSelection()) {
+          if (fl.actionsPanel.hasSelection()){
             fl.actionsPanel.setSelection(0,0);
           } else {
             fl.actionsPanel.setText(clickCode + '\n\n' + actionText);
@@ -28,10 +27,9 @@
             UI.dom.frameRate = 30;
           }
           fl.actionsPanel.setSelection(0,0);
-        },
+      },
 
       createClickTag: function(url, tagNum) {
-
           if (UTIL.layerCheck('disclaimer') >= 0){
             UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
           }else {

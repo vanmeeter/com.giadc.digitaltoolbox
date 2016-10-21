@@ -20,7 +20,7 @@
         var urlregex = new RegExp('^(https?:\/\/)?(^(https?:\/\/)[0-9A-Za-z]+\.+[a-z]{2,5})');
         if (!urlregex.test(url)) {
           return 'http://' + url;
-        } else {
+        }else {
           return url;
         }
       }
