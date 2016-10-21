@@ -8,7 +8,7 @@
 
 //**************INCLUDE CODE FOR EXTERNAL JS****************//
 var JS_PATH = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/js/classes';
-var files = FLfile.listFolder(JS_PATH)
+var files = FLfile.listFolder(JS_PATH);
 for (var i = 0; i < files.length; i++) {
 	eval(FLfile.read(JS_PATH + '/' + files[i]));
 }

@@ -1,0 +1,5 @@
+if (!this.alreadyExecuted) {
+	var script = document.createElement("script");
+	script.src = "//ssl.gannett-cdn.com/ads/giadc/scripts/giadc-basic-core.js";
+	document.head.appendChild(script);
+}

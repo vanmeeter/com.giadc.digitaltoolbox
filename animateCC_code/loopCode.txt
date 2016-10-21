@@ -2,7 +2,7 @@
 if (!this.alreadyExecuted) {
 	this.alreadyExecuted=true;
 	this.loopNum = 1;
-} else {
+}else {
 	this.loopNum++;
 	if (this.loopNum === 3) {
 		this.gotoAndStop('static');
