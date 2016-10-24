@@ -190,6 +190,8 @@ function onClick_btn_disclaimer(disclaimer) {
 	if (UI.dom.library.itemExists('disclaimer')) {
 		UI.dom.library.deleteItem('disclaimer');
 		UI.dom.library.deleteItem('disclaimer_content');
+		UI.dom.library.deleteItem('disclaimer_display');
+		UI.dom.library.deleteItem('disclaimer_close');
 	}
 	DISCLAIMER.draw(disclaimer);
 	DISCLAIMER.addText(disclaimer);
