@@ -91,6 +91,14 @@ $("#btn_disclaimer_tab").click(function () {
   location.href='disclaimer.html';
 });
 
+$("#toggleHover").click(function () {
+  if (document.getElementById("chk_hoverToggle").checked === false) {
+    document.getElementById("chk_clickToggle").checked = false;
+  }else {
+    document.getElementById("chk_clickToggle").checked = true;
+  }
+});
+
 $("#btn_main_tab").click(function () {
   var sizeDisplay = document.getElementById("sizeDisplay");
   localStorage["footer"] = sizeDisplay.innerHTML;
