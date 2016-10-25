@@ -71,9 +71,10 @@
                 bottom:UI.dom.height + 17
               },0, false, true);
             UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
-              UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
+            UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
         }
         //reset to previous settings
+        UI.dom.selectNone();
         UI.dom.setCustomFill(legacyStyle);
     },
 
@@ -168,26 +169,26 @@
             right:UI.dom.width - 6,
             bottom:UI.dom.height
           }, true, true);
-        UI.dom.convertToSymbol('movie clip', 'disclaimer_display', 'top left');
+        UI.dom.convertToSymbol('button', 'disclaimer_display', 'top left');
         UI.dom.distributeToLayers();
 
         UI.timeline.setSelectedLayers(0);
-        UI.dom.convertToSymbol('button', 'disclaimer_content', 'top left');
+        UI.dom.convertToSymbol('movie clip', 'disclaimer_content', 'top left');
         UI.timeline.layers[0].frames[0].elements[0].name = 'disclaimer_content';
         UI.timeline.layers[1].frames[0].elements[0].name = 'disclaimer_display';
-
+        //set code
         UI.timeline.setSelectedLayers(0);
         UI.timeline.addNewLayer('actions', 'normal', true);
         fl.actionsPanel.setText(animCode.slice(animCode.lastIndexOf('//'), animCode.length - 1));
         fl.actionsPanel.setSelection(0, 0);
-
+        //opacity content
         UI.timeline.setSelectedLayers(1);
         UI.timeline.convertToKeyframes(21, 21);
         UI.timeline.setSelectedLayers(2);
         UI.timeline.convertToKeyframes(21, 21);
         UI.timeline.setSelectedFrames(21, 21);
         UI.dom.setInstanceAlpha(0);
-
+        //opacity display
         UI.timeline.setSelectedFrames(0, 0);
         UI.timeline.createMotionTween();
         UI.timeline.setSelectedLayers(1);

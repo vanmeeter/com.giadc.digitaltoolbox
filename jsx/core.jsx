@@ -77,6 +77,30 @@ function onClick_btn_getInfo() {
 	}else {
 		data.loop = true;
 	}
+	if (UTIL.layerCheck('disclaimer') >= 0){
+		if(UI.dom.library.itemExists('disclaimer_close')){
+			UI.dom.library.editItem('disclaimer_content');
+			data.disclaimerText = UI.timeline.layers[0].frames[0].elements[1].getTextString();
+			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 4){
+				data.disclaimerCorner = 1;
+			}else {
+				data.disclaimerCorner = 0;
+			}
+			data.disclaimerHover = false;
+		}else {
+			UI.dom.library.editItem('disclaimer_content');
+			data.disclaimerText = UI.timeline.layers[0].frames[0].elements[2].getTextString();
+			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 6){
+				data.disclaimerCorner = 1;
+			}else {
+				data.disclaimerCorner = 0;
+			}
+			data.disclaimerHover = true;
+		}
+		data.disclaimerFontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
+		data.disclaimerColor = UI.dom.getCustomFill().color;
+		UI.dom.exitEditMode();
+	}
 	return (JSON.encode(data));
 }
 
