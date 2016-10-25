@@ -26,25 +26,46 @@ var getInfo = function() {
     if (initCheck === 'actions') {
       csInterface.evalScript('onClick_btn_getInfo()', function(result) {
         result = JSON.parse(result);
-        var tagField = Object.keys(result).length - 2;
-        for (var i = 1; i <= tagField; i++) {
-          if (i === 1) {
-             document.getElementById("txt_clickTag1").value = result['clickTag' + i];
-           } else {
-             if (clickNum < tagField && !document.getElementById("txt_clickTag" + i)) {
-               addField(result['clickTag' + i]);
+        var tagField = Object.keys(result).length - 7;
+        if (document.getElementById("txt_clickTag1") != null) {
+          for (var i = 1; i <= tagField; i++) {
+            if (i === 1) {
+               document.getElementById("txt_clickTag1").value = result['clickTag' + i];
+             } else {
+               if (clickNum < tagField && !document.getElementById("txt_clickTag" + i)) {
+                 addField(result['clickTag' + i]);
+               }
              }
-           }
-           if (tagField < clickNum) {
-             var removeUpdate = clickNum - tagField;
-             for(var i = 0; i < removeUpdate; i++){
-              $("#btn_sub").click();
+             if (tagField < clickNum) {
+               var removeUpdate = clickNum - tagField;
+               for(var i = 0; i < removeUpdate; i++){
+                $("#btn_sub").click();
+              }
+             }
+          }
+          document.getElementById("txt_borderWidth").value = result.border.width;
+          document.getElementById("txt_borderColor").value = result.border.color;
+          document.getElementById("chk_loopToggle").checked = result.loop;
+        }else {
+          csInterface.evalScript('UTIL.layerCheck(' + "'disclaimer'" + ')', function(discCheck) {
+            if(discCheck >= 0) {
+              document.getElementById("txt_disclaimer1").innerHTML = result.disclaimerText;
+              if (result.disclaimerHover === false) {
+                document.getElementById("chk_clickToggle").checked = false;
+                document.getElementById("chk_clickToggle").disabled = true;
+              }
+              document.getElementById("chk_hoverToggle").checked = result.disclaimerHover;
+              document.getElementById("txt_discFontColor").value = result.disclaimerFontColor;
+              document.getElementById("txt_discColor").value = result.disclaimerColor.slice(0, 7);
+              if (parseInt('0x' + result.disclaimerColor.slice(7, 9)) / 2.555 >= 0) {
+                document.getElementById("rng_opacity").value = parseInt('0x' + result.disclaimerColor.slice(7, 9)) / 2.555;
+              }else {
+                document.getElementById("rng_opacity").value = 100;
+              }
+              cornerTog = result.disclaimerCorner;
             }
-           }
+          });
         }
-        document.getElementById("txt_borderWidth").value = result.border.width;
-        document.getElementById("txt_borderColor").value = result.border.color;
-        document.getElementById("chk_loopToggle").checked = result.loop;
       });
     }
   });
@@ -94,7 +115,9 @@ $("#btn_disclaimer_tab").click(function () {
 $("#toggleHover").click(function () {
   if (document.getElementById("chk_hoverToggle").checked === false) {
     document.getElementById("chk_clickToggle").checked = false;
+    document.getElementById("chk_clickToggle").disabled = true;
   }else {
+    document.getElementById("chk_clickToggle").disabled = false;
     document.getElementById("chk_clickToggle").checked = true;
   }
 });
