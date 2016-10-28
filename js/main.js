@@ -18,14 +18,17 @@
                   document.getElementById("btn_border").disabled = false;
                   document.getElementById("btn_clickTag").disabled = false;
                   document.getElementById("btn_static").disabled = false;
+                  document.getElementById("btn_disclaimer").disabled = false;
                   document.getElementById("btn_initialize").disabled = true;
                 } else {
                   document.getElementById("btn_border").disabled = true;
                   document.getElementById("btn_clickTag").disabled = true;
                   document.getElementById("btn_static").disabled = true;
+                  document.getElementById("btn_disclaimer").disabled = true;
                   document.getElementById("btn_publish").disabled = true;
                   document.getElementById("btn_publishJpg").disabled = true;
                   document.getElementById("btn_initialize").disabled = false;
+
                 }
               });
             }
