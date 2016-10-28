@@ -100,6 +100,12 @@ function onClick_btn_getInfo() {
 		data.disclaimerFontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
 		data.disclaimerColor = UI.dom.getCustomFill().color;
 		UI.dom.exitEditMode();
+	}else {
+		data.disclaimerCorner = 0;
+		data.disclaimerHover = true;
+		data.disclaimerFontColor = '#ffffff';
+		data.disclaimerColor = '#00000041';
+		data.disclaimerText = '';
 	}
 	return (JSON.encode(data));
 }

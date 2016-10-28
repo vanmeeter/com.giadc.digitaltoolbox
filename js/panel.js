@@ -141,6 +141,14 @@ $("#disclaimer1").find(".disc_top").click(function(){
   $("#txt_disclaimer1").animate({ height: 'toggle' });
 });
 
+$("#disclaimer2").find(".disc_top").click(function(){
+  $("#txt_disclaimer2").animate({ height: 'toggle' });
+});
+
+$("#disclaimer3").find(".disc_top").click(function(){
+  $("#txt_disclaimer3").animate({ height: 'toggle' });
+});
+
 $("#btn_roundCorner").click(function() {cornerTog = 1});
 $("#btn_sharpCorner").click(function() {cornerTog = 0});
 
@@ -160,13 +168,6 @@ rotate.addEventListener( 'mouseout', function () {
     window.setTimeout( function () { rotate.className = '' }, 150 );
 
 }, false );
-
-/*$(window).resize(function(){
-  var txt_marLeft = 35 + ($(window).width / 250 * .02);
-  var span_marLeft = 14 + ($(window).width / 250 * .30667);
-  $('#txt_jpegQuality').animate({left: span_marLeft});
-  $('#jpg_btn_div').find('span').animate({left: span_marLeft});
-});*/
 
 $("#btn_reset").click(function() {
   location.href='index.html';
