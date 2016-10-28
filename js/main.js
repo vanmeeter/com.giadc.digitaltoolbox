@@ -18,7 +18,6 @@
                   document.getElementById("btn_border").disabled = false;
                   document.getElementById("btn_clickTag").disabled = false;
                   document.getElementById("btn_static").disabled = false;
-                  document.getElementById("btn_disclaimer_tab").disabled = false;
                   document.getElementById("btn_initialize").disabled = true;
                 } else {
                   document.getElementById("btn_border").disabled = true;
@@ -26,7 +25,6 @@
                   document.getElementById("btn_static").disabled = true;
                   document.getElementById("btn_publish").disabled = true;
                   document.getElementById("btn_publishJpg").disabled = true;
-                  document.getElementById("btn_disclaimer_tab").disabled = true;
                   document.getElementById("btn_initialize").disabled = false;
                 }
               });
@@ -73,13 +71,6 @@
         $("#chk_loopToggle").click(function () {
           var loopTog = document.getElementById("chk_loopToggle").checked;
           csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
-        });
-
-        $("#btn_border").click(function () {
-          var bWidth = document.getElementById("txt_borderWidth").value;
-          var bColor = document.getElementById("txt_borderColor").value;
-          var loopTog = document.getElementById("chk_loopToggle").checked;
-          csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
         });
 
         $("#btn_clickTag").click(function () {

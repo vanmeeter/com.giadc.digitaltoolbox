@@ -1,0 +1,120 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  font-size: 12px;
+  padding: 0 0.563rem;
+  border: 1px solid #333434;
+  overflow: hidden;
+  width: 100%;
+  height:100%;
+}
+
+.switch__input {
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  opacity: 0.001;
+  z-index: 1;
+  vertical-align: top;
+  outline: none;
+}
+
+.switch__toggle {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: default;
+  user-select: none;
+  line-height: 52px;
+  height:52px;
+  width: 1rem;
+  color: #c6c8c8;
+  text-shadow: 0 -1px rgba(0,0,0,0.69);
+  background-color: #595b5b;
+  border: 1px solid #333434;
+  margin-left: -0.6rem;
+  margin-bottom: -1px;
+  margin-top: -1px;
+  box-shadow: inset 0 1px #737373;
+  transition: margin-left .3s ease-in-out;
+}
+
+.switch__toggle:before,
+.switch__toggle:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+.switch--disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+.switch__toggle:before,
+.switch__toggle:after, {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+.switch--disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.switch__toggle:before,
+.switch__toggle:after {
+  top: -1px;
+  width: 2.6rem;
+}
+
+.switch__toggle:before {
+  content: 'ON';
+  color: #288edf;
+  background-color: #3f4041;
+  right: 2rem;
+  padding-left: 0.75rem;
+}
+
+.switch__toggle:after {
+  content: 'OFF';
+  background-color: #3f4041;
+  left: 0.8rem;
+  padding-left: 0.6rem;
+}
+
+.switch__input:checked + .switch__toggle {
+  margin-left: 3.4rem;
+}
+
+.switch__input:active + .switch__toggle {
+  border: 1px solid #333434;
+  box-shadow: inset 0 1px #737373;
+}
+
+.switch__input:focus + .switch__toggle {
+  border: 1px solid #fb4f00;
+}
+
+.switch__input:disabled + .switch__toggle:after,
+.switch__input:disabled + .switch__toggle:before {
+  background: transparent;
+}

@@ -1,6 +1,7 @@
 var clickNum = 1;
 var get = 0;
 var cornerTog = 0;
+var editNum;
 
 (function() {
 var switchCount = 1;
@@ -15,7 +16,7 @@ var addField = function(url) {
     currentTags[i] = document.getElementById("txt_clickTag" + i).value;
   }
   clickNum++;
-  document.getElementById("click_fields").innerHTML = clickFields + '<input id="txt_clickTag' + clickNum + '" class="topcoat-text-input" style="width:98%; margin-bottom:5px;" type="text" placeholder="Enter ClickTag" value="' + url + '" required>';
+  document.getElementById("click_fields").innerHTML = clickFields + '<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-field" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>';
   for (var i = 1; i< clickNum; i++) {
     document.getElementById("txt_clickTag" + i).value = currentTags[i];
   }
@@ -46,7 +47,6 @@ var getInfo = function() {
           document.getElementById("txt_borderWidth").value = result.border.width;
           document.getElementById("txt_borderColor").value = result.border.color;
           document.getElementById("chk_loopToggle").checked = result.loop;
-        }else {
           csInterface.evalScript('UTIL.layerCheck(' + "'disclaimer'" + ')', function(discCheck) {
             if(discCheck >= 0) {
               document.getElementById("txt_disclaimer1").innerHTML = result.disclaimerText;
@@ -96,20 +96,31 @@ $("#inital").unload(function(){
   csInterface.evalScript('fl.removeEventListener("documentChanged", switcher)');
 });
 
-$("#btn_add").click(addField);
-
-$("#btn_sub").click(function () {
-  var clickFields = document.getElementById("click_fields").innerHTML;
-  if (clickNum > 1) {
-    $('#txt_clickTag' + clickNum).remove();
-    clickNum--;
-  }
+$("#btn_border").click(function() {
+  $("#border_flyout").animate({opacity:'toggle'});
+  $("#btn_border").click(function(){
+    var bWidth = document.getElementById("txt_borderWidth").value;
+    var bColor = document.getElementById("txt_borderColor").value;
+    var loopTog = document.getElementById("chk_loopToggle").checked;
+    csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+  });
 });
 
-$("#btn_disclaimer_tab").click(function () {
-  var sizeDisplay = document.getElementById("sizeDisplay");
-  localStorage["footer"] = sizeDisplay.innerHTML;
-  location.href='disclaimer.html';
+$("#btn_add").click(addField);
+
+$(document).on('click', '#btn_sub', function () {
+  if (clickNum > 1) {
+    $('#clickTag' + editNum).remove();
+    if (editNum < clickNum) {
+      for (var i = editNum + 1; i <= clickNum; i++) {
+        $('#clickTag' + i).find('h4').html('ClickTag ' + (i - 1));
+        $('#txt_clickTag' + i).attr('id', 'txt_clickTag' + (i - 1));
+        $('#clickTag' + i).find('#btn_sub').attr('onclick', 'editNum = ' + (i - 1));
+        $('#clickTag' + i).attr('id', 'clickTag' + (i - 1));
+      }
+    }
+    clickNum--;
+  }
 });
 
 $("#toggleHover").click(function () {
@@ -122,10 +133,12 @@ $("#toggleHover").click(function () {
   }
 });
 
-$("#btn_main_tab").click(function () {
-  var sizeDisplay = document.getElementById("sizeDisplay");
-  localStorage["footer"] = sizeDisplay.innerHTML;
-  location.href='index.html';
+$("#btn_settings_disc").click(function(){
+  $("#disc_settings").animate({ height: 'toggle' });
+});
+
+$("#disclaimer1").find(".disc_top").click(function(){
+  $("#txt_disclaimer1").animate({ height: 'toggle' });
 });
 
 $("#btn_roundCorner").click(function() {cornerTog = 1});
@@ -148,9 +161,27 @@ rotate.addEventListener( 'mouseout', function () {
 
 }, false );
 
+/*$(window).resize(function(){
+  var txt_marLeft = 35 + ($(window).width / 250 * .02);
+  var span_marLeft = 14 + ($(window).width / 250 * .30667);
+  $('#txt_jpegQuality').animate({left: span_marLeft});
+  $('#jpg_btn_div').find('span').animate({left: span_marLeft});
+});*/
+
 $("#btn_reset").click(function() {
   location.href='index.html';
   localStorage["footer"] = 'Size of Document: ';
 });
 
 }());
+
+/*$(document).on('click', '.ct_over', function () {
+  if ($(".ct_over").css('right') === undefined){
+    $(".ct_over").css('right') = '0px';
+  }
+  if ($(":focus").css('right') != '40px') {
+    $(":focus").animate({ right: '40px' });
+  }else{
+    $(":focus").animate({ right: '-=40px' });
+  }
+});*/

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 
 <link rel="stylesheet" href="css/topcoat-desktop-dark.css"/>
+<link  id="hostStyle" rel="stylesheet" href="css/switch.css"/>
 <link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
 
 <title></title>
@@ -12,85 +13,146 @@
 <body id="inital" class="hostElt">
   <div id="header"><img src="images/header.png" /></div>
 
-    <div id="nav">
-      <div id = "main_tab" style="width:50%; float:left; display:inline-block;">
-        <button class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Main</button>
-      </div>
-      <div id = "disclaimer_tab" style="width:48%; float:right; display:inline-block; padding-right:4px;">
-        <button id="btn_disclaimer_tab" class="topcoat-tab-bar__button"style="width:100%; margin:0px;">Disclaimer/Widgets</button>
-      </div>
-    </div>
-<!--style="position:fixed; top:40px;"-->
     <div id="content">
+
         <div class = "contRow">
           <div id="init_bttnDiv">
-            <button id="btn_initialize" class="topcoat-button--large--cta" style="width:100%;">Initialize</button>
+            <button id="btn_initialize" class="button-large-cta">Initialize</button>
+          </div>
+        </div>
+
+        <div id="miscSettings" class = "contRow">
+          <div id="border_flyout">
+            <div id="point"></div>
+            <div id="border_flyout_fields">
+              <input id="txt_borderWidth" class="text-input" type="text" placeholder="width" value="1">
+              <input id="txt_borderColor" class="text-input" type="text"  placeholder="color" value="#000000">
+            </div>
+          </div>
+          <div id="border_bttnDiv">
+            <button id="btn_border" class="button-large">Border</button>
+          </div>
+          <div id="static_bttnDiv">
+            <button id="btn_static" class="button-large">Set Static</button>
           </div>
           <div id="toggleLoop">
-            <label class="topcoat-switch" style="margin-top:2px;">
-              <input id="chk_loopToggle" type="checkbox" class="topcoat-switch__input" checked>
-                <div class="topcoat-switch__toggle"></div>
+            <label class="switch">
+              <input id="chk_loopToggle" type="checkbox" class="switch__input" checked>
+                <div class="switch__toggle"></div>
             </label>
           </div>
         </div>
 
         <div class = "contRow">
-          <h3 class="sectionLabel">Border</h3>
-          <!--<hr / class="sectionRule" style="top:118px;">-->
-          <div id=border_bttnDiv>
-            <button id="btn_border" class="topcoat-button--large hostFontSize" style="float:left;">Border</button>
-          </div>
-          <div id="border_fields">
-              <input id="txt_borderWidth" class="topcoat-text-input" type="text" placeholder="width" value="1">
-              <input id="txt_borderColor" class="topcoat-text-input" type="text"  placeholder="color" value="#000000">
-          </div>
-        </div>
-
-        <div class = "contRow">
-          <h3 class="sectionLabel">ClickTag</h3>
-          <div class="addSub">
-            <button id="btn_add" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;">
-              <span>+</span>
-            </button>
-            <button id="btn_sub" class="topcoat-icon-button--quiet" style="width:15px; height:15px; line-height:0px; padding:0px; padding-bottom:2px;" >
-              <span>-</span>
+          <div class="sectionLabel">
+            <h2>ClickTag</h2>
+            <button id="btn_add" class="icon-button">
+              <div class="circle">
+                <span>+</span>
+              </div>
             </button>
           </div>
-          <!--<hr / class="sectionRule" style="top:190px;">-->
           <div id="click_fields">
-            <input id="txt_clickTag1" class="topcoat-text-input" style="width:98%; margin-bottom:5px;" type="text" placeholder="Enter ClickTag" required>
+            <div id="clickTag1">
+              <button class="ct_over">
+                <h4>ClickTag 1</h4>
+                </br>
+                <input id="txt_clickTag1" class="text-field" type="text" placeholder="Enter ClickTag" required>
+              </button>
+              <div class="ct_under">
+                <button id="btn_sub" class="icon-button" onclick="editNum = 1">
+                  <div class="circle">
+                    <span>-</span>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
           <div id="click_bttnDiv">
-            <button id="btn_clickTag" style="width:98%; margin-left:2px; margin-bottom:2px;" class="topcoat-button--large hostFontSize">Generate ClickTag</button>
+            <button id="btn_clickTag" class="button-large">Generate ClickTag</button>
           </div>
         </div>
 
+      <!--DISCLAIMER-->
         <div class = "contRow">
-          <h3 class="sectionLabel">Generate Static</h3>
-          <!--<hr / class="sectionRule" style="top:351px;">-->
-          <div id="static_bttnDiv" style="margin-left:2px;">
-            <button id="btn_static" class="topcoat-button--large hostFontSize" style="float:left;">Set Static</button>
+          <div class="sectionLabel">
+            <h2>Disclaimer</h2>
+            <button id="btn_add_disc" class="icon-button">
+              <div class="circle">
+                <span>+</span>
+              </div>
+            </button>
+            <button id="btn_settings_disc" class="icon-button">
+              <div class="circle">
+                <span>S</span>
+              </div>
+            </button>
           </div>
-          <div id="static_field">
-              <input id="txt_jpegQuality" class="topcoat-text-input" type="text" placeholder="" value="40">
+          <div id="disc_settings">
+            <div style="width:100%; display:flex;">
+              <div id="rc_bttnDiv">
+                <button id="btn_roundCorner" class="button-large">rc</button>
+              </div>
+              <div id="static_bttnDiv">
+                <button id="btn_sharpCorner" class="button-large">sc</button>
+              </div>
+              <div id="toggleHover">
+                <label class="switch">
+                  <input id="chk_hoverToggle" type="checkbox" class="switch__input" checked>
+                    <div id="switch__toggle_hover" class="switch__toggle"></div>
+                </label>
+              </div>
+              <div id="toggleClick">
+                <label class="switch">
+                  <input id="chk_clickToggle" type="checkbox" class="switch__input" checked>
+                    <div id="switch__toggle_click" class="switch__toggle"></div>
+                </label>
+              </div>
+            </div>
+            <div id="disc_settings_fields" style="display: flex;">
+              <input id="txt_discColor" class="topcoat-text-input" type="text" placeholder="color" value="#000000">
+              <input type="range" class="topcoat-range" id="rng_opacity" value="65">
+              <input id="txt_discFontColor" class="topcoat-text-input" type="text"  placeholder="font color" value="#ffffff">
+            </div>
           </div>
+          <div id="disc_fields">
+            <div id="disclaimer1">
+              <div id="btn_sub_disc_div">
+                <button id="btn_sub_disc" class="icon-button" onclick="editNum = 1">
+                  <div class="circle">
+                    <span>-</span>
+                  </div>
+                </button>
+              </div>
+              <button id="boop" class="disc_top">
+                <h4>Disclaimer 1</h4>
+              </button>
+              <textarea id="txt_disclaimer1" class="disc_textarea" rows="10" cols="45" placeholder="Enter Disclaimer Text"></textarea>
+            </div>
+          </div>
+          <div id="click_bttnDiv">
+            <button id="btn_disclaimer" class="button-large">Generate Disclaimer</button>
+          </div>
+        </div>
+        <!--END DISCLAIMER-->
+
+        <div class = "contRow" style="margin-bottom:80px;">
         </div>
 
-        <div class = "contRow" style="margin-bottom:40px;">
-          <h3 class="sectionLabel">Publish</h3>
-          <!--<hr / class="sectionRule" style="top:351px;">-->
-          <div style="width:98%; margin-left:2px;">
-            <div style="width:50%; margin-bottom:2px; float:left; display:inline-block;">
-              <button id="btn_publish" style="width:100%;" class="topcoat-button--large hostFontSize">Publish</button>
-            </div>
-            <div style="width:50%; display:inline-block;">
-              <button id="btn_publishJpg" style="width:100%;" class="topcoat-button--large hostFontSize">Publish JPEG</button>
-            </div>
-          </div>
-        </div>
     </div>
 
     <div id="footer">
+      <div style="width:100%; display:flex;">
+        <div id="pub_btn_div">
+          <button id="btn_publish" class="button-large-cta">Publish</button>
+        </div>
+        <div id="jpg_btn_div">
+              <span>Publish JPEG</span>
+              <input id="txt_jpegQuality" class="text-input" type="text" placeholder="" value="40">
+          <button id="btn_publishJpg" class="button-large-cta">
+          </button>
+        </div>
+      </div>
       <img id="leftLines" src="images/footer_line.png"/>
       <p id="sizeDisplay"></p>
       <img id="btn_reset" src="icons/reset.png"/>
