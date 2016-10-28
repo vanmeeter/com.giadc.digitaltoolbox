@@ -16,3 +16,7 @@
   ```
 5. Run plugin from Window > Extensions > digitalToolbox
 6. Restart computer if plugin does not load.
+
+#### Initializing Ad
+1. The only thing required at this point is a url for the clickTag.
+  ![clickTag Area](https://www.dropbox.com/s/dkkq4i0q02a1tg6/Screen%20Shot%202016-10-28%20at%2011.29.04%20AM.png?dl=0)

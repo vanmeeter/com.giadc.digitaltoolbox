@@ -16,10 +16,11 @@ var addField = function(url) {
     currentTags[i] = document.getElementById("txt_clickTag" + i).value;
   }
   clickNum++;
-  document.getElementById("click_fields").innerHTML = clickFields + '<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-field" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>';
+  document.getElementById("click_fields").innerHTML = clickFields + '<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>';
   for (var i = 1; i< clickNum; i++) {
     document.getElementById("txt_clickTag" + i).value = currentTags[i];
   }
+  $("#clickTag" + clickNum).find(".ct_over").css('border-right', '10px solid ' + '#' + Math.floor(Math.random()*16777215).toString(16));
 }
 
 var getInfo = function() {
@@ -46,6 +47,7 @@ var getInfo = function() {
           }
           document.getElementById("txt_borderWidth").value = result.border.width;
           document.getElementById("txt_borderColor").value = result.border.color;
+          $('#btn_border').css('border', result.border.width + 'px solid ' + result.border.color);
           document.getElementById("chk_loopToggle").checked = result.loop;
           csInterface.evalScript('UTIL.layerCheck(' + "'disclaimer'" + ')', function(discCheck) {
             if(discCheck >= 0) {
@@ -63,6 +65,13 @@ var getInfo = function() {
                 document.getElementById("rng_opacity").value = 100;
               }
               cornerTog = result.disclaimerCorner;
+              if(cornerTog === 0) {
+                $('#btn_sharpCorner').css('box-shadow', 'inset 0px -3px 0px #fb4f00');
+                $('#btn_roundCorner').css('box-shadow', 'inset 0 2px rgba(115, 115, 115, .7)');
+              }else {
+                $('#btn_sharpCorner').css('box-shadow', 'inset 0 2px rgba(115, 115, 115, .7)');
+                $('#btn_roundCorner').css('box-shadow', 'inset 0px -3px 0px #fb4f00');
+              }
             }
           });
         }
@@ -101,8 +110,8 @@ $("#btn_border").click(function() {
   $("#btn_border").click(function(){
     var bWidth = document.getElementById("txt_borderWidth").value;
     var bColor = document.getElementById("txt_borderColor").value;
-    var loopTog = document.getElementById("chk_loopToggle").checked;
     csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+    $('#btn_border').css('border', bWidth + 'px solid ' + bColor);
   });
 });
 
@@ -149,8 +158,16 @@ $("#disclaimer3").find(".disc_top").click(function(){
   $("#txt_disclaimer3").animate({ height: 'toggle' });
 });
 
-$("#btn_roundCorner").click(function() {cornerTog = 1});
-$("#btn_sharpCorner").click(function() {cornerTog = 0});
+$("#btn_roundCorner").click(function() {
+  cornerTog = 1;
+  $('#btn_sharpCorner').css('box-shadow', 'inset 0 2px rgba(115, 115, 115, .7)');
+  $('#btn_roundCorner').css('box-shadow', 'inset 0px -3px 0px #fb4f00');
+});
+$("#btn_sharpCorner").click(function() {
+  cornerTog = 0;
+  $('#btn_sharpCorner').css('box-shadow', 'inset 0px -3px 0px #fb4f00');
+  $('#btn_roundCorner').css('box-shadow', 'inset 0 2px rgba(115, 115, 115, .7)');
+});
 
 //reset bttn
 rotate.addEventListener( 'mouseover', function () {
