@@ -70,6 +70,8 @@ function onClick_btn_getInfo() {
 
 		UI.timeline.layers[UTIL.layerCheck('border')].locked = true;
 	}
+
+	totalFrames = UI.timeline.layers[UTIL.layerCheck('actions')].frameCount;
 	fl.actionsPanel.setSelection(0,0);
 	UI.timeline.setSelectedLayers(0);
 	if(UI.timeline.layers[UTIL.layerCheck('actions')].frames[totalFrames - 1].name === 'replay') {

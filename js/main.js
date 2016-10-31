@@ -81,7 +81,7 @@
           var newClick;
           for (var i = 1; i <= clickNum; i++) {
             newClick = 'clickTag' + i;
-            clickURL[newClick] = document.getElementById("txt_clickTag" + i).value;
+            clickURL[newClick] = $("#txt_clickTag" + i).value;
             if (clickURL[newClick] === '') {
               return;
             }
@@ -98,7 +98,6 @@
           csInterface.evalScript('onClick_btn_publish()', function(result) {
             var sizeDisplay = document.getElementById("sizeDisplay");
             sizeDisplay.innerHTML = 'Size of Document: ' + result/1000 + "kb"
-            localStorage["footer"] = sizeDisplay.innerHTML;
           });
         });
 
