@@ -1,7 +1,9 @@
 var clickNum = 1;
+var discNum = 0;
 var get = 0;
 var cornerTog = 0;
 var editNum;
+var expNum = 0;
 
 (function() {
 var switchCount = 1;
@@ -9,19 +11,38 @@ var csInterface = new CSInterface();
 var rotate = document.getElementById("btn_reset");
 
 var addField = function(url) {
-  var url = (typeof url !== 'object') ? url : "";
-  var clickFields = document.getElementById("click_fields").innerHTML;
-  var currentTags = {};
-  for (var i = 1; i <= clickNum; i++) {
-    currentTags[i] = document.getElementById("txt_clickTag" + i).value;
+  if(clickNum < 9) {
+    var url = (typeof url !== 'object') ? url : "";
+    var clickFields = document.getElementById("click_fields").innerHTML;
+    var currentTags = {};
+    for (var i = 1; i <= clickNum; i++) {
+      currentTags[i] = document.getElementById("txt_clickTag" + i).value;
+    }
+    clickNum++;
+    document.getElementById("click_fields").innerHTML = clickFields + '\n<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>';
+    for (var i = 1; i< clickNum; i++) {
+      document.getElementById("txt_clickTag" + i).value = currentTags[i];
+    }
+    $("#clickTag" + clickNum).find(".ct_over").css('border-right', '10px solid ' + '#' + Math.floor(Math.random()*16777215).toString(16));
   }
-  clickNum++;
-  document.getElementById("click_fields").innerHTML = clickFields + '<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>';
-  for (var i = 1; i< clickNum; i++) {
-    document.getElementById("txt_clickTag" + i).value = currentTags[i];
-  }
-  $("#clickTag" + clickNum).find(".ct_over").css('border-right', '10px solid ' + '#' + Math.floor(Math.random()*16777215).toString(16));
 }
+
+var addDisc = function(disc_txt) {
+  if(discNum < 3) {
+    var disc_txt = (typeof url !== 'object') ? disc_txt : "";
+    var discFields = $("#disc_fields").html();
+    var currentDiscs = {};
+    for (var i = 1; i <= discNum; i++) {
+      currentDiscs[i] = $("#txt_disclaimer" + i).value;
+    }
+    discNum++;
+    $("#disc_fields").html(discFields + '\n<div id="disclaimer' + discNum + '">\n\t<div id="btn_sub_disc_div">\n\t<button id="btn_sub_disc" class="icon-button" onclick="editNum = ' + discNum + '"\n\t><div class="circle">\n\t<span>-</span>\n</div>\n</button>\n</div>\n<button class="disc_top" onclick="expNum = ' + discNum + '">\n\t<h4>Disclaimer' + discNum + '</h4>\n</button>\n<textarea id="txt_disclaimer' + discNum + '" class="disc_textarea" rows="10" cols="45" placeholder="Enter Disclaimer Text"></textarea>\n</div>');
+    for (var i = 1; i< discNum; i++) {
+      $("#disclaimer" + i).value = currentDiscs[i];
+    }
+  }
+}
+
 
 var getInfo = function() {
   csInterface.evalScript('UI.timeline.layers[0].name', function(initCheck) {
@@ -132,6 +153,24 @@ $(document).on('click', '#btn_sub', function () {
   }
 });
 
+$('#btn_add_disc').click(addDisc);
+
+$(document).on('click', '#btn_sub_disc', function () {
+  if (discNum > 0) {
+    $('#disclaimer' + editNum).remove();
+    if (editNum < discNum) {
+      for (var i = editNum + 1; i <= discNum; i++) {
+        $('#disclaimer' + i).find('h4').html('disclaimer ' + (i - 1));
+        $('#txt_disclaimer' + i).attr('id', 'txt_disclaimer' + (i - 1));
+        $('#disclaimer' + i).find('#btn_sub_disc').attr('onclick', 'editNum = ' + (i - 1));
+        $('#disclaimer' + i).find('.disc_top').attr('onclick', 'expNum = ' + (i - 1));
+        $('#disclaimer' + i).attr('id', 'disclaimer' + (i - 1));
+      }
+    }
+    discNum--;
+  }
+});
+
 $("#toggleHover").click(function () {
   if (document.getElementById("chk_hoverToggle").checked === false) {
     document.getElementById("chk_clickToggle").checked = false;
@@ -146,16 +185,8 @@ $("#btn_settings_disc").click(function(){
   $("#disc_settings").animate({ height: 'toggle' });
 });
 
-$("#disclaimer1").find(".disc_top").click(function(){
-  $("#txt_disclaimer1").animate({ height: 'toggle' });
-});
-
-$("#disclaimer2").find(".disc_top").click(function(){
-  $("#txt_disclaimer2").animate({ height: 'toggle' });
-});
-
-$("#disclaimer3").find(".disc_top").click(function(){
-  $("#txt_disclaimer3").animate({ height: 'toggle' });
+$(document).on('click', '.disc_top', function () {
+  $("#txt_disclaimer" + expNum).animate({ height: 'toggle' });
 });
 
 $("#btn_roundCorner").click(function() {

@@ -1,11 +1,11 @@
 //hover
 
+this.stop();
 this.disclaimer_content.cursor = 'pointer';
 if(!this.flag)
 {
 	var i;
 	this.flag=1;
-	this.stop();
 
 	this.disclaimer_content.addEventListener("rollover", fl_MouseOverHandler.bind(this));
 	this.disclaimer_content.addEventListener("rollout", fl_MouseOutHandler.bind(this));

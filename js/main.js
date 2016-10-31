@@ -81,7 +81,7 @@
           var newClick;
           for (var i = 1; i <= clickNum; i++) {
             newClick = 'clickTag' + i;
-            clickURL[newClick] = $("#txt_clickTag" + i).value;
+            clickURL[newClick] = $("#txt_clickTag" + i).val();
             if (clickURL[newClick] === '') {
               return;
             }
@@ -96,8 +96,8 @@
 
         $("#btn_publish").click(function () {
           csInterface.evalScript('onClick_btn_publish()', function(result) {
-            var sizeDisplay = document.getElementById("sizeDisplay");
-            sizeDisplay.innerHTML = 'Size of Document: ' + result/1000 + "kb"
+            var sizeDisplay = $("#sizeDisplay");
+            sizeDisplay.html('Size of Document: ' + result/1000 + "kb");
           });
         });
 
@@ -141,8 +141,11 @@
             clickthrough: document.getElementById("chk_clickToggle").checked,
             color: document.getElementById("txt_discColor").value + parseInt(document.getElementById("rng_opacity").value * 2.555).toString(16),
             fontColor: document.getElementById("txt_discFontColor").value + 'ff',
-            text: document.getElementById("txt_disclaimer1").value
+            length: discNum
           };
+          for (var i = 1; i <= discNum; i++) {
+            disclaimer['disc_text' + i] = document.getElementById("txt_disclaimer" + i).value;
+          }
           csInterface.evalScript('onClick_btn_disclaimer(' + JSON.stringify(disclaimer) + ')');
         });
     }

@@ -216,17 +216,37 @@ function onClick_btn_publishJpg() {
 //******************DISCLAIMER TOOL****************//
 function onClick_btn_disclaimer(disclaimer) {
 	JSON.decode(disclaimer);
-	if (UTIL.layerCheck('disclaimer') > -1) {
-		UI.timeline.deleteLayer(UTIL.layerCheck('disclaimer'));
+	var discNum = disclaimer.length;
+	var totalFrames = UI.timeline.frameCount;
+	for (var i = 1; i < 4; i++){
+		if (UTIL.layerCheck('disclaimer' + i) > -1) {
+			UI.timeline.deleteLayer(UTIL.layerCheck('disclaimer' + i));
+		}
+		if (UI.dom.library.itemExists('disclaimer' + i)) {
+			UI.dom.library.deleteItem('disclaimer' + i);
+			UI.dom.library.deleteItem('disclaimer_inner' + i);
+			UI.dom.library.deleteItem('disclaimer_content' + i);
+			UI.dom.library.deleteItem('disclaimer_display' + i);
+			UI.dom.library.deleteItem('disclaimer_close' + i);
+		}
 	}
-	if (UI.dom.library.itemExists('disclaimer')) {
-		UI.dom.library.deleteItem('disclaimer');
-		UI.dom.library.deleteItem('disclaimer_content');
-		UI.dom.library.deleteItem('disclaimer_display');
-		UI.dom.library.deleteItem('disclaimer_close');
+	for (var i = 1; i <= discNum; i++){
+		var discStart = 0;
+		var discEnd = totalFrames / discNum;
+
+		DISCLAIMER.draw(disclaimer, i);
+		DISCLAIMER.addText(disclaimer, i);
+		DISCLAIMER.animate(disclaimer, i);
+
+		discEnd = Math.round(discEnd * (i - 1));
+		if (discEnd != 0) {
+			UI.timeline.clearFrames(discStart, discEnd);
+		}
+		discStart = Math.round(discEnd + (totalFrames / discNum));
+		discEnd = totalFrames;
+		if (discStart != totalFrames) {
+			UI.timeline.clearFrames(discStart, discEnd);
+		}
+		UI.timeline.layers[UTIL.layerCheck('disclaimer' + i)].locked = true;
 	}
-	DISCLAIMER.draw(disclaimer);
-	DISCLAIMER.addText(disclaimer);
-	DISCLAIMER.animate(disclaimer);
-	UI.timeline.layers[UTIL.layerCheck('disclaimer')].locked = true;
 }

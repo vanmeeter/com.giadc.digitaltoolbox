@@ -35,7 +35,8 @@ body::-webkit-scrollbar-thumb {
 #btn_initialize,
 #toggleLoop,
 #border_bttnDiv,
-#static_bttnDiv{
+#static_bttnDiv,
+#corner_bttnDiv{
   display:inline-block;
 }
 
@@ -407,6 +408,14 @@ body::-webkit-scrollbar-thumb {
   width: 100%;
   height: 80px;
   display:none;
+}
+
+#corner_bttnDiv{
+  flex-grow:1;
+  width: auto;
+  height: 50px;
+  top: 82px;
+  float:left;
 }
 
 #sc_bttnDiv,

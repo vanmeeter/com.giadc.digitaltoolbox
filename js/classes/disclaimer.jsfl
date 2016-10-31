@@ -2,9 +2,9 @@
 
     DISCLAIMER =
   {
-    draw: function(disclaimer) {
+    draw: function(disclaimer, discNum) {
       UI.timeline.setSelectedLayers(Math.abs(UTIL.layerCheck('border')));
-      UI.timeline.addNewLayer('disclaimer', 'normal', false);
+      UI.timeline.addNewLayer('disclaimer' + discNum, 'normal', false);
 
       //create temp text box to get dynamic height of disclaimer
       UI.dom.addNewText(
@@ -13,13 +13,13 @@
           top:0,
           right:UI.dom.width - 16,
           bottom:5
-        }, disclaimer.text);
-      UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].setTextAttr('face', 'Gf-OpenSans');
-      UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].setTextAttr('size', 10);
-      UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].setTextAttr('alignment', 'left');
-      UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].setTextAttr("lineSpacing", 0);
-      disclaimer.height = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].height + 13;
-      UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+        }, disclaimer['disc_text' + discNum]);
+      UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].setTextAttr('face', 'Gf-OpenSans');
+      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('size', 10);
+      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('alignment', 'left');
+      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr("lineSpacing", 0);
+      disclaimer.height = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].height + 13;
+      UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
       UI.dom.deleteSelection();
       //make main disclaimer box
       var recStyle = UI.dom.getCustomFill();
@@ -36,18 +36,18 @@
             right:UI.dom.width - 6,
             bottom:UI.dom.height + 5
           },0, false, true);
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
           UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
           UI.dom.breakApart();
           //make display tab
           UI.dom.addNewPrimitiveRectangle(
             {
               left:UI.dom.width - 69,
-              top:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top - 18,
+              top:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top - 18,
               right:UI.dom.width - 6,
-              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 20
+              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 20
             },0, false, true);
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
           UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
           UI.dom.breakApart();
           UI.dom.selectNone();
@@ -59,7 +59,7 @@
               right:UI.dom.width - 6,
               bottom:(UI.dom.height / 2) + (disclaimer.height / 2) + 4
             },0, false, true);
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
             UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
             UI.dom.breakApart();
             //make display tab
@@ -70,7 +70,7 @@
                 right:UI.dom.width - 6,
                 bottom:UI.dom.height + 17
               },0, false, true);
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
             UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
         }
         //reset to previous settings
@@ -78,27 +78,27 @@
         UI.dom.setCustomFill(legacyStyle);
     },
 
-    addText: function(disclaimer) {
+    addText: function(disclaimer, discNum) {
     //  UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
       if (disclaimer.hover === true){
         UI.dom.addNewText(
           {
             left:UI.dom.width - 69,
-            top:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top,
+            top:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top,
             right:UI.dom.width - 6,
-            bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 14,
+            bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 14,
           }, 'DISCLAIMER');
 
           UI.dom.addNewText(
             {
               left:12,
-              top:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 25,
+              top:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 25,
               right:UI.dom.width - 14,
-              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 30
-            }, disclaimer.text);
+              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 30
+            }, disclaimer['disc_text' + discNum]);
 
-            textDisp = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[1];
-            textMain = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[2];
+            textDisp = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[1];
+            textMain = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[2];
             textDisp.setTextAttr('fillColor', disclaimer.fontColor);
             textMain.setTextAttr('fillColor', disclaimer.fontColor);
             textDisp.setTextAttr('face', 'Gf-OpenSans');
@@ -112,21 +112,21 @@
           UI.dom.addNewText(
             {
               left:UI.dom.width - 69,
-              top:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[1].top,
+              top:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[1].top,
               right:UI.dom.width - 6,
-              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[1].top + 14
+              bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[1].top + 14
             }, 'DISCLAIMER');
 
             UI.dom.addNewText(
               {
                 left:12,
-                top:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 24,
+                top:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 24,
                 right:UI.dom.width - 14,
-                bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].top + 6 + disclaimer.height
-              }, disclaimer.text);
+                bottom:UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].top + 6 + disclaimer.height
+              }, disclaimer['disc_text' + discNum]);
 
-              textDisp = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[2];
-              textMain = UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[3];
+              textDisp = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[2];
+              textMain = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[3];
               textDisp.setTextAttr('fillColor', disclaimer.fontColor);
               textMain.setTextAttr('fillColor', disclaimer.fontColor);
               textDisp.setTextAttr('face', 'Gf-OpenSans');
@@ -139,16 +139,24 @@
         }
     },
 
-    animate: function(disclaimer) {
+    animate: function(disclaimer, discNum) {
       var animCode = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/disclaimer.txt');
-      UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+      animCode = animCode.replace(/disclaimer_content/g, 'disclaimer_content' + discNum);
+      animCode = animCode.replace(/disclaimer_display/g, 'disclaimer_display' + discNum);
+      animCode = animCode.replace(/disclaimer_close/g, 'disclaimer_close' + discNum);
+      UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
+      //hover
       if (disclaimer.hover === true) {
-        UI.dom.convertToSymbol('movie clip', 'disclaimer_content', 'top left');
-        UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].name = 'disclaimer_content';
-        UI.dom.convertToSymbol('movie clip', 'disclaimer', 'top left');
+        UI.dom.convertToSymbol('movie clip', 'disclaimer_content' + discNum, 'top left');
+        UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].name = 'disclaimer_content' + discNum;
+        UI.dom.convertToSymbol('movie clip', 'disclaimer_inner' + discNum, 'top left');
+        UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].name = 'disclaimer_inner' + discNum;
+        UI.dom.convertToSymbol('movie clip', 'disclaimer' + discNum, 'top left');
+        UI.dom.enterEditMode('inPlace');
         UI.dom.enterEditMode('inPlace');
         UI.timeline.insertFrames(21);
         UI.timeline.addNewLayer('actions', 'normal', true);
+        animcode = animCode.slice(0, animCode.lastIndexOf('//'));
         fl.actionsPanel.setText(animCode.slice(0, animCode.lastIndexOf('//')));
         fl.actionsPanel.setSelection(0, 0);
         UI.timeline.setSelectedLayers(1);
@@ -158,8 +166,9 @@
         UI.dom.moveSelectionBy({x:0, y:disclaimer.height});
         UI.timeline.layers[1].frames[0].setCustomEase('all', [ {x:0,y:0}, {x:0.8297,y:0}, {x:0.3123,y:1}, {x:1,y:1} ]);
         UI.timeline.layers[1].frames[0].hasCustomEase = true;
+      //click
       } else {
-        UI.dom.convertToSymbol('movie clip', 'disclaimer', 'top left');
+        UI.dom.convertToSymbol('movie clip', 'disclaimer' + discNum, 'top left');
         UI.dom.enterEditMode('inPlace');
         UI.timeline.insertFrames(21);
         UI.dom.setSelectionRect(
@@ -169,13 +178,13 @@
             right:UI.dom.width - 6,
             bottom:UI.dom.height
           }, true, true);
-        UI.dom.convertToSymbol('button', 'disclaimer_display', 'top left');
+        UI.dom.convertToSymbol('button', 'disclaimer_display' + discNum, 'top left');
         UI.dom.distributeToLayers();
 
         UI.timeline.setSelectedLayers(0);
-        UI.dom.convertToSymbol('movie clip', 'disclaimer_content', 'top left');
-        UI.timeline.layers[0].frames[0].elements[0].name = 'disclaimer_content';
-        UI.timeline.layers[1].frames[0].elements[0].name = 'disclaimer_display';
+        UI.dom.convertToSymbol('movie clip', 'disclaimer_content' + discNum, 'top left');
+        UI.timeline.layers[0].frames[0].elements[0].name = 'disclaimer_content' + discNum;
+        UI.timeline.layers[1].frames[0].elements[0].name = 'disclaimer_display' + discNum;
         //set code
         UI.timeline.setSelectedLayers(0);
         UI.timeline.addNewLayer('actions', 'normal', true);
@@ -196,7 +205,7 @@
         UI.timeline.createMotionTween();
         UI.dom.setInstanceAlpha(0);
         //add close
-        UI.timeline.addNewLayer('close', 'normal', true);
+        UI.timeline.addNewLayer('close' + discNum, 'normal', true);
         UI.timeline.convertToKeyframes(21, 21);
         UI.timeline.setSelectedFrames(21, 21);
         //draw x
@@ -227,8 +236,8 @@
         UI.dom.setStrokeCapType('none')
         UI.dom.setStrokeColor(disclaimer.fontColor);
         //convert x to button
-        UI.dom.convertToSymbol('button', 'disclaimer_close', 'top left');
-        UI.timeline.layers[1].frames[21].elements[0].name = 'disclaimer_close';
+        UI.dom.convertToSymbol('button', 'disclaimer_close' + discNum, 'top left');
+        UI.timeline.layers[1].frames[21].elements[0].name = 'disclaimer_close' + discNum;
         UI.dom.enterEditMode('inPlace');
         UI.timeline.convertToKeyframes(3, 3);
         UI.timeline.setSelectedFrames(3, 3);
@@ -244,7 +253,8 @@
       }
       //exit edit mode
      UI.dom.exitEditMode();
-      UI.timeline.layers[UTIL.layerCheck('disclaimer')].frames[0].elements[0].name = 'disclaimer';
+     UI.dom.exitEditMode();
+      UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].name = 'disclaimer' + discNum;
       if (disclaimer.clickthrough === true) {
         for (var i = 0; i < 10; i++) {
           if (UTIL.layerCheck('clickTag' + i) > -1) {
@@ -257,8 +267,8 @@
             }
           }
         }
-        clickCode = clickCode.replace(/btn_clickTag\d/, 'disclaimer');
-        UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+        clickCode = clickCode.replace(/btn_clickTag\d/, 'disclaimer' + discNum);
+        UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
         fl.actionsPanel.setText(clickCode);
         fl.actionsPanel.setSelection(0, 0);
       }
