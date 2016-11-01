@@ -79,35 +79,68 @@ function onClick_btn_getInfo() {
 	}else {
 		data.loop = true;
 	}
-	if (UTIL.layerCheck('disclaimer') >= 0){
-		if(UI.dom.library.itemExists('disclaimer_close')){
-			UI.dom.library.editItem('disclaimer_content');
-			data.disclaimerText = UI.timeline.layers[0].frames[0].elements[1].getTextString();
+	//DISCLAIMER INFO
+	if (UTIL.layerCheck('disclaimer1') >= 0){
+		data.disclaimer = {};
+		if(UI.dom.library.itemExists('disclaimer_close1')){
+			for (var i = 1; i < 4; i++) {
+				if(UI.dom.library.itemExists('disclaimer_content' + i)){
+					UI.dom.library.editItem('disclaimer_content' + i);
+					data.disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[1].getTextString();
+				}else {
+					data.disclaimer['text' + i] = '';
+				}
+			}
 			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 4){
-				data.disclaimerCorner = 1;
+				data.disclaimer.corner = 1;
 			}else {
-				data.disclaimerCorner = 0;
+				data.disclaimer.corner = 0;
 			}
-			data.disclaimerHover = false;
+			data.disclaimer.hover = false;
 		}else {
-			UI.dom.library.editItem('disclaimer_content');
-			data.disclaimerText = UI.timeline.layers[0].frames[0].elements[2].getTextString();
-			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 6){
-				data.disclaimerCorner = 1;
-			}else {
-				data.disclaimerCorner = 0;
+			for (var i = 1; i < 4; i++) {
+				if(UI.dom.library.itemExists('disclaimer_content' + i)){
+					UI.dom.library.editItem('disclaimer_content' + i);
+					data.disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[2].getTextString();
+				}else {
+					data.disclaimer['text' + i] = '';
+				}
 			}
-			data.disclaimerHover = true;
+			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 6){
+				data.disclaimer.corner = 1;
+			}else {
+				data.disclaimer.corner = 0;
+			}
+			data.disclaimer.hover = true;
 		}
-		data.disclaimerFontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
-		data.disclaimerColor = UI.dom.getCustomFill().color;
+		data.disclaimer.fontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
+		data.disclaimer.bgcolor = UI.dom.getCustomFill().color;
 		UI.dom.exitEditMode();
+		if(data.disclaimer.hover === true) {
+			UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
+			UI.timeline.setSelectedFrames(0, 0);
+			if (fl.actionsPanel.getText() != '') {
+				for (var i = 1; i < 4; i++){
+					if(UTIL.layerCheck('disclaimer' + i) > -1){
+						for (var k = 0; k < totalFrames; k++) {
+							if (!UI.timeline.layers[UTIL.layerCheck('disclaimer' + i)].frames[k].isEmpty) {
+								UI.timeline.currentFrame = k;
+								break;
+							}
+						}
+							UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + i));
+							data.disclaimer['clickTag' + i] = fl.actionsPanel.getText().slice(10, 11);
+					}
+				}
+				data.disclaimer.clickToggle = true;
+			}else {
+				data.disclaimer.clickToggle = false;
+			}
+		}else {
+			data.disclaimer.clickToggle = false;
+		}
 	}else {
-		data.disclaimerCorner = 0;
-		data.disclaimerHover = true;
-		data.disclaimerFontColor = '#ffffff';
-		data.disclaimerColor = '#00000041';
-		data.disclaimerText = '';
+		data.disclaimer = 0;
 	}
 	return (JSON.encode(data));
 }

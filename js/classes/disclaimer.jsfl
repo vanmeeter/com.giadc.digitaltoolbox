@@ -256,18 +256,17 @@
      UI.dom.exitEditMode();
       UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].name = 'disclaimer' + discNum;
       if (disclaimer.clickthrough === true) {
-        for (var i = 0; i < 10; i++) {
-          if (UTIL.layerCheck('clickTag' + i) > -1) {
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + i));
+          if (UTIL.layerCheck('clickTag' + disclaimer['clickTag' + discNum]) === -1) {
+            disclaimer['clickTag' + discNum] = 1;
+          }
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + disclaimer['clickTag' + discNum]));
             for (var j = 0; j < UI.timeline.frameCount; j++) {
-              if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].frames[j].isEmpty) {
+              if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + disclaimer['clickTag' + discNum])].frames[j].isEmpty) {
                 UI.timeline.setSelectedFrames(j, j);
                 var clickCode = fl.actionsPanel.getText();
               }
             }
-          }
-        }
-        clickCode = clickCode.replace(/btn_clickTag\d/, 'disclaimer' + discNum);
+        clickCode = '//clickTag' + disclaimer['clickTag' + discNum] + '\n' + clickCode.replace(/btn_clickTag\d/, 'disclaimer' + discNum);
         UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
         fl.actionsPanel.setText(clickCode);
         fl.actionsPanel.setSelection(0, 0);

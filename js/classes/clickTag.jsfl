@@ -30,11 +30,11 @@
       },
 
       createClickTag: function(url, tagNum) {
-          if (UTIL.layerCheck('disclaimer') >= 0){
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
+          if (UTIL.layerCheck('disclaimer1') >= 0){
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
           }else {
-            if(UTIL.layerCheck('static') >= 0){
-              UI.timeline.setSelectedLayers(UTIL.layerCheck('static'));
+            if(UTIL.layerCheck('border') >= 0){
+              UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
             }else {
               UI.timeline.setSelectedLayers(0);
             }

@@ -28,7 +28,8 @@ body::-webkit-scrollbar-thumb {
 
 .button-large,
 .button-large-cta,
-.sectionLabel{
+.sectionLabel,
+h4 {
   color:#f7efd5;
 }
 
@@ -143,6 +144,12 @@ body::-webkit-scrollbar-thumb {
 
 .text-input:focus {
   border:1px solid #fb4f00;
+}
+
+.text-input:disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
 }
 
 #content {
@@ -406,8 +413,39 @@ body::-webkit-scrollbar-thumb {
 
 #disc_settings {
   width: 100%;
-  height: 80px;
+  height: 130px;
   display:none;
+}
+
+#disc_settings_top_labels {
+  display:flex;
+  justify-content: flex-start;;
+  margin-top:6px;
+  margin-bottom:6px;
+}
+
+#label1 {
+  width:auto;
+  flex-grow: 1;
+  text-align: center;
+  padding-top: 6px;
+}
+
+#label2 {
+  width: 80px;
+  flex-grow: 0;
+  text-align: center;
+  padding-top: 6px;
+}
+
+#label3 {
+  width: 50px;
+  flex-grow: 0;
+  text-align: center;
+}
+
+#disc_settings_top_labels h4 {
+  margin: 0px;
 }
 
 #corner_bttnDiv{
@@ -500,6 +538,17 @@ body::-webkit-scrollbar-thumb {
   margin-left: 1.5rem;
 }
 
+#disc_settings_fields_labels {
+  display:flex;
+  justify-content: space-around;
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+#disc_settings_fields_labels h4 {
+  margin:0;
+}
+
 #txt_discColor,
 #txt_discFontColor {
   flex-grow: 1;
@@ -514,6 +563,16 @@ body::-webkit-scrollbar-thumb {
   flex-grow: 1;
   width:auto;
   margin-top:10px;
+}
+
+#txt_clickDisc {
+  width:27px;
+  height:20px;
+  line-height: 1px;
+  float:right;
+  position: absolute;
+  right: 38px;
+  margin-top:5px;
 }
 
 /**********FOOTER*************/
@@ -594,14 +653,9 @@ body::-webkit-scrollbar-thumb {
   cursor:pointer;
 }
 
-.over {
+#btn_reset:hover {
     transform: rotate( -360deg );
     transition: transform 400ms ease;
-    cursor:pointer;
-}
-
-.out {
-    transform: rotate( -360deg );
     cursor:pointer;
 }
 
