@@ -78,8 +78,8 @@
         fl.actionsPanel.setText(loopCode.slice(loopCode.indexOf('//replay code') + 14, loopCode.length - 1));
         fl.actionsPanel.setSelection(0,0);
         UI.dom.library.selectItem('replay_bttn');
-        UI.dom.library.addItemToDocument({x:UI.dom.width - 14, y:14});
-        UI.dom.scaleSelection(0.06, 0.06, 'center');
+        UI.dom.library.addItemToDocument({x:UI.dom.width - 16, y:16});
+        UI.dom.scaleSelection(0.8, 0.8, 'center');
         UI.timeline.layers[0].frames[frameIndex].elements[0].name = 'replay';
       }
     }

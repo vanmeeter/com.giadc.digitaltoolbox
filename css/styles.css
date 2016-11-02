@@ -1,8 +1,31 @@
 /*Your styles*/
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("../font/SourceSansPro-Regular.otf");
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("../font/SourceSansPro-Light.otf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Source Sans";
+  src: url("../font/SourceSansPro-Semibold.otf");
+  font-weight: 600;
+}
+
  body {
-    /*margin: 2px;*/
     overflow-x: hidden;
     color:#f7efd5;
+    margin: 0;
+    padding: 0;
+    background: #4b4d4e;
+    color: #000;
+    font: 16px "Source Sans", helvetica, arial, sans-serif;
+    font-weight: 400;
 }
 
 body::-webkit-scrollbar {
@@ -24,6 +47,11 @@ body::-webkit-scrollbar-thumb {
   rgba(255, 255, 255, .2) 75%,
   transparent 75%,
   transparent);
+}
+
+:focus {
+  outline-color: transparent;
+  outline-style: none;
 }
 
 .button-large,
@@ -276,7 +304,7 @@ h4 {
 #border_flyout {
   width:200px;
   height:29px;
-  top:135px;
+  top:133px;
   left:2px;
   position:absolute;
   background-color: #414141;
@@ -665,6 +693,25 @@ h4 {
   margin:0px;
   left:20px;
   color:#f7efd5;
+}
+
+.reset-ui {
+  box-sizing: border-box;
+  background-clip: padding-box;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: default;
+  user-select: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 
