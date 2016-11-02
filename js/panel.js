@@ -19,7 +19,7 @@ var addField = function(url) {
       currentTags[i] = $('#txt_clickTag' + i).val();
     }
     clickNum++;
-    $('#click_fields').html(clickFields + '\n<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n</div></div>');
+    $('#click_fields').html(clickFields + '\n<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n<button id="btn_ct" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t<span>CT</span>\n</button>\n<button id="btn_ss" class="icon-button" onclick="editNum = ' + clickNum + '"><span>SS</span>\n</button>\n<div class="ss_flyout">\n<div id="point"></div>\n<div id="ss_flyout_fields">\n<select class="ss_select">\n\t<option value="facebook">Facebook</option>\n<option value="twitter">Twitter</option>\n<option value="other">other</option>\n</select>\n</div>\n</div>\n</div>\n</div>');
     for (var i = 1; i< clickNum; i++) {
       $('#txt_clickTag' + i).val(currentTags[i]);
     }
@@ -148,6 +148,20 @@ $('#btn_border').click(function() {
 
 $('#btn_add').click(addField);
 
+$(document).on('click', '.ct_over', function () {
+  if ($(".ct_over").css('right') === undefined){
+    $(".ct_over").css('right') = '0px';
+  }
+  if ($(":focus").css('right') != '100px') {
+    $(":focus").animate({ right: '100px' }, 50);
+  }else{
+    $(":focus").animate({ right: '-=100px' }, 50);
+    if ($('#clickTag' + editNum).find('.ss_flyout').css('opacity') != 0) {
+      $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'hide'});
+    }
+  }
+});
+
 $(document).on('click', '#btn_sub', function () {
   if (clickNum > 1) {
     $('#clickTag' + editNum).remove();
@@ -161,6 +175,21 @@ $(document).on('click', '#btn_sub', function () {
     }
     clickNum--;
   }
+});
+
+$(document).on('click', '#btn_ct', function () {
+  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+  if ($('#clickTag' + editNum).find('.ss_flyout').css('opacity') != 0) {
+    $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'hide'});
+  }
+});
+
+$(document).on('click', '#btn_ss', function () {
+  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+  $('#clickTag' + editNum).find('.ss_flyout').css({'top': (event.pageY + 18)});
+  $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'toggle'});
 });
 
 $('#btn_add_disc').click(addDisc);
