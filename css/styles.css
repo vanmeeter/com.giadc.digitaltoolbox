@@ -151,6 +151,12 @@ h4 {
   color: #f7efd5;
 }
 
+.icon-button:disabled {
+  display: none;
+  cursor: default;
+  pointer-events: none;
+}
+
 .text-input {
   margin: 0;
   font: inherit;
@@ -420,6 +426,17 @@ select {
 #click_bttnDiv{
   height:30px;
   width:100%;
+  display: flex;
+}
+
+#btn_clickTag {
+  display: inline-block;
+  width:50%;
+}
+
+#btn_widget {
+  display: inline-block;
+  width:50%;
 }
 
 

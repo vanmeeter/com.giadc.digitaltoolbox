@@ -4,6 +4,7 @@ var get = 0;
 var cornerTog = 0;
 var editNum;
 var expNum = 0;
+var totalClickFields = 1;
 
 (function() {
 var switchCount = 1;
@@ -11,19 +12,22 @@ var csInterface = new CSInterface();
 var rotate = $('#btn_reset');
 
 var addField = function(url) {
-  if(clickNum < 9) {
+  if(totalClickFields < 9) {
     var url = (typeof url !== 'object') ? url : '';
     var clickFields = $('#click_fields').html();
     var currentTags = {};
-    for (var i = 1; i <= clickNum; i++) {
+    clickNum++;
+    totalClickFields++;
+    for (var i = 1; i <= totalClickFields; i++) {
       currentTags[i] = $('#txt_clickTag' + i).val();
     }
-    clickNum++;
-    $('#click_fields').html(clickFields + '\n<div id="clickTag' + clickNum + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + clickNum + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n<button id="btn_ct" class="icon-button" onclick="editNum = ' + clickNum + '">\n\t<span>CT</span>\n</button>\n<button id="btn_ss" class="icon-button" onclick="editNum = ' + clickNum + '"><span>SS</span>\n</button>\n<div class="ss_flyout">\n<div id="point"></div>\n<div id="ss_flyout_fields">\n<select class="ss_select">\n\t<option value="facebook">Facebook</option>\n<option value="twitter">Twitter</option>\n<option value="other">other</option>\n</select>\n</div>\n</div>\n</div>\n</div>');
-    for (var i = 1; i< clickNum; i++) {
+    $('#click_fields').html(clickFields + '\n<div id="clickTag' + totalClickFields + '"><button class="ct_over">\n\t<h4>ClickTag ' + clickNum + '</h4>\n\t</br>\n\t<input id="txt_clickTag' + totalClickFields + '" class="text-input" type="text" placeholder="Enter ClickTag" value="' + url + '" required>\n</button>\n<div class="ct_under">\n\t<button id="btn_sub" class="icon-button" onclick="editNum = ' + totalClickFields + '">\n\t\t<div class="circle">\n\t\t\t<span>-</span>\n\t\t</div>\n\t</button>\n<button id="btn_ct" class="icon-button" onclick="editNum = ' + totalClickFields + '">\n\t<span>CT</span>\n</button>\n<button id="btn_ss" class="icon-button" onclick="editNum = ' + totalClickFields + '"><span>SS</span>\n</button>\n<div class="ss_flyout">\n<div id="point"></div>\n<div id="ss_flyout_fields">\n<select class="ss_select">\n\t<option value="facebook">Facebook</option>\n<option value="twitter">Twitter</option>\n<option value="instagram">instagram</option>\n<option value="button">Button</option>\n</select>\n</div>\n</div>\n</div>\n</div>');
+    for (var i = 1; i< totalClickFields; i++) {
       $('#txt_clickTag' + i).val(currentTags[i]);
     }
-    $('#clickTag' + clickNum).find('.ct_over').css('border-right', '10px solid ' + '#' + Math.floor(Math.random()*16777215).toString(16));
+    $('#clickTag' + totalClickFields).find('.ct_over').css('border-right', '10px solid ' + '#' + Math.floor(Math.random()*16777215).toString(16));
+    $('#clickTag1').find('#btn_ct').prop('disabled', true);
+    $('#clickTag1').find('#btn_ss').prop('disabled', true);
   }
 }
 
@@ -52,23 +56,51 @@ var getInfo = function() {
     if (initCheck === 'actions') {
       csInterface.evalScript('onClick_btn_getInfo()', function(result) {
         result = JSON.parse(result);
-        var tagField = Object.keys(result).length - 3;
         if ($('#txt_clickTag1') != null) {
-          for (var i = clickNum; i > 0; i--){
+          for (var i = totalClickFields; i > 0; i--){
             if (i === 1) {
               $('#txt_clickTag1').val('');
             }else {
               $('#btn_sub').click();
             }
           }
+          $('#clickTag1').find('h4').html('ClickTag 1');
           clickNum = 1;
-          for (var i = 1; i <= tagField; i++) {
+          totalClickFields = 1;
+          for (var i = 1; i <= result.clickNum; i++) {
             if (i === 1) {
                $('#txt_clickTag1').val(result['clickTag' + i]);
              } else {
-                 addField(result['clickTag' + i]);
+                addField(result['clickTag' + i]);
                }
           }
+          for (var i = 1; i <= result.widgetNum; i++) {
+            if (result['facebook_icon' + i]) {
+              addField(result['facebook_icon' + i]);
+              $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+              $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+              $('#clickTag' + totalClickFields).find('h4').html('facebook icon');
+            }
+            if (result['twitter_icon' + i]) {
+              addField(result['twitter_icon' + i]);
+              $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+              $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+              $('#clickTag' + totalClickFields).find('h4').html('twitter icon');
+            }
+            if (result['instagram_icon' + i]) {
+              addField(result['instagram_icon' + i]);
+              $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+              $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+              $('#clickTag' + totalClickFields).find('h4').html('instagram icon');
+            }
+            if (result['button' + i]) {
+              addField(result['button' + i]);
+              $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+              $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+              $('#clickTag' + totalClickFields).find('h4').html('button');
+            }
+          }
+          clickNum = totalClickFields -  result.widgetNum;
           $('#txt_borderWidth').val(result.border.width);
           $('#txt_borderColor').val(result.border.color);
           $('#btn_border').css('border', result.border.width + 'px solid ' + result.border.color);
@@ -154,7 +186,7 @@ $(document).on('click', '.ct_over', function () {
   }
   if ($(":focus").css('right') != '100px') {
     $(":focus").animate({ right: '100px' }, 50);
-  }else{
+  }else {
     $(":focus").animate({ right: '-=100px' }, 50);
     if ($('#clickTag' + editNum).find('.ss_flyout').css('opacity') != 0) {
       $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'hide'});
@@ -163,33 +195,75 @@ $(document).on('click', '.ct_over', function () {
 });
 
 $(document).on('click', '#btn_sub', function () {
-  if (clickNum > 1) {
+  var j = editNum;
+  var k = editNum;
+  if (totalClickFields > 1) {
+    //alert($('#clickTag' + editNum).find('h4').html().slice(0, 8));
+    if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) === 'ClickTag'){
+      clickNum--;
+    }
     $('#clickTag' + editNum).remove();
-    if (editNum < clickNum) {
-      for (var i = editNum + 1; i <= clickNum; i++) {
-        $('#clickTag' + i).find('h4').html('ClickTag ' + (i - 1));
-        $('#txt_clickTag' + i).attr('id', 'txt_clickTag' + (i - 1));
-        $('#clickTag' + i).find('#btn_sub').attr('onclick', 'editNum = ' + (i - 1));
-        $('#clickTag' + i).attr('id', 'clickTag' + (i - 1));
+    for (var i = 1; i <= totalClickFields; i++){
+      if (i > editNum) {
+        if ($('#clickTag' + i).find('h4').html().slice(0, 8) === 'ClickTag') {
+          $('#clickTag' + i).find('h4').html('ClickTag ' + j);
+          j = parseInt($('#clickTag' + i).find('h4').html().slice(9, 10)) + 1;
+        }
+        $('#txt_clickTag' + i).attr('id', 'txt_clickTag' + k);
+        $('#clickTag' + i).find('#btn_sub').attr('onclick', 'editNum = ' + k);
+        $('#clickTag' + i).find('#btn_ct').attr('onclick', 'editNum = ' + k);
+        $('#clickTag' + i).find('#btn_ss').attr('onclick', 'editNum = ' + k);
+        $('#clickTag' + i).attr('id', 'clickTag' + k);
+        k++;
       }
+    }
+    totalClickFields--;
+  }
+  $('#clickTag1').find('#btn_ct').prop('disabled', true);
+  $('#clickTag1').find('#btn_ss').prop('disabled', true);
+});
+
+$(document).on('click', '#btn_ct', function () {
+  var j = 1;
+  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+  $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'hide'});
+  if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) != 'ClickTag') {
+    $('#clickTag' + editNum).find('h4').html('ClickTag ' + editNum);
+    for (var i = 1; i <= totalClickFields; i++){
+      if ($('#clickTag' + i).find('h4').html().slice(0, 8) === 'ClickTag'){
+        $('#clickTag' + i).find('h4').html('ClickTag ' + j);
+      }else {
+        j--;
+      }
+      j++;
+    }
+    clickNum++;
+  }
+});
+
+$(document).on('click', '#btn_ss', function () {
+  var j = 1;
+  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
+  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
+  $('#clickTag' + editNum).find('.ss_flyout').css({'top': (event.pageY + 18)});
+  $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'toggle'});
+  if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) === 'ClickTag'){
+    $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val() + ' icon');
+    for (var i = 1; i <= totalClickFields; i++){
+      if ($('#clickTag' + (i)).find('h4').html().slice(0, 8) === 'ClickTag'){
+        $('#clickTag' + i).find('h4').html('ClickTag ' + j);
+      }else {
+        j--;
+      }
+      j++;
     }
     clickNum--;
   }
 });
 
-$(document).on('click', '#btn_ct', function () {
-  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
-  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#544859', 'text-shadow': 'none'});
-  if ($('#clickTag' + editNum).find('.ss_flyout').css('opacity') != 0) {
-    $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'hide'});
-  }
-});
-
-$(document).on('click', '#btn_ss', function () {
-  $('#clickTag' + editNum).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
-  $('#clickTag' + editNum).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
-  $('#clickTag' + editNum).find('.ss_flyout').css({'top': (event.pageY + 18)});
-  $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'toggle'});
+$(document).on('click', '.ss_select', function () {
+  $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val() + ' icon');
 });
 
 $('#btn_add_disc').click(addDisc);

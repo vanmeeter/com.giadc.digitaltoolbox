@@ -16,12 +16,14 @@
                 if (result > -1) {
                   $('#btn_border').prop('disabled', false);
                   $('#btn_clickTag').prop('disabled', false);
+                  $('#btn_widget').prop('disabled', false);
                   $('#btn_static').prop('disabled', false);
                   $('#btn_disclaimer').prop('disabled', false);
                   $('#btn_initialize').prop('disabled', true);
                 } else {
                   $('#btn_border').prop('disabled', true);
                   $('#btn_clickTag').prop('disabled', true);
+                  $('#btn_widget').prop('disabled', true);
                   $('#btn_static').prop('disabled', true);
                   $('#btn_disclaimer').prop('disabled', true);
                   $('#btn_publish').prop('disabled', true);
@@ -53,23 +55,17 @@
           var bColor = $('#txt_borderColor').val();
           var loopTog = $('#chk_loopToggle').prop('checked');
           var clickURL = {};
-          var newClick;
-
-          for (var i = 1; i <= clickNum; i++) {
-            newClick = 'clickTag' + i;
-            clickURL[newClick] = $('#txt_clickTag' + i).val();
-            if (clickURL[newClick] === '') {
-              return;
-            }
+          clickURL = getTags(clickURL);
+          if (clickURL === 0){
+            return;
           }
-            clickURL.clickNum = clickNum;
-            csInterface.evalScript('initializeDoc()');
-            csInterface.evalScript('PUBLISH.setPublishSettings();')
-            csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
-            csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
-            csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
-            csInterface.evalScript('onClick_btn_static()');
-            csInterface.evalScript('UI.timeline.setSelectedLayers(UTIL.layerCheck("actions"));');
+          csInterface.evalScript('initializeDoc()');
+          csInterface.evalScript('PUBLISH.setPublishSettings();')
+          csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+          csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
+          csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
+          csInterface.evalScript('onClick_btn_static()');
+          csInterface.evalScript('UI.timeline.setSelectedLayers(UTIL.layerCheck("actions"));');
         });
 
         $('#chk_loopToggle').click(function () {
@@ -79,16 +75,20 @@
 
         $('#btn_clickTag').click(function () {
           var clickURL = {};
-          var newClick;
-          for (var i = 1; i <= clickNum; i++) {
-            newClick = 'clickTag' + i;
-            clickURL[newClick] = $('#txt_clickTag' + i).val();
-            if (clickURL[newClick] === '') {
-              return;
-            }
+          clickURL = getTags(clickURL, 'clickTag');
+          if (clickURL === 0){
+            return;
           }
-          clickURL.clickNum = clickNum;
           csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
+        });
+
+        $('#btn_widget').click(function () {
+          var clickURL = {};
+          clickURL = getTags(clickURL, 'widget');
+          if (clickURL === 0){
+            return;
+          }
+          csInterface.evalScript('onClick_btn_clickWidget(' + JSON.stringify(clickURL) + ')');
         });
 
         $('#btn_static').click(function () {
@@ -150,6 +150,44 @@
           }
           csInterface.evalScript('onClick_btn_disclaimer(' + JSON.stringify(disclaimer) + ')');
         });
-    }
+
+        function getTags(clickURL, type) {
+          var newClick;
+          var newWidget;
+          var faceCount = 0;
+          var twitCount = 0;
+          var instaCount = 0;
+          var buttonCount = 0;
+
+          for (var i = 1; i <= totalClickFields; i++) {
+            if ($('#clickTag' + i).find('h4').html() != '') {
+              if (type === 'clickTag'){
+                newClick = 'clickTag' + $('#clickTag' + i).find('h4').html().slice(9, 10);
+                clickURL[newClick] = $('#txt_clickTag' + i).val();
+              }else if (type === 'widget') {
+                if($('#clickTag' + i).find('h4').html() === 'facebook icon') {
+                  faceCount++;
+                  newWidget = 'facebook_icon' + faceCount;
+                }else if($('#clickTag' + i).find('h4').html() === 'twitter icon') {
+                  twitCount++;
+                  newWidget = 'twitter_icon' + twitCount;
+                }else if($('#clickTag' + i).find('h4').html() === 'instagram icon') {
+                  instaCount++;
+                  newWidget = 'instagram_icon' + instaCount;
+                }else if($('#clickTag' + i).find('h4').html() === 'button') {
+                  buttonCount++;
+                  newWidget = 'button' + buttonCount;
+                }
+              }
+              clickURL[newWidget] = $('#txt_clickTag' + i).val();
+            }else {
+              return 0;
+            }
+          }
+          clickURL.clickNum = clickNum;
+          clickURL.widgetNum = totalClickFields - clickNum;
+          return (clickURL);
+        }
+      }
     init();
 }());

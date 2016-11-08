@@ -34,7 +34,7 @@
   </PublishProperties>
   <PublishProperties id="C6B9CB0C-C6DC-4FBC-9805-93E9EB37A444" name="JavaScript/HTML" otf="true" enabled="true">
     <Property name="SiteUrl"> </Property>
-    <Property name="bitDepth">8</Property>
+    <Property name="bitDepth">32</Property>
     <Property name="centerOption">2</Property>
     <Property name="centerStage">false</Property>
     <Property name="compactPaths">true</Property>

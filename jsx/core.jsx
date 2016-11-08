@@ -40,108 +40,37 @@ function initializeDoc() {
 //************GET INFO FROM CREATED AD***************//
 function onClick_btn_getInfo() {
 	var data = {};
-	var totalFrames = UI.timeline.frameCount;
-
+	data.clickNum = 0;
+	data.widgetNum = 0;
+	//get clickTags
 	for (var j = 1; j < 10; j++){
 		if (UTIL.layerCheck('clickTag' + j) > -1) {
-			for (var k = 0; k < totalFrames; k++) {
-				if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + j)].frames[k].isEmpty) {
-					UI.timeline.currentFrame = k;
-					break;
-				}
-			}
-			UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + j));
-			var selectStop = fl.actionsPanel.getText().lastIndexOf('");');
-			selectStop -= 173;
-			fl.actionsPanel.setSelection(173, selectStop);
-			var existingURL = fl.actionsPanel.getSelectedText()
-			data[UI.timeline.layers[UTIL.layerCheck('clickTag' + j)].name] = existingURL;
+			data.clickNum++;
+			data[UI.timeline.layers[UTIL.layerCheck('clickTag' + j)].name] = INFO.getClickTag(j);
 		}
 	}
-	if (UI.timeline.layers[UTIL.layerCheck('border')]) {
-		UI.timeline.layers[UTIL.layerCheck('border')].locked = false;
-		UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
-
-		data.border =
-		{
-			width: UI.dom.getCustomStroke().thickness,
-			color: UI.dom.getCustomStroke().color
-		};
-
-		UI.timeline.layers[UTIL.layerCheck('border')].locked = true;
-	}
-
-	totalFrames = UI.timeline.layers[UTIL.layerCheck('actions')].frameCount;
-	fl.actionsPanel.setSelection(0,0);
-	UI.timeline.setSelectedLayers(0);
-	if(UI.timeline.layers[UTIL.layerCheck('actions')].frames[totalFrames - 1].name === 'replay') {
-		data.loop = false;
-	}else {
-		data.loop = true;
-	}
-	//DISCLAIMER INFO
-	if (UTIL.layerCheck('disclaimer1') >= 0){
-		data.disclaimer = {};
-		if(UI.dom.library.itemExists('disclaimer_close1')){
-			for (var i = 1; i < 4; i++) {
-				if(UI.dom.library.itemExists('disclaimer_content' + i)){
-					UI.dom.library.editItem('disclaimer_content' + i);
-					data.disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[1].getTextString();
-				}else {
-					data.disclaimer['text' + i] = '';
-				}
-			}
-			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 4){
-				data.disclaimer.corner = 1;
-			}else {
-				data.disclaimer.corner = 0;
-			}
-			data.disclaimer.hover = false;
-		}else {
-			for (var i = 1; i < 4; i++) {
-				if(UI.dom.library.itemExists('disclaimer_content' + i)){
-					UI.dom.library.editItem('disclaimer_content' + i);
-					data.disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[2].getTextString();
-				}else {
-					data.disclaimer['text' + i] = '';
-				}
-			}
-			if (UI.timeline.layers[0].frames[0].elements[0].vertices.length > 6){
-				data.disclaimer.corner = 1;
-			}else {
-				data.disclaimer.corner = 0;
-			}
-			data.disclaimer.hover = true;
+	//get widgets
+	for (var j = 1; j < 10; j++){
+		if (UTIL.layerCheck('facebook_icon' + j) > -1) {
+			data.widgetNum++;
+			data['facebook_icon' + j] = INFO.getWidgets('facebook_icon' + j);
 		}
-		data.disclaimer.fontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
-		data.disclaimer.bgcolor = UI.dom.getCustomFill().color;
-		UI.dom.exitEditMode();
-		if(data.disclaimer.hover === true) {
-			UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
-			UI.timeline.setSelectedFrames(0, 0);
-			if (fl.actionsPanel.getText() != '') {
-				for (var i = 1; i < 4; i++){
-					if(UTIL.layerCheck('disclaimer' + i) > -1){
-						for (var k = 0; k < totalFrames; k++) {
-							if (!UI.timeline.layers[UTIL.layerCheck('disclaimer' + i)].frames[k].isEmpty) {
-								UI.timeline.currentFrame = k;
-								break;
-							}
-						}
-							UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + i));
-							data.disclaimer['clickTag' + i] = fl.actionsPanel.getText().slice(10, 11);
-					}
-				}
-				data.disclaimer.clickToggle = true;
-			}else {
-				data.disclaimer.clickToggle = false;
-			}
-		}else {
-			data.disclaimer.clickToggle = false;
+		if (UTIL.layerCheck('twitter_icon' + j) > -1) {
+			data.widgetNum++;
+			data['twitter_icon' + j] = INFO.getWidgets('twitter_icon' + j);
 		}
-	}else {
-		data.disclaimer = 0;
+		if (UTIL.layerCheck('instagram_icon' + j) > -1){
+			data.widgetNum++;
+			data['instagram_icon' + j] = INFO.getWidgets('instagram_icon' + j);
+		}
+		if (UTIL.layerCheck('button' + j) > -1) {
+			data.widgetNum++;
+			data['button' + j] = INFO.getWidgets('button' + j);
+		}
 	}
+	data.border = INFO.getBorder();
+	data.loop = INFO.getLoop();
+	data.disclaimer = INFO.getDisclaimer();
 	return (JSON.encode(data));
 }
 
@@ -166,14 +95,11 @@ function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-
-	  //deletes previous clickTags
+		//deletes previous clickTags & widgets
 		for (var i = 1; i < 10; i++) {
 			if (UTIL.layerCheck('clickTag' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
 			}
-		}
-		for (var i = 0; i < 10; i++) {
 			if (UI.dom.library.itemExists('btn_clickTag' + i)) {
 				UI.dom.library.deleteItem('btn_clickTag' + i);
 			}
@@ -195,6 +121,56 @@ function onClick_btn_clickTag(clickURL) {
 			}
 		}
 		UI.timeline.setSelectedLayers(0);
+	}
+}
+
+function onClick_btn_clickWidget(clickURL) {
+	if (UTIL.layerCheck('actions') > -1) {
+		JSON.decode(clickURL);
+		var totalFrames = UI.timeline.frameCount;
+
+		for (var i = 1; i < 10; i++) {
+			if (UTIL.layerCheck('facebook_icon' + i) > -1) {
+				UI.timeline.deleteLayer(UTIL.layerCheck('facebook_icon' + i));
+			}
+			if (UI.dom.library.itemExists('btn_facebook' + i)) {
+				UI.dom.library.deleteItem('btn_facebook' + i);
+			}
+			if (UTIL.layerCheck('twitter_icon' + i) > -1) {
+				UI.timeline.deleteLayer(UTIL.layerCheck('twitter_icon' + i));
+			}
+			if (UI.dom.library.itemExists('btn_twitter' + i)) {
+				UI.dom.library.deleteItem('btn_twitter' + i);
+			}
+			if (UTIL.layerCheck('instagram_icon' + i) > -1) {
+				UI.timeline.deleteLayer(UTIL.layerCheck('instagram_icon' + i));
+			}
+			if (UI.dom.library.itemExists('btn_instagram' + i)) {
+				UI.dom.library.deleteItem('btn_instagram' + i);
+			}
+			if (UTIL.layerCheck('button' + i) > -1) {
+				UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
+			}
+			if (UI.dom.library.itemExists('btn_button' + i)) {
+				UI.dom.library.deleteItem('btn_button' + i);
+			}
+		}
+		//widget creation
+		for (var i = 1; i <= clickURL.widgetNum; i++){
+			if (clickURL['facebook_icon' + i]){
+				TAG.createWidget(UTIL.validateUrl(clickURL['facebook_icon' + i]), 'facebook', i, clickURL.clickNum);
+			}
+			if (clickURL['twitter_icon' + i]){
+				TAG.createWidget(UTIL.validateUrl(clickURL['twitter_icon' + i]), 'twitter', i, clickURL.clickNum);
+			}
+			if (clickURL['instagram_icon' + i]){
+				TAG.createWidget(UTIL.validateUrl(clickURL['instagram_icon' + i]), 'instagram', i, clickURL.clickNum);
+			}
+			if (clickURL['button_icon' + i]){
+				TAG.createWidget(UTIL.validateUrl(clickURL['button_icon' + i]), 'button', i, clickURL.clickNum);
+			}
+		}
+	UI.timeline.setSelectedLayers(0);
 	}
 }
 
@@ -239,7 +215,6 @@ function onClick_btn_publish() {
 }
 
 //****************PUBLISH JPG********************//
-//TODO different pub files for each type of publishing
 function onClick_btn_publishJpg() {
 		PUBLISH.jpgProfile();
 		PUBLISH.showHideLayers(false);
