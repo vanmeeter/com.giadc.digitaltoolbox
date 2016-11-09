@@ -31,18 +31,37 @@
       },
 
       createClickTag: function(url, tagNum) {
-          if (UTIL.layerCheck('disclaimer1') >= 0){
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
-          }else {
-            if(UTIL.layerCheck('border') >= 0){
-              UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
-            }else {
-              UI.timeline.setSelectedLayers(0);
+        var widgetLayer = 0;
+        if(UTIL.layerCheck('facebook_icon1') >= 0 || UTIL.layerCheck('twitter_icon1') >= 0 || UTIL.layerCheck('instagram_icon1') >= 0){
+          if(UTIL.layerCheck('facebook_icon1') >= 0){
+            if (UTIL.layerCheck('facebook_icon1') > widgetLayer){
+              widgetLayer = UTIL.layerCheck('facebook_icon1');
             }
           }
-          UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
+          if(UTIL.layerCheck('twitter_icon1') >= 0){
+            if (UTIL.layerCheck('twitter_icon1') > widgetLayer){
+              widgetLayer = UTIL.layerCheck('twitter_icon1');
+            }
+          }
+          if(UTIL.layerCheck('instagram_icon1') >= 0){
+            if (UTIL.layerCheck('instagram_icon1') > widgetLayer){
+              widgetLayer = UTIL.layerCheck('instagram_icon1');
+            }
+          }
+          UI.timeline.setSelectedLayers(widgetLayer);
+        }else if (UTIL.layerCheck('disclaimer1') >= 0){
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
+        }else {
+          if(UTIL.layerCheck('border') >= 0){
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
+          }else {
+            UI.timeline.setSelectedLayers(0);
+          }
+        }
+        UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
+        UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
 
+        if (!UI.dom.library.itemExists('btn_clickTag')){
           //create clicktag rectangle
           var recStyle = UI.dom.getCustomFill();
           var legacyStyle = UI.dom.getCustomFill('toolbar');
@@ -60,7 +79,7 @@
 
           //converts to button
           UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
-          UI.dom.convertToSymbol('button', 'btn_clickTag' + tagNum, 'top left');
+          UI.dom.convertToSymbol('button', 'btn_clickTag', 'top left');
           UI.dom.enterEditMode('inPlace');
 
           //make new frames in button
@@ -74,21 +93,28 @@
 
           //exit edit mode
           UI.dom.exitEditMode();
+        }else{
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
+          UI.dom.library.selectItem('btn_clickTag');
+          UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2});
+        }
+        //set instance name
+        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[0].elements[0].name = 'btn_clickTag' + tagNum;
 
-          //set instance name
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[0].elements[0].name = 'btn_clickTag' + tagNum;
+        //add actions to clickTag
+        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
+        fl.actionsPanel.setSelection(0,0);
 
-          //add actions to clickTag
-          fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
-          fl.actionsPanel.setSelection(0,0);
-
-          //lock and hide clickTag
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].locked = true;
-          UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].visible = false;
+        //lock and hide clickTag
+        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].locked = true;
+        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].visible = false;
       },
 
       createWidget: function(url, widgetName, i, topClick) {
         UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + topClick));
+        if (i > 1){
+          UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + '_icon' + (i - 1)));
+        }
         UI.timeline.addNewLayer(widgetName + '_icon' + i, 'normal', true);
         if (widgetName.slice(0, 1) === 'f') {
           UI.dom.importFile(widgetIcon + 'FB-Logo.svg', false, false, false);
@@ -98,14 +124,18 @@
           UI.dom.importFile(widgetIcon + 'Insta-Logo.svg', false, false, false);
         }
         UI.timeline.setSelectedLayers(0);
-        fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName + i, 'center');
+        if (!UI.dom.library.itemExists('btn_' + widgetName)){
+          fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName, 'center');
+        }
         UI.timeline.deleteLayer(0);
         UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + '_icon' + i));
         UI.timeline.clearKeyframes();
-        UI.dom.library.selectItem('btn_' + widgetName + i);
+        UI.dom.library.selectItem('btn_' + widgetName);
         UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
-        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName.slice(0, widgetName.indexOf(/\s/) + widgetName.slice(widgetName.indexOf(/\d/), widgetName.indexOf(/\d/) + 1)) + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
+        UI.timeline.layers[UTIL.layerCheck(widgetName + '_icon' + i)].frames[0].elements[0].name = 'btn_' + widgetName + i;
+        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + i + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0, 0);
+        UI.timeline.layers[UTIL.layerCheck(widgetName + '_icon' + i)].locked = true;
       }
 
     }

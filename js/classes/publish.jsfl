@@ -12,18 +12,26 @@
     },
 
     genSizeReport: function() {
-      var images;
-      var imagesSize = 0;
-      var docPath = UI.dom.pathURI.replace(/.fla/, '.html');
-      var spritePath = docPath.replace(/\d{1,3}x\d{1,3}\.html/, 'images');
-      images = FLfile.listFolder(spritePath);
-      for (var i = 0; i < images.length; i++) {
-        var imgFile = images[i].slice(images[i].lastIndexOf('.'), images[i].length);
-        if (imgFile === '.jpg' || imgFile === '.jpeg' || imgFile === '.png') {
-          imagesSize += FLfile.getSize(spritePath + '/' + images[i]);
+      if (UI.dom.pathURI){
+        if(fl.fileExists(UI.dom.pathURI.replace(/.fla/, '.html'))){
+          var images;
+          var imagesSize = 0;
+          var docPath = UI.dom.pathURI.replace(/.fla/, '.html');
+          var spritePath = docPath.replace(/\d{1,3}x\d{1,3}\.html/, 'images');
+          images = FLfile.listFolder(spritePath);
+          for (var i = 0; i < images.length; i++) {
+            var imgFile = images[i].slice(images[i].lastIndexOf('.'), images[i].length);
+            if (imgFile === '.jpg' || imgFile === '.jpeg' || imgFile === '.png') {
+              imagesSize += FLfile.getSize(spritePath + '/' + images[i]);
+            }
+          }
+          return FLfile.getSize(docPath) + imagesSize;
+        }else {
+          return 0;
         }
+      }else {
+        return 0;
       }
-      return FLfile.getSize(docPath) + imagesSize;
     },
 
     publishDoc: function() {

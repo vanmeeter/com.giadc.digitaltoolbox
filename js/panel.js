@@ -141,6 +141,9 @@ var getInfo = function() {
       });
     }
   });
+  csInterface.evalScript('PUBLISH.genSizeReport();', function(result) {
+    $('#sizeDisplay').html('Size of Document: ' + result/1000 + 'kb');
+  });
 };
 
 $('#inital').ready(function(){

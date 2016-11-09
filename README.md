@@ -10,7 +10,6 @@
   ```
   defaults write com.adobe.CSXS.6 PlayerDebugMode 1
   ```
-
   ```
   killall -u <username> cfprefsd
   ```
@@ -28,6 +27,8 @@
 3. After a url is entered, the initialize button can be pressed. The border will default at 1px black, the loop at loop, and the static image at the end of the timeline.
 
   ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/Screen%20Shot%202016-10-28%20at%2011.45.03%20AM.png)
+
+4. The publish settings will be set at this point. You should not have to worry about the publish settings from this point.
 
 ## Top Row Settings
 
@@ -59,34 +60,37 @@ The toggle switch can be used to choose a 3x loop or a replay button. If set to 
 2. You can add up to 9 clickTags by pressing the + button in the clickTag area header.
 3. To remove a clickTag, click on the specific clickTag you want to remove. The panel will slide over allowing you to remove that specific clickTag by pressing the - button:
 
-  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/Screen%20Shot%202016-10-28%20at%2012.04.17%20PM.png)
+  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/clickTag.png)
 
-  **One note about this, when you click the clickTag area to slide it over be sure to click above the url field. If this is annoying I'll fix that, just let me know. Also when you remove a clickTag the numbers will adjust automatically, but you will need to hit generate clickTag again**
+4. The CT (clickTag) button will be blue if it is a clickTag. If it isn't, you can press the CT button to convert it back to a clickTag.
+5. When the SS(Social Share) button is pressed, a drop down menu will appear. You can use this menu to choose the type of icon what will be imported in. They are all svgs for optimum resolution. (Facebook, Twitter, Instagram, Button):
 
-4. After you have the tags and urls wanted, click Generate ClickTag. They will default being over the entire ad, and be spread even over the timeline. This can be edited manually if a hotspot clickTag is needed. If the size and position is edited, be sure to edit the outside button symbol, not the inside content of the button.
+  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/ss_drop.png)
+
+6. The button option can be used to generate cta buttons and misc social icon clickthroughs. To make a button, design or import the content you want to make a clickable button, turn it into a symbol, then name it with the prefix 'cbtn_'.
+
+7. After you have the tags and urls wanted, click Generate ClickTag. They will default being over the entire ad, and be spread even over the timeline. This can be edited manually if a hotspot clickTag is needed. If the size and position is edited, be sure to edit the outside button symbol, not the inside content of the button. To generate the widgets/buttons, click the generate widgets button. All social icons and custom buttons will be generate and imported to the stage. You can edit them and reposition them as needed, but leave the code as is to make sure it clicks through properly.
 
 Only this tool should be used to add/remove clickTags rather than removing them manually.
 
 ## Disclaimer Tool
 
-The disclaimer tool will be able to add up to 3 disclaimers(feature coming soon).
+The disclaimer tool is able to add up to 3 disclaimers. The text field on the disclaimer entries is used to select which clickTag's clickthrough url that disclaimer will use.(Disabled if click version of disclaimer is selected).
 
 1. You can add a disclaimer by clicking the + button in the disclaimer area header:
 
-  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/Screen%20Shot%202016-10-28%20at%2012.12.51%20PM.png)
+  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/discTool.png)
 
 2. To edit the settings for the disclaimers, click the S button in the in the disclaimer area header. A menu will slide down where you can edit corners(round or sharp), activate the disclaimer by click or by hover, click through or not(click version of disclaimer defaults this to off), color of font, opacity of bg(slider), and the color of the background:
 
-  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/Screen%20Shot%202016-10-28%20at%2012.19.23%20PM.png)
+  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/disc_settings.png)
 
-  **One note, some of the settings are not well labeled, I'll fix that down the road.**
+3. To edit the text of the disclaimer, click the box of the disclaimer you wish to edit. The font will be open sans(web font). The bottom right corner can be dragged to resize the disclaimer textarea if more space is needed. **IMPORTATNT: Before you generate a disclaimer, be sure that your text tool is set on dynamic text. I'm not sure if I can set that from the plugin, but I'm looking into it**
 
-3. To edit the text of the disclaimer, click the box of the disclaimer you wish to edit. The font will be open sans(web font) **IMPORTATNT: Before you generate a disclaimer, be sure that your text tool is set on dynamic text. I'm not sure if I can set that from the plugin, but I'm looking into it**:
+  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/disc.png)
 
-  ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/Screen%20Shot%202016-10-28%20at%2012.24.26%20PM.png)
-
-1. To remove disclaimer just click the - button(coming soon).
-2. After everything, is set just click the Generate Disclaimer button and it will be add.
+4. To remove disclaimer just click the - button.
+5. After everything, is set just click the Generate Disclaimer button and it will be add.
 
 **Note: currently we do not have web fonts(we need the latest update), so it will default to times New Roman(ugly) for now. This may cause the disclaimer to size itself strangely, if this happens, you can go in an edit the content in the symbols. Everything should be ok as long as you don't mess with the code. You can even alter the animation, just not the code.**
 
@@ -98,13 +102,13 @@ The footer tool includes the publish button, the publish jpg button, the size of
 
 ### Publish
 
-This will publish the html document and the sprite sheet.
+This will publish the html document and the sprite sheet. The size report will be calculated at this point. The publish settings will also be set here as well, just as a fail safe to make sure the ad is published properly.
 
 ### Publish JPG
 
 This publishes the static jpg based on where you have the static flag on the timeline set. It will also put the jpg in the correct folder and automatically name it based on the SUB or COR file. If neither file is present, it will name it based on the name of the fla file.
 
-### Publish JPG Size Field
+#### Publish JPG Size Field
 
 This sets the max size the static jpg will be. It will default to 40kb, but can set to what ever you need.
 
@@ -114,4 +118,4 @@ This will be generated when you publish the html file. It includes the size of t
 
 ### Refresh Button
 
-This will automatically retrieve the info in an already created ad and auto populate the fields. It's a way to force it if, for some reason, it doesn't auto populate on it's own. It is also used to clear all info on a new ad. If you have a blank fla file open, and this is pressed, it will put everything back to default.
+This will automatically retrieve the info in an already created ad and auto populate the fields. It's a way to force it if, for some reason, it doesn't auto populate on it's own. It is also used to clear all info on a new ad. If you have a blank fla file open, and this is pressed, it will put everything back to default. The size report will also re-calculate the size report. This can be especially useful if you have optimized the sprite sheet and want an up to date size report.

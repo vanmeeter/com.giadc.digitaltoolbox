@@ -55,21 +55,24 @@
           var bColor = $('#txt_borderColor').val();
           var loopTog = $('#chk_loopToggle').prop('checked');
           var clickURL = {};
-          clickURL = getTags(clickURL);
+          var widgetURL = {};
+          clickURL = getTags(clickURL, 'clickTag');
+          widgetURL = getTags(widgetURL, 'widget');
           if (clickURL === 0){
             return;
           }
           csInterface.evalScript('initializeDoc()');
-          csInterface.evalScript('PUBLISH.setPublishSettings();')
+          csInterface.evalScript('PUBLISH.setPublishSettings();');
           csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
           csInterface.evalScript('onClick_btn_clickTag(' + JSON.stringify(clickURL) + ')');
+          csInterface.evalScript('onClick_btn_clickWidget(' + JSON.stringify(widgetURL) + ')');
           csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
           csInterface.evalScript('onClick_btn_static()');
           csInterface.evalScript('UI.timeline.setSelectedLayers(UTIL.layerCheck("actions"));');
         });
 
         $('#chk_loopToggle').click(function () {
-          var loopTog = $('#chk_loopToggle').prop('checked')
+          var loopTog = $('#chk_loopToggle').prop('checked');
           csInterface.evalScript('onClick_chk_loopToggle("' + loopTog + '")');
         });
 

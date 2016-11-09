@@ -100,8 +100,8 @@ function onClick_btn_clickTag(clickURL) {
 			if (UTIL.layerCheck('clickTag' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
 			}
-			if (UI.dom.library.itemExists('btn_clickTag' + i)) {
-				UI.dom.library.deleteItem('btn_clickTag' + i);
+			if (UI.dom.library.itemExists('btn_clickTag')) {
+				UI.dom.library.deleteItem('btn_clickTag');
 			}
 		}
 		//clickTag creation
@@ -133,26 +133,26 @@ function onClick_btn_clickWidget(clickURL) {
 			if (UTIL.layerCheck('facebook_icon' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('facebook_icon' + i));
 			}
-			if (UI.dom.library.itemExists('btn_facebook' + i)) {
-				UI.dom.library.deleteItem('btn_facebook' + i);
+			if (UI.dom.library.itemExists('btn_facebook')) {
+				UI.dom.library.deleteItem('btn_facebook');
 			}
 			if (UTIL.layerCheck('twitter_icon' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('twitter_icon' + i));
 			}
-			if (UI.dom.library.itemExists('btn_twitter' + i)) {
-				UI.dom.library.deleteItem('btn_twitter' + i);
+			if (UI.dom.library.itemExists('btn_twitter')) {
+				UI.dom.library.deleteItem('btn_twitter');
 			}
 			if (UTIL.layerCheck('instagram_icon' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('instagram_icon' + i));
 			}
-			if (UI.dom.library.itemExists('btn_instagram' + i)) {
-				UI.dom.library.deleteItem('btn_instagram' + i);
+			if (UI.dom.library.itemExists('btn_instagram')) {
+				UI.dom.library.deleteItem('btn_instagram');
 			}
 			if (UTIL.layerCheck('button' + i) > -1) {
 				UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
 			}
-			if (UI.dom.library.itemExists('btn_button' + i)) {
-				UI.dom.library.deleteItem('btn_button' + i);
+			if (UI.dom.library.itemExists('btn_button')) {
+				UI.dom.library.deleteItem('btn_button');
 			}
 		}
 		//widget creation
