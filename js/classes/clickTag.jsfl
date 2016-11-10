@@ -32,33 +32,35 @@
 
       createClickTag: function(url, tagNum) {
         var widgetLayer = 0;
-        if(UTIL.layerCheck('facebook_icon1') >= 0 || UTIL.layerCheck('twitter_icon1') >= 0 || UTIL.layerCheck('instagram_icon1') >= 0){
-          if(UTIL.layerCheck('facebook_icon1') >= 0){
-            if (UTIL.layerCheck('facebook_icon1') > widgetLayer){
-              widgetLayer = UTIL.layerCheck('facebook_icon1');
+        if (UTIL.layerCheck('clickTag' + tagNum) === -1){
+          if(UTIL.layerCheck('facebook_icon1') >= 0 || UTIL.layerCheck('twitter_icon1') >= 0 || UTIL.layerCheck('instagram_icon1') >= 0){
+            if(UTIL.layerCheck('facebook_icon1') >= 0){
+              if (UTIL.layerCheck('facebook_icon1') > widgetLayer){
+                widgetLayer = UTIL.layerCheck('facebook_icon1');
+              }
             }
-          }
-          if(UTIL.layerCheck('twitter_icon1') >= 0){
-            if (UTIL.layerCheck('twitter_icon1') > widgetLayer){
-              widgetLayer = UTIL.layerCheck('twitter_icon1');
+            if(UTIL.layerCheck('twitter_icon1') >= 0){
+              if (UTIL.layerCheck('twitter_icon1') > widgetLayer){
+                widgetLayer = UTIL.layerCheck('twitter_icon1');
+              }
             }
-          }
-          if(UTIL.layerCheck('instagram_icon1') >= 0){
-            if (UTIL.layerCheck('instagram_icon1') > widgetLayer){
-              widgetLayer = UTIL.layerCheck('instagram_icon1');
+            if(UTIL.layerCheck('instagram_icon1') >= 0){
+              if (UTIL.layerCheck('instagram_icon1') > widgetLayer){
+                widgetLayer = UTIL.layerCheck('instagram_icon1');
+              }
             }
-          }
-          UI.timeline.setSelectedLayers(widgetLayer);
-        }else if (UTIL.layerCheck('disclaimer1') >= 0){
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
-        }else {
-          if(UTIL.layerCheck('border') >= 0){
-            UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
+            UI.timeline.setSelectedLayers(widgetLayer);
+          }else if (UTIL.layerCheck('disclaimer1') >= 0){
+            UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer1'));
           }else {
-            UI.timeline.setSelectedLayers(0);
+            if(UTIL.layerCheck('border') >= 0){
+              UI.timeline.setSelectedLayers(UTIL.layerCheck('border'));
+            }else {
+              UI.timeline.setSelectedLayers(0);
+            }
           }
+            UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
         }
-        UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
         UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
 
         if (!UI.dom.library.itemExists('btn_clickTag')){
@@ -93,49 +95,59 @@
 
           //exit edit mode
           UI.dom.exitEditMode();
-        }else{
-          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
-          UI.dom.library.selectItem('btn_clickTag');
-          UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2});
         }
-        //set instance name
-        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[0].elements[0].name = 'btn_clickTag' + tagNum;
-
+        UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
+        for (var k = 0; k < UI.timeline.frameCount; k++) {
+          if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[k].isEmpty) {
+            UI.timeline.setSelectedFrames(k, k);
+            break;
+          }else if (k === UI.timeline.frameCount - 1){
+            UI.dom.library.selectItem('btn_clickTag');
+            UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2});
+            //set instance name
+            UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[0].elements[0].name = 'btn_clickTag' + tagNum;
+          }
+        }
         //add actions to clickTag
         fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0,0);
-
-        //lock and hide clickTag
-        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].locked = true;
-        UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].visible = false;
       },
 
       createWidget: function(url, widgetName, i, topClick) {
-        UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + topClick));
-        if (i > 1){
-          UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + '_icon' + (i - 1)));
+        if (UTIL.layerCheck(widgetName + i) === -1) {
+          UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + topClick));
+          if (i > 1){
+            UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + (i - 1)));
+          }
+          UI.timeline.addNewLayer(widgetName + i, 'normal', true);
+          if (widgetName.slice(0, 1) === 'f') {
+            UI.dom.importFile(widgetIcon + 'FB-Logo.svg', false, false, false);
+          }else if(widgetName.slice(0, 1) === 't') {
+            UI.dom.importFile(widgetIcon + 'twitter-Logo.svg', false, false, false);
+          }else if(widgetName.slice(0, 1) === 'i') {
+            UI.dom.importFile(widgetIcon + 'Insta-Logo.svg', false, false, false);
+          }
+          UI.timeline.setSelectedLayers(0);
+          if (!UI.dom.library.itemExists('btn_' + widgetName) && !UI.dom.library.itemExists('btn_' + widgetName + i)){
+            fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName, 'center');
+            UI.timeline.deleteLayer(0);
+          }
+          UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + i));
+          UI.timeline.clearKeyframes();
+          (widgetName === 'button') ? UI.dom.library.selectItem('btn_' + widgetName + i) : UI.dom.library.selectItem('btn_' + widgetName);
+          (widgetName === 'button') ? UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2}) : UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
+          UI.timeline.layers[UTIL.layerCheck(widgetName + i)].frames[0].elements[0].name = 'btn_' + widgetName + i;
         }
-        UI.timeline.addNewLayer(widgetName + '_icon' + i, 'normal', true);
-        if (widgetName.slice(0, 1) === 'f') {
-          UI.dom.importFile(widgetIcon + 'FB-Logo.svg', false, false, false);
-        }else if(widgetName.slice(0, 1) === 't') {
-          UI.dom.importFile(widgetIcon + 'twitter-Logo.svg', false, false, false);
-        }else if(widgetName.slice(0, 1) === 'i') {
-          UI.dom.importFile(widgetIcon + 'Insta-Logo.svg', false, false, false);
+        UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + i));
+        for (var k = 0; k < UI.timeline.frameCount; k++) {
+          if (!UI.timeline.layers[UTIL.layerCheck(widgetName + i)].frames[k].isEmpty) {
+            UI.timeline.setSelectedFrames(k, k);
+            break;
+          }
         }
-        UI.timeline.setSelectedLayers(0);
-        if (!UI.dom.library.itemExists('btn_' + widgetName)){
-          fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName, 'center');
-        }
-        UI.timeline.deleteLayer(0);
-        UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + '_icon' + i));
-        UI.timeline.clearKeyframes();
-        UI.dom.library.selectItem('btn_' + widgetName);
-        UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
-        UI.timeline.layers[UTIL.layerCheck(widgetName + '_icon' + i)].frames[0].elements[0].name = 'btn_' + widgetName + i;
         fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + i + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0, 0);
-        UI.timeline.layers[UTIL.layerCheck(widgetName + '_icon' + i)].locked = true;
+        UI.timeline.layers[UTIL.layerCheck(widgetName + i)].locked = true;
       }
 
     }

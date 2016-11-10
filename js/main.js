@@ -168,15 +168,15 @@
                 newClick = 'clickTag' + $('#clickTag' + i).find('h4').html().slice(9, 10);
                 clickURL[newClick] = $('#txt_clickTag' + i).val();
               }else if (type === 'widget') {
-                if($('#clickTag' + i).find('h4').html() === 'facebook icon') {
+                if($('#clickTag' + i).find('h4').html() === 'facebook') {
                   faceCount++;
-                  newWidget = 'facebook_icon' + faceCount;
-                }else if($('#clickTag' + i).find('h4').html() === 'twitter icon') {
+                  newWidget = 'facebook' + faceCount;
+                }else if($('#clickTag' + i).find('h4').html() === 'twitter') {
                   twitCount++;
-                  newWidget = 'twitter_icon' + twitCount;
-                }else if($('#clickTag' + i).find('h4').html() === 'instagram icon') {
+                  newWidget = 'twitter' + twitCount;
+                }else if($('#clickTag' + i).find('h4').html() === 'instagram') {
                   instaCount++;
-                  newWidget = 'instagram_icon' + instaCount;
+                  newWidget = 'instagram' + instaCount;
                 }else if($('#clickTag' + i).find('h4').html() === 'button') {
                   buttonCount++;
                   newWidget = 'button' + buttonCount;

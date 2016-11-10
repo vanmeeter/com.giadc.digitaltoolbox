@@ -67,7 +67,7 @@ The toggle switch can be used to choose a 3x loop or a replay button. If set to 
 
   ![clickTag Area](https://raw.githubusercontent.com/vanmeeter/com.giadc.digitaltoolbox/super_cleanup_time/images/ss_drop.png)
 
-6. The button option can be used to generate cta buttons and misc social icon clickthroughs. To make a button, design or import the content you want to make a clickable button, turn it into a symbol, then name it with the prefix 'cbtn_'.
+6. The button option can be used to generate cta buttons and misc social icon clickthroughs. To make a button, design or import the content you want to make a clickable button, turn it into a symbol, then name it 'btn_button' followed by a number.
 
 7. After you have the tags and urls wanted, click Generate ClickTag. They will default being over the entire ad, and be spread even over the timeline. This can be edited manually if a hotspot clickTag is needed. If the size and position is edited, be sure to edit the outside button symbol, not the inside content of the button. To generate the widgets/buttons, click the generate widgets button. All social icons and custom buttons will be generate and imported to the stage. You can edit them and reposition them as needed, but leave the code as is to make sure it clicks through properly.
 

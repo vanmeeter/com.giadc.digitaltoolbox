@@ -75,23 +75,23 @@ var getInfo = function() {
                }
           }
           for (var i = 1; i <= result.widgetNum; i++) {
-            if (result['facebook_icon' + i]) {
-              addField(result['facebook_icon' + i]);
+            if (result['facebook' + i]) {
+              addField(result['facebook' + i]);
               $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
               $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
-              $('#clickTag' + totalClickFields).find('h4').html('facebook icon');
+              $('#clickTag' + totalClickFields).find('h4').html('facebook');
             }
-            if (result['twitter_icon' + i]) {
-              addField(result['twitter_icon' + i]);
+            if (result['twitter' + i]) {
+              addField(result['twitter' + i]);
               $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
               $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
-              $('#clickTag' + totalClickFields).find('h4').html('twitter icon');
+              $('#clickTag' + totalClickFields).find('h4').html('twitter');
             }
-            if (result['instagram_icon' + i]) {
-              addField(result['instagram_icon' + i]);
+            if (result['instagram' + i]) {
+              addField(result['instagram' + i]);
               $('#clickTag' + totalClickFields).find('#btn_ss').find('span').css({'color': '#1381ff', 'text-shadow': '0px 0px 3px #4a9cfb'});
               $('#clickTag' + totalClickFields).find('#btn_ct').find('span').css({'color': '#544859', 'text-shadow': 'none'});
-              $('#clickTag' + totalClickFields).find('h4').html('instagram icon');
+              $('#clickTag' + totalClickFields).find('h4').html('instagram');
             }
             if (result['button' + i]) {
               addField(result['button' + i]);
@@ -252,7 +252,7 @@ $(document).on('click', '#btn_ss', function () {
   $('#clickTag' + editNum).find('.ss_flyout').css({'top': (event.pageY + 18)});
   $('#clickTag' + editNum).find('.ss_flyout').animate({opacity: 'toggle'});
   if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) === 'ClickTag'){
-    $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val() + ' icon');
+    $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val());
     for (var i = 1; i <= totalClickFields; i++){
       if ($('#clickTag' + (i)).find('h4').html().slice(0, 8) === 'ClickTag'){
         $('#clickTag' + i).find('h4').html('ClickTag ' + j);
@@ -266,7 +266,7 @@ $(document).on('click', '#btn_ss', function () {
 });
 
 $(document).on('click', '.ss_select', function () {
-  $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val() + ' icon');
+  $('#clickTag' + editNum).find('h4').html($('#clickTag' + editNum).find('.ss_select').val());
 });
 
 $('#btn_add_disc').click(addDisc);

@@ -51,17 +51,17 @@ function onClick_btn_getInfo() {
 	}
 	//get widgets
 	for (var j = 1; j < 10; j++){
-		if (UTIL.layerCheck('facebook_icon' + j) > -1) {
+		if (UTIL.layerCheck('facebook' + j) > -1) {
 			data.widgetNum++;
-			data['facebook_icon' + j] = INFO.getWidgets('facebook_icon' + j);
+			data['facebook' + j] = INFO.getWidgets('facebook' + j);
 		}
-		if (UTIL.layerCheck('twitter_icon' + j) > -1) {
+		if (UTIL.layerCheck('twitter' + j) > -1) {
 			data.widgetNum++;
-			data['twitter_icon' + j] = INFO.getWidgets('twitter_icon' + j);
+			data['twitter' + j] = INFO.getWidgets('twitter' + j);
 		}
-		if (UTIL.layerCheck('instagram_icon' + j) > -1){
+		if (UTIL.layerCheck('instagram' + j) > -1){
 			data.widgetNum++;
-			data['instagram_icon' + j] = INFO.getWidgets('instagram_icon' + j);
+			data['instagram' + j] = INFO.getWidgets('instagram' + j);
 		}
 		if (UTIL.layerCheck('button' + j) > -1) {
 			data.widgetNum++;
@@ -71,6 +71,7 @@ function onClick_btn_getInfo() {
 	data.border = INFO.getBorder();
 	data.loop = INFO.getLoop();
 	data.disclaimer = INFO.getDisclaimer();
+	UI.timeline.setSelectedLayers(0);
 	return (JSON.encode(data));
 }
 
@@ -95,79 +96,104 @@ function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
+		var newClick;
+		(UI.dom.library.itemExists('btn_clickTag')) ? newClick = false : newClick = true;
 		//deletes previous clickTags & widgets
 		for (var i = 1; i < 10; i++) {
 			if (UTIL.layerCheck('clickTag' + i) > -1) {
-				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
-			}
-			if (UI.dom.library.itemExists('btn_clickTag')) {
-				UI.dom.library.deleteItem('btn_clickTag');
+				UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].visible = true;
+				if (clickURL['clickTag' + i] === undefined){
+					UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+				}
 			}
 		}
 		//clickTag creation
 		for (var i = 1; i <= clickURL.clickNum; i++) {
 			var clickStart = 0;
 			var clickEnd = totalFrames / clickURL.clickNum;
-
-			TAG.createClickTag(UTIL.validateUrl(clickURL['clickTag' + i]), i);
-			clickEnd = Math.round(clickEnd * (i - 1));
-			if (clickEnd != 0) {
-				UI.timeline.clearFrames(clickStart, clickEnd);
+			if (UTIL.layerCheck('clickTag' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
+				TAG.createClickTag(UTIL.validateUrl(clickURL['clickTag' + i]), i);
 			}
-			clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
-			clickEnd = totalFrames;
-			if (clickStart != totalFrames) {
-				UI.timeline.clearFrames(clickStart, clickEnd);
+			if (newClick === true){
+				clickEnd = Math.round(clickEnd * (i - 1));
+				if (clickEnd != 0) {
+					if (UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
+						UI.timeline.clearFrames(clickStart, clickEnd);
+					}
+				}
+				clickStart = Math.round(clickEnd + (totalFrames / clickURL.clickNum));
+				clickEnd = totalFrames;
+				if (clickStart != totalFrames) {
+					if (UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
+						UI.timeline.clearFrames(clickStart, clickEnd);
+					}
+				}
 			}
+			//lock and hide clickTag
+			UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked = true;
+			UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].visible = false;
 		}
 		UI.timeline.setSelectedLayers(0);
 	}
 }
 
+//*****************WIDGET*****************//
 function onClick_btn_clickWidget(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-
 		for (var i = 1; i < 10; i++) {
-			if (UTIL.layerCheck('facebook_icon' + i) > -1) {
-				UI.timeline.deleteLayer(UTIL.layerCheck('facebook_icon' + i));
+			if (UTIL.layerCheck('facebook' + i) > -1) {
+				if (clickURL['facebook' + i] === undefined){
+					UI.timeline.deleteLayer(UTIL.layerCheck('facebook' + i));
+					if (clickURL.facebook1 === undefined && UI.dom.library.itemExists('btn_facebook')) {
+						UI.dom.library.deleteItem('btn_facebook');
+					}
+				}
 			}
-			if (UI.dom.library.itemExists('btn_facebook')) {
-				UI.dom.library.deleteItem('btn_facebook');
+			if (UTIL.layerCheck('twitter' + i) > -1) {
+				if (clickURL[twitter + i] === undefined){
+					UI.timeline.deleteLayer(UTIL.layerCheck('twitter' + i));
+					if (clickURL.twitter1 === undefined && UI.dom.library.itemExists('btn_twitter')) {
+						UI.dom.library.deleteItem('btn_twitter');
+					}
+				}
 			}
-			if (UTIL.layerCheck('twitter_icon' + i) > -1) {
-				UI.timeline.deleteLayer(UTIL.layerCheck('twitter_icon' + i));
-			}
-			if (UI.dom.library.itemExists('btn_twitter')) {
-				UI.dom.library.deleteItem('btn_twitter');
-			}
-			if (UTIL.layerCheck('instagram_icon' + i) > -1) {
-				UI.timeline.deleteLayer(UTIL.layerCheck('instagram_icon' + i));
-			}
-			if (UI.dom.library.itemExists('btn_instagram')) {
-				UI.dom.library.deleteItem('btn_instagram');
+			if (UTIL.layerCheck('instagram' + i) > -1) {
+				if (clickURL['instagram' + i] === undefined){
+					UI.timeline.deleteLayer(UTIL.layerCheck('instagram' + i));
+					if (clickURL.instagram1 === undefined && UI.dom.library.itemExists('btn_instagram')) {
+						UI.dom.library.deleteItem('btn_instagram');
+					}
+				}
 			}
 			if (UTIL.layerCheck('button' + i) > -1) {
-				UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
-			}
-			if (UI.dom.library.itemExists('btn_button')) {
-				UI.dom.library.deleteItem('btn_button');
+				if (clickURL['button' + i] === undefined){
+					UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
+				}
 			}
 		}
 		//widget creation
 		for (var i = 1; i <= clickURL.widgetNum; i++){
-			if (clickURL['facebook_icon' + i]){
-				TAG.createWidget(UTIL.validateUrl(clickURL['facebook_icon' + i]), 'facebook', i, clickURL.clickNum);
+			if (clickURL['facebook' + i]){
+				if (UTIL.layerCheck('facebook' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('facebook' + i)].locked === false) {
+					TAG.createWidget(UTIL.validateUrl(clickURL['facebook' + i]), 'facebook', i, clickURL.clickNum);
+				}
 			}
-			if (clickURL['twitter_icon' + i]){
-				TAG.createWidget(UTIL.validateUrl(clickURL['twitter_icon' + i]), 'twitter', i, clickURL.clickNum);
+			if (clickURL['twitter' + i]){
+				if (UTIL.layerCheck('twitter' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('twitter' + i)].locked === false){
+					TAG.createWidget(UTIL.validateUrl(clickURL['twitter' + i]), 'twitter', i, clickURL.clickNum);
+				}
 			}
-			if (clickURL['instagram_icon' + i]){
-				TAG.createWidget(UTIL.validateUrl(clickURL['instagram_icon' + i]), 'instagram', i, clickURL.clickNum);
+			if (clickURL['instagram' + i]){
+				if (UTIL.layerCheck('instagram' + i) === -1 || UTIL.layerCheck('instagram' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('instagram' + i)].locked === false) {
+					TAG.createWidget(UTIL.validateUrl(clickURL['instagram' + i]), 'instagram', i, clickURL.clickNum);
+				}
 			}
-			if (clickURL['button_icon' + i]){
-				TAG.createWidget(UTIL.validateUrl(clickURL['button_icon' + i]), 'button', i, clickURL.clickNum);
+			if (clickURL['button' + i]){
+				if (UTIL.layerCheck('button' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('button' + i)].locked === false){
+					TAG.createWidget(UTIL.validateUrl(clickURL['button' + i]), 'button', i, clickURL.clickNum);
+				}
 			}
 		}
 	UI.timeline.setSelectedLayers(0);
