@@ -96,7 +96,7 @@ function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-		var newClick;
+		var distro = prompt('Distribute ClickTags? (y, n)');
 		(UI.dom.library.itemExists('btn_clickTag')) ? newClick = false : newClick = true;
 		//deletes previous clickTags & widgets
 		for (var i = 1; i < 10; i++) {
@@ -114,7 +114,7 @@ function onClick_btn_clickTag(clickURL) {
 			if (UTIL.layerCheck('clickTag' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
 				TAG.createClickTag(UTIL.validateUrl(clickURL['clickTag' + i]), i);
 			}
-			if (newClick === true){
+			if (distro === 'y'){
 				clickEnd = Math.round(clickEnd * (i - 1));
 				if (clickEnd != 0) {
 					if (UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
@@ -152,7 +152,7 @@ function onClick_btn_clickWidget(clickURL) {
 				}
 			}
 			if (UTIL.layerCheck('twitter' + i) > -1) {
-				if (clickURL[twitter + i] === undefined){
+				if (clickURL['twitter' + i] === undefined){
 					UI.timeline.deleteLayer(UTIL.layerCheck('twitter' + i));
 					if (clickURL.twitter1 === undefined && UI.dom.library.itemExists('btn_twitter')) {
 						UI.dom.library.deleteItem('btn_twitter');
