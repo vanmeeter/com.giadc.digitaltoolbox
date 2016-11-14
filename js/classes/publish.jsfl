@@ -62,6 +62,9 @@
           var jpegName = UI.dom.name.slice(0, UI.dom.name.lastIndexOf('.')) + '.jpg';
         }
       }
+      if (jpegName.slice(0, 2) === 'AT' || jpegName.slice(0, 4) === 'SPEC') {
+        jpegName = jpegName.slice(jpegName.lastIndexOf('_') - 6, jpegName.length);
+      }
       jpegPath += jpegName;
       pubProfile = pubProfile.replace(/<jpegFileName><\/jpegFileName>/, '<jpegFileName>../' + jpegName + '</jpegFileName>');
       UI.dom.importPublishProfileString(pubProfile);
@@ -78,8 +81,10 @@
 
     showHideLayers: function(state){
       UI.timeline.layers[UTIL.layerCheck('actions')].visible = state;
-      if (UTIL.layerCheck('disclaimer') >= 0) {
-        UI.timeline.layers[UTIL.layerCheck('disclaimer')].visible = state;
+      for(var i = 1; i < 4; i++){
+        if (UTIL.layerCheck('disclaimer' + i) >= 0) {
+          UI.timeline.layers[UTIL.layerCheck('disclaimer' + i)].visible = state;
+        }
       }
     }
   }

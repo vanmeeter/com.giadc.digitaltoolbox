@@ -14,10 +14,10 @@
           UTIL.actionsSelect('if (!this.alreadyExecuted) {\n\tvar script = document.createElement("script")', 10);
           if (fl.actionsPanel.hasSelection()){
             fl.actionsPanel.setSelection(0,0);
-          } else {
+          }else {
             fl.actionsPanel.setText(clickCode + '\n\n' + actionText);
           }
-        } else {
+        }else {
           UI.timeline.addNewLayer('actions', 'normal', true);
           UI.timeline.setSelectedLayers(0);
           UI.timeline.setSelectedFrames(0, 0, true);
@@ -118,14 +118,18 @@
         fl.actionsPanel.setSelection(0,0);
       },
 
-      createWidget: function(url, widgetName, i, topClick) {
-        if (UTIL.layerCheck(widgetName + i) === -1) {
+      createWidget: function(url, widgetName, topClick) {
+        var i = widgetName.slice(widgetName.search(/\d/), widgetName.search(/\d/) + 1);
+        if (UTIL.layerCheck(widgetName) === -1) {
+          if (UTIL.layerCheck('clickTag' + topClick) === -1){
+            return;
+          }
           UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + topClick));
           if (i > 1){
-            UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + (i - 1)));
+            UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName.slice(0, widgetName.search(/\d/)) + (i - 1)));
           }
-          UI.timeline.addNewLayer(widgetName + i, 'normal', true);
-          if (!UI.dom.library.itemExists('btn_' + widgetName)){
+          UI.timeline.addNewLayer(widgetName, 'normal', true);
+          if (!UI.dom.library.itemExists('btn_' + widgetName.slice(0, widgetName.search(/\d/)))){
             if (widgetName.slice(0, 1) === 'f') {
               UI.dom.importFile(widgetIcon + 'FB-Logo.svg', false, false, false);
             }else if(widgetName.slice(0, 1) === 't') {
@@ -134,33 +138,33 @@
               UI.dom.importFile(widgetIcon + 'Insta-Logo.svg', false, false, false);
             }
             UI.timeline.setSelectedLayers(0);
-            if (widgetName === 'button') {
-              if (!UI.dom.library.itemExists('btn_' + widgetName + i)){
+            if (widgetName === 'button' + i) {
+              if (!UI.dom.library.itemExists('btn_' + widgetName)){
                 alert('No button found in library.');
-                UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
+                UI.timeline.deleteLayer(UTIL.layerCheck(widgetName));
                 return;
               }
             }else {
-              fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName, 'center');
+              fl.getDocumentDOM().convertToSymbol('button', 'btn_' + widgetName.slice(0, widgetName.search(/\d/)), 'center');
               UI.timeline.deleteLayer(0);
             }
           }
-          UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + i));
+          UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName));
           UI.timeline.clearKeyframes();
-          (widgetName === 'button') ? UI.dom.library.selectItem('btn_' + widgetName + i) : UI.dom.library.selectItem('btn_' + widgetName);
-          (widgetName === 'button') ? UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2}) : UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
-          UI.timeline.layers[UTIL.layerCheck(widgetName + i)].frames[0].elements[0].name = 'btn_' + widgetName + i;
+          (widgetName === 'button' + i) ? UI.dom.library.selectItem('btn_' + widgetName) : UI.dom.library.selectItem('btn_' + widgetName.slice(0, widgetName.search(/\d/)));
+          (widgetName === 'button' + i) ? UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2}) : UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
+          UI.timeline.layers[UTIL.layerCheck(widgetName)].frames[0].elements[0].name = 'btn_' + widgetName;
         }
-        UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName + i));
+        UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName));
         for (var k = 0; k < UI.timeline.frameCount; k++) {
-          if (!UI.timeline.layers[UTIL.layerCheck(widgetName + i)].frames[k].isEmpty) {
+          if (!UI.timeline.layers[UTIL.layerCheck(widgetName)].frames[k].isEmpty) {
             UI.timeline.setSelectedFrames(k, k);
             break;
           }
         }
-        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + i + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
+        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0, 0);
-        UI.timeline.layers[UTIL.layerCheck(widgetName + i)].locked = true;
+        UI.timeline.layers[UTIL.layerCheck(widgetName)].locked = true;
       }
 
     }

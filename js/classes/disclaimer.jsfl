@@ -69,7 +69,7 @@
                 top:UI.dom.height - 18,
                 right:UI.dom.width - 6,
                 bottom:UI.dom.height + 17
-              },0, false, true);
+              }, 0, false, true);
             UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
             UI.dom.setRectangleObjectProperty('topLeftRadius', disclaimer.corner * 8);
         }
@@ -79,7 +79,6 @@
     },
 
     addText: function(disclaimer, discNum) {
-    //  UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer'));
       if (disclaimer.hover === true){
         UI.dom.addNewText(
           {
@@ -164,10 +163,10 @@
         UI.timeline.setSelectedFrames(0, 0);
         UI.timeline.createMotionTween();
         UI.dom.moveSelectionBy({x:0, y:disclaimer.height});
-        UI.timeline.layers[1].frames[0].setCustomEase('all', [ {x:0,y:0}, {x:0.8297,y:0}, {x:0.3123,y:1}, {x:1,y:1} ]);
+        UI.timeline.layers[1].frames[0].setCustomEase('all', [{x:0,y:0}, {x:0.8297,y:0}, {x:0.3123,y:1}, {x:1,y:1}]);
         UI.timeline.layers[1].frames[0].hasCustomEase = true;
       //click
-      } else {
+      }else {
         UI.dom.convertToSymbol('movie clip', 'disclaimer' + discNum, 'top left');
         UI.dom.enterEditMode('inPlace');
         UI.timeline.insertFrames(21);

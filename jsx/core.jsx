@@ -96,8 +96,12 @@ function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-		var distro = prompt('Distribute ClickTags? (y, n)');
-		(UI.dom.library.itemExists('btn_clickTag')) ? newClick = false : newClick = true;
+		if (clickURL.clickNum > 1){
+			var distro = prompt('Distribute ClickTags? (y, n)');
+			if (distro === null){
+				return;
+			}
+		}
 		//deletes previous clickTags & widgets
 		for (var i = 1; i < 10; i++) {
 			if (UTIL.layerCheck('clickTag' + i) > -1) {
@@ -142,61 +146,33 @@ function onClick_btn_clickWidget(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-		for (var i = 1; i < 10; i++) {
-			if (UTIL.layerCheck('facebook' + i) > -1) {
-				if (clickURL['facebook' + i] === undefined){
-					UI.timeline.deleteLayer(UTIL.layerCheck('facebook' + i));
-					if (clickURL.facebook1 === undefined && UI.dom.library.itemExists('btn_facebook')) {
-						UI.dom.library.deleteItem('btn_facebook');
-					}
-				}
+		for(var name in clickURL){
+			if (name === 'clickNum'){
+				break;
 			}
-			if (UTIL.layerCheck('twitter' + i) > -1) {
-				if (clickURL['twitter' + i] === undefined){
-					UI.timeline.deleteLayer(UTIL.layerCheck('twitter' + i));
-					if (clickURL.twitter1 === undefined && UI.dom.library.itemExists('btn_twitter')) {
-						UI.dom.library.deleteItem('btn_twitter');
+			for (var i = 1; i < 10; i++){
+				if (UTIL.layerCheck(name.slice(0, name.search(/\d/)) + i) > -1) {
+					if (clickURL[name.slice(0, name.search(/\d/)) + i] === 0 || clickURL[name.slice(0, name.search(/\d/)) + i] === undefined){
+						UI.timeline.deleteLayer(UTIL.layerCheck(name.slice(0, name.search(/\d/)) + i));
+						if (clickURL[name.slice(0, name.search(/\d/)) + 1] === 0 && UI.dom.library.itemExists('btn_' + name.slice(0, name.search(/\d/)))) {
+							UI.dom.library.deleteItem('btn_' + name.slice(0, name.search(/\d/)));
+						}
 					}
-				}
-			}
-			if (UTIL.layerCheck('instagram' + i) > -1) {
-				if (clickURL['instagram' + i] === undefined){
-					UI.timeline.deleteLayer(UTIL.layerCheck('instagram' + i));
-					if (clickURL.instagram1 === undefined && UI.dom.library.itemExists('btn_instagram')) {
-						UI.dom.library.deleteItem('btn_instagram');
-					}
-				}
-			}
-			if (UTIL.layerCheck('button' + i) > -1) {
-				if (clickURL['button' + i] === undefined){
-					UI.timeline.deleteLayer(UTIL.layerCheck('button' + i));
 				}
 			}
 		}
 		//widget creation
-		for (var i = 1; i <= clickURL.widgetNum; i++){
-			if (clickURL['facebook' + i]){
-				if (UTIL.layerCheck('facebook' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('facebook' + i)].locked === false) {
-					TAG.createWidget(UTIL.validateUrl(clickURL['facebook' + i]), 'facebook', i, clickURL.clickNum);
+		for(var name in clickURL){
+			if (name === 'clickNum'){
+				break;
+			}
+			if (clickURL[name] != 0){
+				if (UTIL.layerCheck(name) === -1 || UI.timeline.layers[UTIL.layerCheck(name)].locked === false){
+					TAG.createWidget(UTIL.validateUrl(clickURL[name]), name, clickURL.clickNum);
 				}
 			}
-			if (clickURL['twitter' + i]){
-				if (UTIL.layerCheck('twitter' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('twitter' + i)].locked === false){
-					TAG.createWidget(UTIL.validateUrl(clickURL['twitter' + i]), 'twitter', i, clickURL.clickNum);
-				}
-			}
-			if (clickURL['instagram' + i]){
-				if (UTIL.layerCheck('instagram' + i) === -1 || UTIL.layerCheck('instagram' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('instagram' + i)].locked === false) {
-					TAG.createWidget(UTIL.validateUrl(clickURL['instagram' + i]), 'instagram', i, clickURL.clickNum);
-				}
-			}
-			if (clickURL['button' + i]){
-				if (UTIL.layerCheck('button' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('button' + i)].locked === false){
-					TAG.createWidget(UTIL.validateUrl(clickURL['button' + i]), 'button', i, clickURL.clickNum);
-				}
-			}
+			UI.timeline.setSelectedLayers(0);
 		}
-	UI.timeline.setSelectedLayers(0);
 	}
 }
 

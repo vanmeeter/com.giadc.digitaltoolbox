@@ -20,7 +20,7 @@
                   $('#btn_static').prop('disabled', false);
                   $('#btn_disclaimer').prop('disabled', false);
                   $('#btn_initialize').prop('disabled', true);
-                } else {
+                }else {
                   $('#btn_border').prop('disabled', true);
                   $('#btn_clickTag').prop('disabled', true);
                   $('#btn_widget').prop('disabled', true);
@@ -86,7 +86,12 @@
         });
 
         $('#btn_widget').click(function () {
-          var clickURL = {};
+          var clickURL = {
+            facebook1: 0,
+            twitter1: 0,
+            instagram1: 0,
+            button1: 0
+          };
           clickURL = getTags(clickURL, 'widget');
           if (clickURL === 0){
             return;
@@ -154,6 +159,7 @@
           csInterface.evalScript('onClick_btn_disclaimer(' + JSON.stringify(disclaimer) + ')');
         });
 
+        //create object that will be passed to clicktags/widgets
         function getTags(clickURL, type) {
           var newClick;
           var newWidget;
@@ -181,8 +187,10 @@
                   buttonCount++;
                   newWidget = 'button' + buttonCount;
                 }
+                if (newWidget != undefined){
+                  clickURL[newWidget] = $('#txt_clickTag' + i).val();
+                }
               }
-              clickURL[newWidget] = $('#txt_clickTag' + i).val();
             }else {
               return 0;
             }
