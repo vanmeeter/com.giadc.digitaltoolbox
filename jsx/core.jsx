@@ -32,7 +32,7 @@ function initializeDoc() {
 	TAG.giadcScriptInject(UTIL.layerCheck('actions'));
 
 	UI.timeline.layers[UTIL.layerCheck('actions')].locked = true;
-	if (frameIndex < 30){
+	if (frameIndex < 30) {
 		UI.timeline.insertFrames((90 - frameIndex), true);
 	}
 }
@@ -75,7 +75,7 @@ function onClick_btn_getInfo() {
 	return (JSON.encode(data));
 }
 
-//***********BORDER*************//
+//****************BORDER*****************//
 function onClick_btn_border(bWidth, bColor) {
 	if (UTIL.layerCheck('actions') > -1) {
 	  bWidth = parseInt(bWidth);

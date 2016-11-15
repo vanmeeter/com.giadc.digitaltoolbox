@@ -319,7 +319,7 @@ $('#chk_clickToggle').click(function(){
   }
 });
 
-$('#btn_settings_disc').click(function(){
+$('#btn_settings_disc').click(function() {
   $('#disc_settings').animate({ height: 'toggle' });
 });
 
