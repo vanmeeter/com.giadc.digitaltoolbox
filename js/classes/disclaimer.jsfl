@@ -263,6 +263,7 @@
               if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + disclaimer['clickTag' + discNum])].frames[j].isEmpty) {
                 UI.timeline.setSelectedFrames(j, j);
                 var clickCode = fl.actionsPanel.getText();
+                break;
               }
             }
         clickCode = '//clickTag' + disclaimer['clickTag' + discNum] + '\n' + clickCode.replace(/btn_clickTag\d/, 'disclaimer' + discNum);

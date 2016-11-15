@@ -153,8 +153,8 @@
           UI.timeline.clearKeyframes();
           (widgetName === 'button' + i) ? UI.dom.library.selectItem('btn_' + widgetName) : UI.dom.library.selectItem('btn_' + widgetName.slice(0, widgetName.search(/\d/)));
           (widgetName === 'button' + i) ? UI.dom.library.addItemToDocument({x:UI.dom.width / 2, y:UI.dom.height / 2}) : UI.dom.library.addItemToDocument({x:16, y:UI.dom.height - 16});
-          UI.timeline.layers[UTIL.layerCheck(widgetName)].frames[0].elements[0].name = 'btn_' + widgetName;
         }
+        UI.timeline.layers[UTIL.layerCheck(widgetName)].frames[0].elements[0].name = 'btn_' + widgetName;
         UI.timeline.setSelectedLayers(UTIL.layerCheck(widgetName));
         for (var k = 0; k < UI.timeline.frameCount; k++) {
           if (!UI.timeline.layers[UTIL.layerCheck(widgetName)].frames[k].isEmpty) {

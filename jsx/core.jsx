@@ -101,16 +101,26 @@ function onClick_btn_clickTag(clickURL) {
 			if (distro === null){
 				return;
 			}
-		}
-		//deletes previous clickTags & widgets
-		for (var i = 1; i < 10; i++) {
-			if (UTIL.layerCheck('clickTag' + i) > -1) {
-				UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].visible = true;
-				if (clickURL['clickTag' + i] === undefined){
-					UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+		}else {
+			if (UTIL.layerCheck('clickTag1') > -1) {
+				UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag1'));
+				for(var i = 0; i < totalFrames; i++){
+					if (UI.timeline.layers[UTIL.layerCheck('clickTag1')].frames[i].isEmpty) {
+						UI.timeline.clearKeyframes(i, i);
+						break;
+					}
 				}
 			}
 		}
+	//deletes previous clickTags & widgets
+	for (var i = 1; i < 10; i++) {
+		if (UTIL.layerCheck('clickTag' + i) > -1) {
+			UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].visible = true;
+			if (clickURL['clickTag' + i] === undefined){
+				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+			}
+		}
+	}
 		//clickTag creation
 		for (var i = 1; i <= clickURL.clickNum; i++) {
 			var clickStart = 0;
@@ -240,6 +250,7 @@ function onClick_btn_disclaimer(disclaimer) {
 			UI.dom.library.deleteItem('disclaimer_close' + i);
 		}
 	}
+
 	for (var i = 1; i <= discNum; i++){
 		var discStart = 0;
 		var discEnd = totalFrames / discNum;

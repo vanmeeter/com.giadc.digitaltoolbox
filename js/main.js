@@ -132,6 +132,7 @@
               csInterface.evalScript('PUBLISH.showHideLayers(true);');
             }
           };
+
           var getSize = function() {
             csInterface.evalScript('PUBLISH.getFileSize()', function(result) {
               jpgFileSize = result / 1000;
@@ -163,16 +164,22 @@
         function getTags(clickURL, type) {
           var newClick;
           var newWidget;
+          var clickCount = 0;
           var faceCount = 0;
           var twitCount = 0;
           var instaCount = 0;
           var buttonCount = 0;
 
           for (var i = 1; i <= totalClickFields; i++) {
-            if ($('#clickTag' + i).find('h4').html() != '') {
+            if ($('#clickTag' + i).find('.text-input').val() != '') {
               if (type === 'clickTag'){
-                newClick = 'clickTag' + $('#clickTag' + i).find('h4').html().slice(9, 10);
-                clickURL[newClick] = $('#txt_clickTag' + i).val();
+                clickCount++;
+                if($('#clickTag' + i).find('h4').html() === 'ClickTag ' + clickCount){
+                  newClick = 'clickTag' + $('#clickTag' + i).find('h4').html().slice(9, 10);
+                  clickURL[newClick] = $('#txt_clickTag' + i).val();
+                }else {
+                  clickCount--;
+                }
               }else if (type === 'widget') {
                 if($('#clickTag' + i).find('h4').html() === 'facebook') {
                   faceCount++;

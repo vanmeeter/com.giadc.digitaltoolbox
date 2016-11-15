@@ -204,8 +204,7 @@ $(document).on('click', '#btn_sub', function () {
   var j = editNum;
   var k = editNum;
   if (totalClickFields > 1) {
-    //alert($('#clickTag' + editNum).find('h4').html().slice(0, 8));
-    if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) === 'ClickTag'){
+    if ($('#clickTag' + editNum).find('h4').html().slice(0, 8) === 'ClickTag') {
       clickNum--;
     }
     $('#clickTag' + editNum).remove();
