@@ -105,6 +105,7 @@
         for (var k = 0; k < UI.timeline.frameCount; k++) {
           if (!UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[k].isEmpty) {
             UI.timeline.setSelectedFrames(k, k);
+            UI.timeline.layers[UTIL.layerCheck('clickTag' + tagNum)].frames[k].elements[0].name = 'btn_clickTag' + tagNum;
             break;
           }else if (k === UI.timeline.frameCount - 1){
             UI.dom.library.selectItem('btn_clickTag');

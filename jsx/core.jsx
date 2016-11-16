@@ -200,7 +200,7 @@ function onClick_chk_loopToggle(loopTog) {
 	}
 }
 
-//****************STATIC SET*****************//
+//******************STATIC SET*****************//
 function onClick_btn_static() {
 	if (UTIL.layerCheck('actions') > -1) {
 		var currF = UI.timeline.currentFrame;
