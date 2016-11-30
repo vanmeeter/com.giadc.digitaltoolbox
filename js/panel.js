@@ -173,14 +173,18 @@ $('#inital').unload(function(){
 });
 
 //border
+
+var createBorder = function(){
+  var bWidth = $('#txt_borderWidth').val();
+  var bColor = $('#txt_borderColor').val();
+  csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
+  $('#btn_border').css('border', bWidth + 'px solid ' + bColor);
+  $('#btn_border').unbind('click', createBorder);
+};
+
 $('#btn_border').click(function() {
   $('#border_flyout').animate({opacity:'toggle'});
-  $('#btn_border').click(function(){
-    var bWidth = $('#txt_borderWidth').val();
-    var bColor = $('#txt_borderColor').val();
-    csInterface.evalScript('onClick_btn_border("' + bWidth + '", "' + bColor + '")');
-    $('#btn_border').css('border', bWidth + 'px solid ' + bColor);
-  });
+  $('#btn_border').bind('click', createBorder);
 });
 
 //clickTag/widgets

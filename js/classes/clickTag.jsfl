@@ -115,7 +115,7 @@
           }
         }
         //add actions to clickTag
-        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
+        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_clickTag' + tagNum + '.addEventListener("click", fl_ClickToGoToWebPage);\n\n\tfunction fl_ClickToGoToWebPage() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0,0);
       },
 
@@ -163,7 +163,7 @@
             break;
           }
         }
-        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + '.addEventListener("click", fl_ClickToGoToWebPage_8);\n\n\tfunction fl_ClickToGoToWebPage_8() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
+        fl.actionsPanel.setText('if (!this.alreadyExecuted) {\n\tthis.btn_' + widgetName + '.addEventListener("click", fl_ClickToGoToWebPage);\n\n\tfunction fl_ClickToGoToWebPage() {\n\t\twindow.openAndTrack("default","' + url + '");\n\t}\n}');
         fl.actionsPanel.setSelection(0, 0);
         UI.timeline.layers[UTIL.layerCheck(widgetName)].locked = true;
       }

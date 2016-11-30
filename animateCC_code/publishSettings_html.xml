@@ -70,7 +70,7 @@
     <Property name="pngMaxSheetHeight">8192</Property>
     <Property name="pngMaxSheetWidth">8192</Property>
     <Property name="preloaderName">Default</Property>
-    <Property name="quality">80</Property>
+    <Property name="quality">100</Property>
     <Property name="responsiveOption">2</Property>
     <Property name="scaleOption">0</Property>
     <Property name="scaleStage">false</Property>
