@@ -36,6 +36,13 @@
 
     publishDoc: function() {
       pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings_html.xml');
+      if (FLfile.exists(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/')) + '/images')){
+        if (!confirm('Publish Spritesheet?')){
+          pubProfile = pubProfile.replace('<Property name="exportImages">true</Property>', '<Property name="exportImages">false</Property>');
+        }else {
+          FLfile.remove(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/')) + '/images');
+        }
+      }
       UI.dom.importPublishProfileString(pubProfile);
       UI.dom.publish();
     },

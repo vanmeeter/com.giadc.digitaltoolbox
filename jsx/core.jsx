@@ -96,12 +96,7 @@ function onClick_btn_clickTag(clickURL) {
 	if (UTIL.layerCheck('actions') > -1) {
 		JSON.decode(clickURL);
 		var totalFrames = UI.timeline.frameCount;
-		if (clickURL.clickNum > 1){
-			var distro = prompt('Distribute ClickTags? (y, n)');
-			if (distro === null){
-				return;
-			}
-		}else {
+		if (clickURL.clickNum === 1){
 			if (UTIL.layerCheck('clickTag1') > -1) {
 				UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag1'));
 				for(var i = 0; i < totalFrames; i++){
@@ -111,12 +106,16 @@ function onClick_btn_clickTag(clickURL) {
 					}
 				}
 			}
+		}else{
+			var distro = confirm('Distribute ClickTags?');
 		}
 	//deletes previous clickTags & widgets
 	for (var i = 1; i < 10; i++) {
 		if (UTIL.layerCheck('clickTag' + i) > -1) {
 			UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].visible = true;
 			if (clickURL['clickTag' + i] === undefined){
+				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
+			}else if(distro){
 				UI.timeline.deleteLayer(UTIL.layerCheck('clickTag' + i));
 			}
 		}
@@ -128,7 +127,7 @@ function onClick_btn_clickTag(clickURL) {
 			if (UTIL.layerCheck('clickTag' + i) === -1 || UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
 				TAG.createClickTag(UTIL.validateUrl(clickURL['clickTag' + i]), i);
 			}
-			if (distro === 'y'){
+			if (distro){
 				clickEnd = Math.round(clickEnd * (i - 1));
 				if (clickEnd != 0) {
 					if (UI.timeline.layers[UTIL.layerCheck('clickTag' + i)].locked === false) {
