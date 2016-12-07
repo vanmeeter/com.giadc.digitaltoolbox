@@ -86,6 +86,11 @@
       return FLfile.getSize(jpegPath);
     },
 
+    setDefaultPub: function(){
+      pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
+      UI.dom.importPublishProfileString(pubProfile);
+    },
+
     showHideLayers: function(state){
       UI.timeline.layers[UTIL.layerCheck('actions')].visible = state;
       for(var i = 1; i < 4; i++){

@@ -44,7 +44,7 @@
     <Property name="embedJS">true</Property>
     <Property name="exportAsSpritesheet">true</Property>
     <Property name="exportHTML">true</Property>
-    <Property name="exportImages">true</Property>
+    <Property name="exportImages">false</Property>
     <Property name="exportImagesToFolder">true</Property>
     <Property name="exportLibs">true</Property>
     <Property name="exportLibsToFolder">true</Property>

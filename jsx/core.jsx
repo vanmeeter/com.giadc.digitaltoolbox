@@ -220,6 +220,7 @@ function onClick_btn_static() {
 function onClick_btn_publish() {
 	if (UTIL.layerCheck('actions') > -1) {
 			PUBLISH.publishDoc();
+			PUBLISH.setDefaultPub();
 			return PUBLISH.genSizeReport();
 	}
 	return 0;

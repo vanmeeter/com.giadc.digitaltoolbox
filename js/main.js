@@ -130,6 +130,7 @@
             }else {
               csInterface.evalScript('fl.trace("JPG export complete!");');
               csInterface.evalScript('PUBLISH.showHideLayers(true);');
+              csInterface.evalScript('PUBLISH.setDefaultPub();');
             }
           };
 
