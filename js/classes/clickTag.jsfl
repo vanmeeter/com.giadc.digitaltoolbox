@@ -67,7 +67,6 @@
             UI.timeline.addNewLayer('clickTag' + tagNum, 'normal', false);
         }
         UI.timeline.setSelectedLayers(UTIL.layerCheck('clickTag' + tagNum));
-
         if (!UI.dom.library.itemExists('btn_clickTag')){
           //create clicktag rectangle
           var recStyle = UI.dom.getCustomFill();
@@ -167,7 +166,5 @@
         fl.actionsPanel.setSelection(0, 0);
         UI.timeline.layers[UTIL.layerCheck(widgetName)].locked = true;
       }
-
     }
-
 }());

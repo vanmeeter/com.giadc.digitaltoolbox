@@ -62,10 +62,10 @@
         UI.dom.setCustomFill(recStyle);
         UI.dom.addNewRectangle(
           {
-            left:-4.0,
-            top:-2,
-            right:305.9,
-            bottom:341.9
+            left:8,
+            top:6,
+            right:37,
+            bottom:37.5
           }, 0, false, true);
         UI.dom.setCustomFill(legacyStyle);
         UI.dom.exitEditMode();
