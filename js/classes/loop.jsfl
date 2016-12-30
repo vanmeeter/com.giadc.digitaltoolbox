@@ -22,7 +22,6 @@
 
 //*************REPLAY***************//
       } else {
-
         UI.timeline.setSelectedLayers(UTIL.layerCheck('actions'));
         UI.timeline.setSelectedFrames(frameIndex, frameIndex, true);
         UI.timeline.clearKeyframes();

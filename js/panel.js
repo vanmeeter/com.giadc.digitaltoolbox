@@ -100,7 +100,7 @@ var getInfo = function() {
               $('#clickTag' + totalClickFields).find('h4').html('button');
             }
           }
-          clickNum = totalClickFields -  result.widgetNum;
+          clickNum = totalClickFields - result.widgetNum;
           $('#txt_borderWidth').val(result.border.width);
           $('#txt_borderColor').val(result.border.color);
           $('#btn_border').css('border', result.border.width + 'px solid ' + result.border.color);

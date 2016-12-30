@@ -3,24 +3,28 @@
     DISCLAIMER =
   {
     draw: function(disclaimer, discNum) {
+      var textPrep = 0;
       UI.timeline.setSelectedLayers(Math.abs(UTIL.layerCheck('border')));
       UI.timeline.addNewLayer('disclaimer' + discNum, 'normal', false);
 
       //create temp text box to get dynamic height of disclaimer
-      UI.dom.addNewText(
-        {
-          left:12,
-          top:0,
-          right:UI.dom.width - 16,
-          bottom:5
-        }, disclaimer['disc_text' + discNum]);
-      UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].setTextAttr('face', 'Gf-OpenSans');
-      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('size', 10);
-      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('alignment', 'left');
-      UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr("lineSpacing", 0);
-      disclaimer.height = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].height + 13;
-      UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
-      UI.dom.deleteSelection();
+      do{
+        UI.dom.addNewText(
+          {
+            left:12,
+            top:0,
+            right:UI.dom.width - 16,
+            bottom:5
+          }, disclaimer['disc_text' + discNum]);
+        UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].setTextAttr('face', 'Gf-OpenSans');
+        UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('size', 10);
+        UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr('alignment', 'left');
+        UI.timeline.layers[UTIL.layerCheck('disclaimer'+ discNum)].frames[0].elements[0].setTextAttr("lineSpacing", 0);
+        disclaimer.height = UI.timeline.layers[UTIL.layerCheck('disclaimer' + discNum)].frames[0].elements[0].height + 13;
+        UI.timeline.setSelectedLayers(UTIL.layerCheck('disclaimer' + discNum));
+        UI.dom.deleteSelection();
+        textPrep++;
+    } while(textPrep < 2);
       //make main disclaimer box
       var recStyle = UI.dom.getCustomFill();
       var legacyStyle = UI.dom.getCustomFill('toolbar');

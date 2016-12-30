@@ -88,6 +88,7 @@
 
     setDefaultPub: function(){
       pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
+      alert('Publish finished.');
       UI.dom.importPublishProfileString(pubProfile);
     },
 
