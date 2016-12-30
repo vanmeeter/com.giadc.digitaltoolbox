@@ -66,7 +66,9 @@
     			for (var i = 1; i < 4; i++) {
     				if(UI.dom.library.itemExists('disclaimer_content' + i)){
     					UI.dom.library.editItem('disclaimer_content' + i);
-    					disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[1].getTextString();
+              if(UI.timeline.layers[0].frames[0].elements[1] != '[object Bitmap]' && UI.timeline.layers[0].frames[0].elements[1] != undefined){
+    					  disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[1].getTextString();
+              }
     				}else {
     					disclaimer['text' + i] = '';
     				}
@@ -81,7 +83,9 @@
     			for (var i = 1; i < 4; i++) {
     				if(UI.dom.library.itemExists('disclaimer_content' + i)){
     					UI.dom.library.editItem('disclaimer_content' + i);
-    					disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[2].getTextString();
+              if(UI.timeline.layers[0].frames[0].elements[2] != '[object Bitmap]' && UI.timeline.layers[0].frames[0].elements[2] != undefined){
+    					  disclaimer['text' + i] = UI.timeline.layers[0].frames[0].elements[2].getTextString();
+              }
     				}else {
     					disclaimer['text' + i] = '';
     				}
@@ -93,7 +97,11 @@
     			}
     			disclaimer.hover = true;
     		}
-    		disclaimer.fontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
+        if (UI.timeline.layers[0].frames[0].elements[1] != '[object Bitmap]' && UI.timeline.layers[0].frames[0].elements[1] != undefined){
+    		  disclaimer.fontColor = UI.timeline.layers[0].frames[0].elements[1].getTextAttr("fillColor");
+        }else {
+          disclaimer.fontColor = '#ffffff';
+        }
     		disclaimer.bgcolor = UI.dom.getCustomFill().color;
     		UI.dom.exitEditMode();
     		if(disclaimer.hover === true) {
