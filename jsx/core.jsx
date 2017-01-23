@@ -232,8 +232,7 @@ function onClick_btn_publishJpg() {
 		PUBLISH.showHideLayers(false);
 }
 
-
-//******************DISCLAIMER TOOL****************//
+//****************DISCLAIMER TOOL****************//
 function onClick_btn_disclaimer(disclaimer) {
 	JSON.decode(disclaimer);
 	var discNum = disclaimer.length;

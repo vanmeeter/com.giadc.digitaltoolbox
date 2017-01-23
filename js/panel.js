@@ -192,7 +192,7 @@ $('#btn_add').click(addField);
 
 $(document).on('click', '.ct_over', function () {
   if ($(".ct_over").css('right') === undefined){
-    $(".ct_over").css('right') = '0px';
+    $(".ct_over").css('right', '0px');
   }
   if ($(":focus").css('right') != '100px') {
     $(":focus").animate({ right: '100px' }, 50);
