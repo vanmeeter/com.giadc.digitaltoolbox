@@ -1,11 +1,11 @@
 (function() {
-  var widgetIcon = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/icons/';
+  var widgetIcon = 'file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/icons/';
 
     TAG =
     {
 
       giadcScriptInject: function(clickCheck) {
-        var clickCode = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/clickCode.txt');
+        var clickCode = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/clickCode.txt');
         UI.timeline.setSelectedLayers(0);
         UI.timeline.setSelectedFrames(0, 0, true);
         var actionText = fl.actionsPanel.getText();

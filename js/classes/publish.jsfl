@@ -1,6 +1,6 @@
 (function() {
 
-  var pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
+  var pubProfile = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
   var jpegPath;
 
   PUBLISH =
@@ -35,7 +35,7 @@
     },
 
     publishDoc: function() {
-      pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings_html.xml');
+      pubProfile = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings_html.xml');
       if (FLfile.exists(UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/')) + '/images')){
         if (!confirm('Publish Spritesheet?')){
           pubProfile = pubProfile.replace('<Property name="exportImages">true</Property>', '<Property name="exportImages">false</Property>');
@@ -48,7 +48,7 @@
     },
 
     jpgProfile: function() {
-      pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings_jpg.xml');
+      pubProfile = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings_jpg.xml');
       jpegPath = UI.dom.pathURI.slice(0, UI.dom.pathURI.lastIndexOf('/'));
       jpegPath = jpegPath.slice(0, jpegPath.lastIndexOf('/') + 1);
       var pathFiles = FLfile.listFolder(jpegPath);
@@ -87,7 +87,7 @@
     },
 
     setDefaultPub: function(){
-      pubProfile = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
+      pubProfile = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/publishSettings.xml');
       alert('Publish finished.');
       UI.dom.importPublishProfileString(pubProfile);
     },

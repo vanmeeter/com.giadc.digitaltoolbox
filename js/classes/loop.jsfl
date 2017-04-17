@@ -1,6 +1,6 @@
 (function() {
-  var replayIcon = fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/icons/replay_arrow.svg';
-  var loopCode = FLfile.read(fl.configURI + '../../../CEP/extensions/com.giadc.digitalToolbox/animateCC_code/loopCode.txt');
+  var replayIcon = 'file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/icons/replay_arrow.svg';
+  var loopCode = FLfile.read('file:///Library/Application Support/Adobe/CEP/extensions/com.giadc.digitalToolbox/animateCC_code/loopCode.txt');
 
   LOOP =
   {
