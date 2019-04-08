@@ -1,4 +1,6 @@
 # GIADC digitalToolbox
+#### THIS IS NO LONGER MAINTAINED AND MAY NOT WORK ON NEW VERSIONS OF ANIMATE CC
+
 
 ## Installation
 
